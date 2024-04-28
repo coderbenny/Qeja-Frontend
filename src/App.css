@@ -22,3 +22,37 @@ p {
   font-family: 'Roboto', sans-serif;
   font-style: italic;
 }
+
+.text-gradient {
+  background: linear-gradient(45deg, #00aeff, #ff9100);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Gradient Variation 1 */
+.text-gradient-1 {
+  background: linear-gradient(45deg, #f6d365, #fda085);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Gradient Variation 2 */
+.text-gradient-2 {
+  background: linear-gradient(45deg, #00c6fb, #005bea);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+.filter-grayscale {
+  filter: grayscale(100%);
+}
+
+.home-sub {
+  opacity: 0;
+  transition: opacity 1.0s ease-in-out;
+}
+
+.home-sub.show {
+  opacity: 1;
+}

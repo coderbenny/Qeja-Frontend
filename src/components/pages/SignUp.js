@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -17,9 +18,17 @@ function Signup() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log("Signup button clicked");
+    try {
+      const res = await axios.post("http://127.0.0.1:5555/users", formData)
+      if (res.status === 201){
+        e.target.reset()
+        alert("Sign Up succesfull")
+      }
+    } catch (error) {
+      alert("An error occured:", error)
+    }
   };
 
   return (
@@ -54,8 +63,8 @@ function Signup() {
           <option value="" disabled selected>
             Choose your role
           </option>
-          <option value="1">Seeking Rental</option>
-          <option value="2">Property Owner</option>
+          <option value="1">Property Owner</option>
+          <option value="2">Seeking Rental</option>
           <option value="3">Seeking Roommate</option>
         </select>
         <input

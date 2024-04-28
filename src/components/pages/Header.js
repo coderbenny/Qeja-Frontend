@@ -9,7 +9,7 @@ function Header() {
         to="/"
         className="flex items-center ml-3 font-bold text-2xl tracking-wider cursor-pointer hover:text-blue-400"
       >
-        <MdOutlineMapsHomeWork className="mr-1" /> Qeja
+        <MdOutlineMapsHomeWork className="" />
       </NavLink>
       <div className="flex justify-between">
         <p className="mr-5 hover:text-blue-300 font-semibold cursor-pointer">

@@ -7,6 +7,7 @@ import Home from './components/pages/Home';
 import Header from './components/pages/Header';
 import Login from './components/pages/Login';
 import SignUp from './components/pages/SignUp';
+import Discover from './components/pages/Discover';
 
 import {Route, Routes} from "react-router-dom";
 
@@ -16,7 +17,8 @@ function App() {
         <Header/>
         <Routes>
           <Route path="/login" element={<Login/>} />
-          <Route exact path="/signup" element={<SignUp/>} />
+          <Route path="/signup" element={<SignUp/>} />
+          <Route path="/discover" element={<Discover/>} />
           <Route exact path="/" element={<Home/>} />
         </Routes>
       </div>

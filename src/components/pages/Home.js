@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import HomeSub from "../ui/HomeSub";
 import ReactTypingFxDemo from "../ui/ReactTypingEffectDemo";
-import Discover from "./Discover";
 
 import { IoIosArrowDropdown } from "react-icons/io";
 import { IoIosArrowDropup } from "react-icons/io";
@@ -51,7 +50,6 @@ function Home() {
 
         {showHomeSub && <HomeSub />}
 
-        <Discover/>
       </div>
     </div>
   );

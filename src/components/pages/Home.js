@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import HomeSub from "../ui/HomeSub";
 import ReactTypingFxDemo from "../ui/ReactTypingEffectDemo";
+import Discover from "./Discover";
 
 import { IoIosArrowDropdown } from "react-icons/io";
 import { IoIosArrowDropup } from "react-icons/io";
 
 function Home() {
-  const [showHomeSub, setShowHomeSub] = useState(false);
+  const [showHomeSub, setShowHomeSub] = useState(true);
 
   const handleReadMoreClick = () => {
     setShowHomeSub(!showHomeSub);
@@ -18,7 +19,7 @@ function Home() {
       style={{
         backgroundImage: `url(${process.env.PUBLIC_URL}/edited.jpg)`,
         backgroundSize: "cover",
-        backgroundAttachment: "fixed", // Make the background image fixed
+        // backgroundAttachment: "fixed", // Make the background image fixed
       }}
     >
       <div className="h-[180px]">
@@ -49,6 +50,8 @@ function Home() {
         </div>
 
         {showHomeSub && <HomeSub />}
+
+        <Discover/>
       </div>
     </div>
   );

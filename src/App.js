@@ -6,6 +6,7 @@ import '@fontsource/roboto/700.css';
 import Home from './components/pages/Home';
 import Header from './components/pages/Header';
 import Login from './components/pages/Login';
+import SignUp from './components/pages/SignUp';
 
 import {Route, Routes} from "react-router-dom";
 
@@ -15,6 +16,7 @@ function App() {
         <Header/>
         <Routes>
           <Route path="/login" element={<Login/>} />
+          <Route exact path="/signup" element={<SignUp/>} />
           <Route exact path="/" element={<Home/>} />
         </Routes>
       </div>

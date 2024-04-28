@@ -5,13 +5,19 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import Home from './components/pages/Home';
 import Header from './components/pages/Header';
+import Login from './components/pages/Login';
+
+import {Route, Routes} from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      <Header/>
-      <Home/>
-    </div>
+        <Header/>
+        <Routes>
+          <Route path="/login" element={<Login/>} />
+          <Route exact path="/" element={<Home/>} />
+        </Routes>
+      </div>
   );
 }
 

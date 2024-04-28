@@ -29,7 +29,7 @@ function Home() {
       </div>
       <div className="flex flex-col w-full items-center">
         <div className="flex px-2 w-[550px] mb-4 justify-between h-[30px] items-center border-2 border-teal-500 rounded-xl text-gray-300 p-1 text-sm">
-          <p className="px-1">
+          <p className="px-1 text-white" >
             Register today and be part of a wonderful society
           </p>
           <span

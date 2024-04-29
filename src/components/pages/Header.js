@@ -13,18 +13,18 @@ function Header() {
         <MdOutlineMapsHomeWork className="" />
       </NavLink>
       <div className="flex justify-between">
-        <p className="flex items-center mr-5 hover:text-blue-300 font-semibold cursor-pointer">
+        <NavLink to="/rentals" className="flex items-center mr-5 hover:text-blue-300 font-semibold cursor-pointer">
           <FaHouseUser className="mr-1" /> Rentals
-        </p>
-        <p className="flex items-center mr-5 hover:text-blue-300 font-semibold cursor-pointer">
+        </NavLink>
+        <NavLink to="/room-mates" className="flex items-center mr-5 hover:text-blue-300 font-semibold cursor-pointer">
           <FaUserFriends className="mr-1" /> Roommates
-        </p>
-        <p className="flex items-center mr-5 hover:text-blue-300 font-semibold cursor-pointer">
+        </NavLink>
+        <NavLink to="/property-owners" className="flex items-center mr-5 hover:text-blue-300 font-semibold cursor-pointer">
           <FaBuilding className="mr-1" /> Property Owners
-        </p>
-        <p className="flex items-center mr-5 hover:text-blue-300 font-semibold cursor-pointer">
+        </NavLink>
+        <NavLink to="/community-chat" className="flex items-center mr-5 hover:text-blue-300 font-semibold cursor-pointer">
           <FaComments className="mr-1" /> Community Chat
-        </p>
+        </NavLink>
       </div>
       <NavLink
         className="flex items-center mr-3 border-2 border-slate-400 text-white hover:bg-teal-400 hover:text-gray-800 font-semibold p-1 rounded-md px-3 tracking-wider"

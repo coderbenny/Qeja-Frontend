@@ -1,17 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import HomeSub from "../ui/HomeSub";
 import ReactTypingFxDemo from "../ui/ReactTypingEffectDemo";
 import FAQ from "./FAQ";
 
 import { IoIosArrowDropdown } from "react-icons/io";
 import { IoIosArrowDropup } from "react-icons/io";
+import AuthContext from "../context/AuthContext";
 
 function Home() {
+  const{auth}= useContext(AuthContext)
+
   const [showHomeSub, setShowHomeSub] = useState(true);
 
   const handleReadMoreClick = () => {
     setShowHomeSub(!showHomeSub);
   };
+
+  console.log(auth)
 
   return (
     <>

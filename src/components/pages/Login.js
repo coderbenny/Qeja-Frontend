@@ -1,22 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 
+import axios from "../context/axios";
+import AuthContext from "../context/AuthContext";
+
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { auth, setAuth } = useContext(AuthContext);
+  const [error, setError] = useState(null);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+  });
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
   };
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your login logic here
-    console.log("Login button clicked");
+    try {
+      const res = await axios.post("/login", formData);
+      if (res.status === 200) {
+        const data = res.data;
+        setAuth({
+          name: data.name,
+          email: data.email,
+          role_id: data.role_id
+        });
+        alert("Login successful");
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+       
+        // Unauthorized error (status code 401)
+        setError("Wrong password");
+      } else if (error.response && error.response.status === 404) {
+
+        // Unauthorized error (status code 401)
+        setError("User does not exist");
+      } else {
+        setError("An error occurred: " + error.message);
+      }
+    }
   };
 
   return (
@@ -30,18 +59,19 @@ function Login() {
         </h2>
         <input
           type="email"
+          name="email"
           placeholder="Email"
-          value={email}
-          onChange={handleEmailChange}
+          onChange={handleInputChange}
           className="w-full px-3 py-2 mb-4 rounded-md bg-gray-200 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring focus:ring-blue-400"
         />
         <input
           type="password"
+          name="password"
           placeholder="Password"
-          value={password}
-          onChange={handlePasswordChange}
+          onChange={handleInputChange}
           className="w-full px-3 py-2 mb-6 rounded-md bg-gray-200 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring focus:ring-blue-400"
         />
+        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
         <button
           type="submit"
           className="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring focus:ring-blue-400"

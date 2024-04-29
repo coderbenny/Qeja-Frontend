@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
+import axios from "../context/axios";
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -21,7 +21,7 @@ function Signup() {
   const handleSubmit = async(e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://127.0.0.1:5555/users", formData)
+      const res = await axios.post("/users", formData)
       if (res.status === 201){
         e.target.reset()
         alert("Sign Up succesfull")
@@ -44,6 +44,7 @@ function Signup() {
           type="text"
           name="name"
           placeholder="Name"
+          // autoComplete="off"
           onChange={handleInputChange}
           className="w-full px-3 py-2 mb-4 rounded-md bg-gray-200 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring focus:ring-blue-400"
         />

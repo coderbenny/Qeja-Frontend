@@ -1,9 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { MdOutlineMapsHomeWork } from "react-icons/md";
-import { FaHouseUser, FaUserFriends, FaBuilding, FaComments, FaSignInAlt } from "react-icons/fa";
+import { FaHouseUser, FaUserFriends, FaBuilding, FaComments, FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
+import useAuth from "../hooks/useAuth";
 
 function Header() {
+
+  const {auth} = useAuth()
+
   return (
     <div className="items-center fixed top-0 z-50 w-full bg-slate-900 text-white flex items-center justify-between p-1 h-16">
       <NavLink
@@ -27,11 +31,20 @@ function Header() {
         </NavLink>
       </div>
       <NavLink
-        className="flex items-center mr-3 border-2 border-slate-400 text-white hover:bg-teal-400 hover:text-gray-800 font-semibold p-1 rounded-md px-3 tracking-wider"
-        to="/login"
-      >
-        <FaSignInAlt className="mr-2" /> Login
-      </NavLink>
+  className="flex items-center mr-3 border-2 border-slate-400 text-white hover:bg-teal-400 hover:text-gray-800 font-semibold p-1 rounded-md px-3 tracking-wider"
+  to={auth ? "/logout" : "/login"}
+>
+  {auth ? (
+    <>
+      <FaSignOutAlt className="mr-2" /> Logout
+    </>
+  ) : (
+    <>
+      <FaSignInAlt className="mr-2" /> Login
+    </>
+  )}
+</NavLink>
+
       {/* <button className="p-1 px-3 bg-slate-700 rounded-md hover:bg-slate-800 border-2 border-gray-500 hover:border-gray-300" type="button">Register</button> */}
     </div>
   );

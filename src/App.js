@@ -15,6 +15,7 @@ import Rentals from './components/pages/Rentals';
 import NotFound from './components/pages/NotFound';
 
 import {Route, Routes} from "react-router-dom";
+import RequireAuth from './components/Auth/RequireAuth';
 
 function App() {
   return (
@@ -25,9 +26,14 @@ function App() {
           <Route path="/signup" element={<SignUp/>} />
           <Route path="/discover" element={<Discover/>} />
           <Route path="/community-chat" element={<CommChat/>} />
-          <Route path="/property-owners" element={<Owners/>} />
-          <Route path="/room-mates" element={<RoomMates/>} />
-          <Route path="/rentals" element={<Rentals/>} />
+          
+          {/* Protected routes */}
+          <Route element={<RequireAuth/>}>
+            <Route path="/property-owners" element={<Owners/>} />
+            <Route path="/room-mates" element={<RoomMates/>} />
+            <Route path="/rentals" element={<Rentals/>} />
+          </Route>
+
           <Route exact path="/" element={<Home/>} />
           <Route path="*" element={<NotFound/>} />
         </Routes>

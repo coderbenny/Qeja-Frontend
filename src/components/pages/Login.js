@@ -1,11 +1,16 @@
-import React, { useState, useContext } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState} from "react";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 
 import axios from "../context/axios";
-import AuthContext from "../context/AuthContext";
-
+import useAuth from "../hooks/useAuth";
 function Login() {
-  const { auth, setAuth } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+  const location = useLocation()
+  const from = location.state?.from?.pathname || "/"
+
+  const {setAuth} = useAuth()
+
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     email: "",
@@ -31,7 +36,7 @@ function Login() {
           email: data.email,
           role_id: data.role_id
         });
-        alert("Login successful");
+        navigate(from, {replace: true})
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {

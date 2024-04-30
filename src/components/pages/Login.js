@@ -31,11 +31,8 @@ function Login() {
       const res = await axios.post("/login", formData);
       if (res.status === 200) {
         const data = res.data;
-        setAuth({
-          name: data.name,
-          email: data.email,
-          role_id: data.role_id
-        });
+        sessionStorage.setItem("user", JSON.stringify(data))
+        setAuth(data);
         navigate(from, {replace: true})
       }
     } catch (error) {

@@ -36,8 +36,9 @@ function Home() {
         </div>
         <div className="flex flex-col w-full items-center">
           <div className="flex px-2 w-[550px] mb-4 justify-between h-[30px] items-center border-2 border-teal-500 rounded-xl text-gray-300 p-1 text-sm">
-            <p className="px-1 text-white" >
-              Register today and be part of a wonderful society
+            <p className="px-1 text-white tracking-wider" >
+              {auth ? `Welcome ${auth.name}`: 'Register today and be part of a wonderful society'
+}
             </p>
             <span
               className="flex items-center font-semibold text-slate-950 px-2 juatify-center font-semibold cursor-pointer bg-teal-400 text-sm rounded-md"

@@ -40,7 +40,7 @@ function Discover() {
       }}
     >
       <div className="max-w-4xl mx-auto text-center text-white py-10">
-        <h2 className="mt-5 text-4xl font-bold mb-4 tracking-wider">Discover</h2>
+        <h2 className="mt-5 text-4xl text-gradient-1 font-bold mb-4 tracking-wider">Discover</h2>
         <p className="text-lg mb-6">
           Experience the ease of finding your perfect home, tenant, or roommate. Say goodbye to endless searches and complicated processes.
         </p>

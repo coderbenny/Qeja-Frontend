@@ -13,6 +13,7 @@ import Owners from "./components/pages/Owners";
 import RoomMates from "./components/pages/RoomMates";
 import Rentals from "./components/pages/Rentals";
 import NotFound from "./components/pages/NotFound";
+import HouseDetails from "./components/pages/HouseDetails";
 
 import { Route, Routes } from "react-router-dom";
 import RequireAuth from "./components/Auth/RequireAuth";
@@ -34,6 +35,7 @@ function App() {
         <Route element={<RequireAuth />}>
           <Route path="/property-owners" element={<Owners />} />
           <Route path="/room-mates" element={<RoomMates />} />
+          <Route path="/rentals/:id" element={<HouseDetails />} />
           <Route path="/rentals" element={<Rentals />} />
         </Route>
 

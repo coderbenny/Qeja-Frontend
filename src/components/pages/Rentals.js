@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Filters from "../ui/Filter";
 import axios from "../context/axios";
 
@@ -20,7 +21,17 @@ const Rentals = () => {
       }
     };
     fetchProperties();
+    return () => {
+      setProperties([]);
+    };
   }, []);
+
+  // Navigate to view house details
+  const navigate = useNavigate();
+
+  const handleViewMore = (id) => {
+    navigate(`/rentals/${id}`);
+  };
 
   return (
     <div
@@ -58,8 +69,9 @@ const Rentals = () => {
                   <b>Price:</b> Kes.{house.rent}
                 </p>
                 <button
-                  disabled
-                  className="bg-blue-500 text-white py-2 px-4 rounded-md cursor-not-allowed focus:outline-none focus:bg-blue-600"
+                  type="button"
+                  onClick={() => handleViewMore(house.id)}
+                  className="bg-blue-500 text-white py-2 px-4 rounded-md focus:bg-blue-600"
                 >
                   View Details
                 </button>

@@ -2,25 +2,20 @@ import React, { useState, useEffect } from "react";
 import HomeSub from "../ui/HomeSub";
 import ReactTypingFxDemo from "../ui/ReactTypingEffectDemo";
 import FAQ from "./FAQ";
-
-import { IoIosArrowDropdown } from "react-icons/io";
-import { IoIosArrowDropup } from "react-icons/io";
+import { IoIosArrowDropdown, IoIosArrowDropup } from "react-icons/io";
 import useAuth from "../hooks/useAuth";
 import axios from "../context/axios";
 
 function Home() {
   const { auth, setAuth } = useAuth();
-
   const [showHomeSub, setShowHomeSub] = useState(true);
 
   const handleReadMoreClick = () => {
     setShowHomeSub(!showHomeSub);
   };
 
-  console.log(auth);
-
   useEffect(() => {
-    const getUser = async (setAuth) => {
+    const getUser = async () => {
       try {
         const token = sessionStorage.getItem("access_token");
         if (token) {
@@ -59,7 +54,6 @@ function Home() {
         style={{
           backgroundImage: `url(${process.env.PUBLIC_URL}/edited.jpg)`,
           backgroundSize: "cover",
-          // backgroundAttachment: "fixed", // Make the background image fixed
         }}
       >
         <div className="h-[180px]">
@@ -79,22 +73,13 @@ function Home() {
               className="flex items-center font-semibold text-slate-950 px-2 juatify-center font-semibold cursor-pointer bg-teal-400 text-sm rounded-md"
               onClick={handleReadMoreClick}
             >
-              {showHomeSub ? (
-                <>
-                  See Less <IoIosArrowDropup />
-                </>
-              ) : (
-                <>
-                  See More <IoIosArrowDropdown />
-                </>
-              )}
+              {showHomeSub ? "See Less" : "See More"}{" "}
+              {showHomeSub ? <IoIosArrowDropup /> : <IoIosArrowDropdown />}
             </span>
           </div>
-
           {showHomeSub && <HomeSub />}
         </div>
       </div>
-
       <FAQ />
     </>
   );

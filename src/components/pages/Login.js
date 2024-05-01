@@ -30,9 +30,10 @@ function Login() {
     try {
       const res = await axios.post("/login", formData);
       if (res.status === 200) {
-        const data = res.data;
-        sessionStorage.setItem("user", JSON.stringify(data))
-        setAuth(data);
+        const data = await res.data;
+        // console.log(data)
+        setAuth({"name":data.name,"email":formData.email, "access_token":data.access_token});
+        sessionStorage.setItem("access_token", data.access_token)
         navigate(from, {replace: true})
       }
     } catch (error) {

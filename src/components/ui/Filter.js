@@ -2,7 +2,7 @@ import React from "react";
 
 function Filters({ searchTerm, setSearchTerm, filterTerm, setFilterTerm }) {
   return (
-    <div className="mb-6 flex ml-3 mr-3 items-center">
+    <div className="mb-6 flex items-center">
       <input
         type="text"
         placeholder="Search by house location..."

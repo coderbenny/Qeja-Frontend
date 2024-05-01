@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { MdOutlineMapsHomeWork } from "react-icons/md";
 import {
@@ -7,13 +7,33 @@ import {
   FaBuilding,
   FaComments,
 } from "react-icons/fa";
-// import useAuth from "../hooks/useAuth";
-
 import AuthButton from "../ui/AuthButton";
 
 function Header() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset;
+      if (scrollTop > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <div className="fixed top-0 z-50 w-full text-white flex items-center bg-transparent justify-between p-1 h-16">
+    <div
+      className={`fixed top-0 z-50 w-full text-white flex items-center justify-between p-1 h-16 transition-all ${
+        isScrolled ? "bg-blue-950" : "bg-transparent"
+      }`}
+    >
       <NavLink
         to="/"
         className="flex items-center ml-3 text-2xl tracking-wider cursor-pointer hover:text-blue-400"
@@ -47,7 +67,6 @@ function Header() {
         </NavLink>
       </div>
       <AuthButton />
-      {/* <button className="p-1 px-3 bg-slate-700 rounded-md hover:bg-slate-800 border-2 border-gray-500 hover:border-gray-300" type="button">Register</button> */}
     </div>
   );
 }

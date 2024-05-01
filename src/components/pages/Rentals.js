@@ -5,16 +5,7 @@ import axios from "../context/axios";
 const Rentals = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTerm, setFilterTerm] = useState("");
-
   const [properties, setProperties] = useState([]);
-
-  // const filteredProperty = properties.filter((property) => {
-  //   return (
-  //     property.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-  //     (filterTerm === "" ||
-  //       property.location.toLowerCase().includes(filterTerm.toLowerCase()))
-  //   );
-  // });
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -25,7 +16,7 @@ const Rentals = () => {
           setProperties(data);
         }
       } catch (error) {
-        console.error("An error occured:", error);
+        console.error("An error occurred:", error);
       }
     };
     fetchProperties();
@@ -33,11 +24,11 @@ const Rentals = () => {
 
   return (
     <div
-      className="w-full mx-auto h-screen py-20"
+      className="mx-auto w-full py-20 px-4"
       style={{
         backgroundImage: `url(${process.env.PUBLIC_URL}/22.jpg)`,
         backgroundSize: "cover",
-        // backgroundAttachment: "fixed", // Make the background image fixed
+        backgroundAttachment: "fixed", // Make the background image fixed
       }}
     >
       <Filters
@@ -46,27 +37,29 @@ const Rentals = () => {
         setFilterTerm={setFilterTerm}
         filterTerm={filterTerm}
       />
-      <div className="grid grid-cols-1 p-3 sm:grid-cols-2 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 overflow-y-auto">
         {properties &&
           properties.map((house, index) => (
             <div
               key={index}
-              className="bg-white shadow-lg rounded-lg overflow-hidden w-[300px]"
+              className="bg-white w-full rounded-lg overflow-hidden shadow-md"
             >
               <img
                 src={house.pic1}
                 alt={house.description}
-                className="w-full h-56"
+                className="w-full h-48 object-cover"
               />
               <div className="p-4">
-                <h3 className="text-xl font-bold text-gray-800 mb-2">
-                  {house.location}
-                </h3>
-                <p className="text-gray-600 mb-2">Location: {house.location}</p>
-                <p className="text-gray-600 mb-4">Price: Kes.{house.rent}</p>
+                <h3 className="text-lg font-semibold mb-2">{house.location}</h3>
+                <p className="text-gray-700 mb-1">
+                  <b>Location:</b> {house.location}
+                </p>
+                <p className="text-gray-700 mb-1">
+                  <b>Price:</b> Kes.{house.rent}
+                </p>
                 <button
                   disabled
-                  className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                  className="bg-blue-500 text-white py-2 px-4 rounded-md cursor-not-allowed focus:outline-none focus:bg-blue-600"
                 >
                   View Details
                 </button>

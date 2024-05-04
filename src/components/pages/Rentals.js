@@ -9,9 +9,12 @@ const Rentals = () => {
   const [properties, setProperties] = useState([]);
 
   useEffect(() => {
-    const fetchProperties = async () => {
+    const token = sessionStorage.getItem("access_token");
+    const fetchProperties = async (token) => {
       try {
-        const res = await axios.get("/properties");
+        const res = await axios.get("/properties", {
+          Authorization: `Bearer ${token}`,
+        });
         if (res.status === 200) {
           const data = await res.data;
           setProperties(data);
@@ -20,7 +23,10 @@ const Rentals = () => {
         console.error("An error occurred:", error);
       }
     };
-    fetchProperties();
+    if (token) {
+      fetchProperties(token);
+    }
+
     return () => {
       setProperties([]);
     };

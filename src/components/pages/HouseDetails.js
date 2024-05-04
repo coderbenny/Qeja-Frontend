@@ -46,17 +46,17 @@ function HouseDetails() {
 
       <div className="p-2 grid grid-cols-1 md:grid-cols-2 md:gap-10 h-[580px]">
         <div className="w-full bg-white p-2">
-          <img src={house.pic1} alt="house" className="h-[380px] w-full mb-1" />
+          <img src={house.pic1} alt="house" className="h-[380px] w-full mb-2" />
           <div className="flex justify-between">
-            <img src={house.pic2} alt="house" className="h-[180px] w-[370px]" />
-            <img src={house.pic3} alt="house" className="h-[180px] w-[370px]" />
+            <img src={house.pic2} alt="house" className="h-[200px] w-[370px]" />
+            <img src={house.pic3} alt="house" className="h-[200px] w-[370px]" />
           </div>
         </div>
         <div className="flex flex-col justify-between bg-white p-2">
           <SubDetails house={house} />
           <button
             type="button"
-            className="p-1 bg-blue-600 hover:bg-slate-700 shadow-md text-white mt-auto"
+            className="p-1 hover:bg-blue-600 bg-slate-700 shadow-md text-white mt-auto"
           >
             Schedule Viewing
           </button>

@@ -67,7 +67,7 @@ const Rentals = () => {
                 className="w-full h-48 object-cover"
               />
               <div className="p-4">
-                <h3 className="text-lg font-semibold mb-2">{house.location}</h3>
+                <h3 className="text-lg font-semibold mb-2">Property Name</h3>
                 <p className="text-gray-700 mb-1">
                   <b>Location:</b> {house.location}
                 </p>

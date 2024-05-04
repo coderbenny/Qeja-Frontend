@@ -23,10 +23,11 @@ function SubDetails({ house }) {
       <div className="flex justify-between items-center">
         <h1 className="font-bold text-3xl mb-4 p-1">House Details</h1>
         <p
-          className="cursor-pointer border-2 shadow-md border-slate-950 p-1"
+          className="cursor-pointer items-center border-2 rounded-sm shadow-sm border-slate-950 p-1 flex"
           onClick={sharePost}
         >
-          Click to share this post
+          <img src="/share.svg" alt="share" className="h-5 w-5" />
+          Click to share
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">

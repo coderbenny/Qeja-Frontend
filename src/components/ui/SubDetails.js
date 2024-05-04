@@ -20,9 +20,12 @@ function SubDetails({ house }) {
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
-      <div className="flex justify-between">
-        <h1 className="font-bold text-3xl mb-4">House Details</h1>
-        <p className="cursor-pointer" onClick={sharePost}>
+      <div className="flex justify-between items-center">
+        <h1 className="font-bold text-3xl mb-4 p-1">House Details</h1>
+        <p
+          className="cursor-pointer border-2 shadow-md border-slate-950 p-1"
+          onClick={sharePost}
+        >
           Click to share this post
         </p>
       </div>

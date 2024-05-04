@@ -33,10 +33,10 @@ function App() {
 
         {/* Protected routes */}
         <Route element={<RequireAuth />}>
+          <Route path="/rentals" element={<Rentals />} />
+          <Route path="/rentals/:id" element={<HouseDetails />} />
           <Route path="/property-owners" element={<Owners />} />
           <Route path="/room-mates" element={<RoomMates />} />
-          <Route path="/rentals/:id" element={<HouseDetails />} />
-          <Route path="/rentals" element={<Rentals />} />
         </Route>
 
         <Route exact path="/" element={<Home />} />

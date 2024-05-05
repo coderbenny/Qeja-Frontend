@@ -17,6 +17,7 @@ import HouseDetails from "./components/pages/HouseDetails";
 
 import { Route, Routes } from "react-router-dom";
 import RequireAuth from "./components/Auth/RequireAuth";
+import MateByID from "./components/pages/MateByID";
 // import { useEffect } from "react";
 // import axios from "./components/context/axios";
 // import useAuth from "./components/hooks/useAuth";
@@ -36,6 +37,7 @@ function App() {
           <Route path="/rentals" element={<Rentals />} />
           <Route path="/rentals/:id" element={<HouseDetails />} />
           <Route path="/property-owners" element={<Owners />} />
+          <Route path="/room-mates/:id" element={<MateByID />} />
           <Route path="/room-mates" element={<RoomMates />} />
         </Route>
 

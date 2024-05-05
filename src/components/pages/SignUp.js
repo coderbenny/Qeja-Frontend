@@ -3,6 +3,8 @@ import { NavLink } from "react-router-dom";
 import axios from "../context/axios";
 
 function Signup() {
+  const [error, setError] = useState(null);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -18,16 +20,22 @@ function Signup() {
     });
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/users", formData)
-      if (res.status === 201){
-        e.target.reset()
-        alert("Sign Up succesfull")
+      const res = await axios.post("/users", formData);
+      if (res.status === 201) {
+        e.target.reset();
+        alert("Sign Up succesfull");
       }
     } catch (error) {
-      alert("An error occured:", error)
+      if (error.response && error.response.status === 400) {
+        setError("Invalid User Data");
+      } else if (error.response && error.response.status === 409) {
+        setError("User exists, use a unique name and email!");
+      } else {
+        setError("An error occurred: " + error.message);
+      }
     }
   };
 
@@ -75,6 +83,7 @@ function Signup() {
           onChange={handleInputChange}
           className="w-full px-3 py-2 mb-6 rounded-md bg-gray-200 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring focus:ring-blue-400"
         />
+        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
         <button
           type="submit"
           className="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring focus:ring-blue-400"

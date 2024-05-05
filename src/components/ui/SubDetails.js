@@ -1,6 +1,6 @@
 import React from "react";
 
-function SubDetails({ house }) {
+function SubDetails({ house, title }) {
   const sharePost = async () => {
     try {
       // Check if the Web Share API is supported
@@ -21,7 +21,7 @@ function SubDetails({ house }) {
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
       <div className="flex justify-between items-center">
-        <h1 className="font-bold text-3xl mb-4 p-1">House Details</h1>
+        <h1 className="font-bold text-3xl mb-4 p-1">{title} Details</h1>
         <p
           className="cursor-pointer items-center border-2 rounded-sm shadow-sm border-slate-950 p-1 flex"
           onClick={sharePost}
@@ -40,8 +40,8 @@ function SubDetails({ house }) {
           <p className="text-sm">{house.rooms}</p>
         </div>
         <div className="flex flex-col bg-gray-800 text-white rounded-md p-4">
-          <h3 className="font-semibold mb-2">Rent</h3>
-          <p className="text-sm">Ksh.{house.rent} Per Month</p>
+          <h3 className="font-semibold mb-2">Price</h3>
+          <p className="text-sm">{house.for_rent ? `Ksh.${house.rent} Per Month` : `Ksh.${house.rent}`}</p>
         </div>
       </div>
 

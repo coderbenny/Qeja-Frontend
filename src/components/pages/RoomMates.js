@@ -10,7 +10,7 @@ const RoomMates = () => {
   const [roommates, setRoommates] = useState([]);
 
   const { auth } = useAuth();
-  //   console.log(auth);
+  console.log(roommates);
 
   useEffect(() => {
     const token = sessionStorage.getItem("access_token");
@@ -37,9 +37,9 @@ const RoomMates = () => {
       fetchRoommates(token, auth);
     }
 
-    return () => {
-      setRoommates([]);
-    };
+    // return () => {
+    //   setRoommates([]);
+    // };
   }, []);
 
   // Navigate to view house details

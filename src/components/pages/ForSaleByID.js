@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "../context/axios";
 import SubDetails from "../ui/SubDetails";
 
-function HouseDetails() {
+function ForSaleByID() {
   const navigate = useNavigate();
   const [house, setHouse] = useState({});
   const id = useParams();
@@ -24,7 +24,7 @@ function HouseDetails() {
   }, []);
 
   const handleBack = () => {
-    navigate("/rentals");
+    navigate("/properties-for-sale");
   };
 
   // console.log(house);
@@ -51,7 +51,7 @@ function HouseDetails() {
           </div>
         </div>
         <div className="flex flex-col justify-between bg-white p-2">
-          <SubDetails title="House" house={house} />
+          <SubDetails title="Property" house={house} />
           <div className="flex justify-between mt-auto gap-2">
             <button
               type="button"
@@ -73,4 +73,4 @@ function HouseDetails() {
   );
 }
 
-export default HouseDetails;
+export default ForSaleByID;

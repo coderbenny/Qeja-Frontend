@@ -59,10 +59,10 @@ function Header() {
           <FaUserFriends className="mr-1" /> Roommates
         </NavLink>
         <NavLink
-          to="/property-owners"
+          to="/properties-for-sale"
           className="flex items-center mr-5 hover:text-blue-300 cursor-pointer"
         >
-          <FaBuilding className="mr-1" /> Property Owners
+          <FaBuilding className="mr-1" /> Property For Sale
         </NavLink>
         <NavLink
           to="/community-chat"

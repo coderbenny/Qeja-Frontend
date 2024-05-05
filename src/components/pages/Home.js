@@ -33,6 +33,7 @@ function Home() {
               email: data.email,
               token: token,
               role_id: data.role_id,
+              profile: data.user_profile,
             });
           } else {
             throw new Error("Unexpected response status: " + response.status);
@@ -44,8 +45,13 @@ function Home() {
         console.error("An error occurred:", error);
       }
     };
-    getUser();
+
+    if (!auth) {
+      getUser();
+    }
   }, []);
+
+  // console.log(auth);
 
   return (
     <>

@@ -9,7 +9,8 @@ import Login from "./components/pages/Login";
 import SignUp from "./components/pages/SignUp";
 import Discover from "./components/pages/Discover";
 import CommChat from "./components/pages/CommChat";
-import Owners from "./components/pages/Owners";
+import ForSale from "./components/pages/ForSale";
+import ForSaleByID from "./components/pages/ForSaleByID";
 import RoomMates from "./components/pages/RoomMates";
 import Rentals from "./components/pages/Rentals";
 import NotFound from "./components/pages/NotFound";
@@ -18,9 +19,6 @@ import HouseDetails from "./components/pages/HouseDetails";
 import { Route, Routes } from "react-router-dom";
 import RequireAuth from "./components/Auth/RequireAuth";
 import MateByID from "./components/pages/MateByID";
-// import { useEffect } from "react";
-// import axios from "./components/context/axios";
-// import useAuth from "./components/hooks/useAuth";
 
 function App() {
   return (
@@ -36,7 +34,8 @@ function App() {
         <Route element={<RequireAuth />}>
           <Route path="/rentals" element={<Rentals />} />
           <Route path="/rentals/:id" element={<HouseDetails />} />
-          <Route path="/property-owners" element={<Owners />} />
+          <Route path="/properties-for-sale/:id" element={<ForSaleByID />} />
+          <Route path="/properties-for-sale" element={<ForSale />} />
           <Route path="/room-mates/:id" element={<MateByID />} />
           <Route path="/room-mates" element={<RoomMates />} />
         </Route>

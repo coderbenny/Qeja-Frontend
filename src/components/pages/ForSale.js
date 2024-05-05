@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Filters from "../ui/Filter";
 import axios from "../context/axios";
 
-const Owners = () => {
+const ForSale = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTerm, setFilterTerm] = useState("");
   const [properties, setProperties] = useState([]);
@@ -12,7 +12,7 @@ const Owners = () => {
     const token = sessionStorage.getItem("access_token");
     const fetchProperties = async (token) => {
       try {
-        const res = await axios.get("/properties", {
+        const res = await axios.get("/for-sale", {
           Authorization: `Bearer ${token}`,
         });
         if (res.status === 200) {
@@ -36,18 +36,11 @@ const Owners = () => {
   const navigate = useNavigate();
 
   const handleViewMore = (id) => {
-    navigate(`/rentals/${id}`);
+    navigate(`/properties-for-sale/${id}`);
   };
 
   return (
-    <div
-      className="mx-auto w-full py-20 px-4"
-      style={{
-        backgroundImage: `url(${process.env.PUBLIC_URL}/22.jpg)`,
-        backgroundSize: "cover",
-        backgroundAttachment: "fixed", // Make the background image fixed
-      }}
-    >
+    <div className="mx-auto w-full py-20 px-4 cursor-pointer bg-gray-100">
       <Filters
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
@@ -59,7 +52,8 @@ const Owners = () => {
           properties.map((house, index) => (
             <div
               key={index}
-              className="bg-white w-full rounded-lg overflow-hidden shadow-md"
+              className="rental-card bg-white rounded-md border-2 border-gray-200 overflow-hidden transition duration-300 ease-in-out transform hover:shadow-lg mb-1"
+              onClick={() => handleViewMore(house.id)}
             >
               <img
                 src={house.pic1}
@@ -67,18 +61,14 @@ const Owners = () => {
                 className="w-full h-48 object-cover"
               />
               <div className="p-4">
-                <h3 className="text-lg font-semibold mb-2">{house.location}</h3>
+                <h3 className="text-lg font-semibold mb-2">Property Name</h3>
                 <p className="text-gray-700 mb-1">
                   <b>Location:</b> {house.location}
                 </p>
                 <p className="text-gray-700 mb-1">
                   <b>Price:</b> Kes.{house.rent}
                 </p>
-                <button
-                  type="button"
-                  onClick={() => handleViewMore(house.id)}
-                  className="bg-blue-500 text-white py-2 px-4 rounded-md focus:bg-blue-600"
-                >
+                <button className="view-details-btn hover:bg-blue-700 text-white py-2 px-4 rounded-md transition duration-300 ease-in-out">
                   View Details
                 </button>
               </div>
@@ -89,4 +79,4 @@ const Owners = () => {
   );
 };
 
-export default Owners;
+export default ForSale;

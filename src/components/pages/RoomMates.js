@@ -10,7 +10,7 @@ const RoomMates = () => {
   const [roommates, setRoommates] = useState([]);
 
   const { auth } = useAuth();
-  console.log(roommates);
+  // console.log(roommates);
 
   useEffect(() => {
     const token = sessionStorage.getItem("access_token");
@@ -58,7 +58,7 @@ const RoomMates = () => {
         filterTerm={filterTerm}
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 overflow-y-auto">
-        {roommates &&
+        {roommates.length > 0 ? (
           roommates.map((roommate, index) => (
             <div
               key={index}
@@ -77,7 +77,7 @@ const RoomMates = () => {
                 </p>
                 <div className="flex justify-between">
                   <button className="view-details-btn hover:bg-blue-700 text-white py-2 px-4 rounded-md transition duration-300 ease-in-out">
-                    View Details
+                    View Profile
                   </button>
                   <button
                     disabled
@@ -88,7 +88,14 @@ const RoomMates = () => {
                 </div>
               </div>
             </div>
-          ))}
+          ))
+        ) : (
+          <div className="flex flex-col p-3 items-center mx-auto justify-center text-center text-gray-500">
+            <h2 className="text-center text-3xl mx-auto">
+              No Roommates available
+            </h2>
+          </div>
+        )}
       </div>
     </div>
   );

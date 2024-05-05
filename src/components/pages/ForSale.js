@@ -48,7 +48,7 @@ const ForSale = () => {
         filterTerm={filterTerm}
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 overflow-y-auto">
-        {properties &&
+        {properties.length > 0 ? (
           properties.map((house, index) => (
             <div
               key={index}
@@ -73,7 +73,14 @@ const ForSale = () => {
                 </button>
               </div>
             </div>
-          ))}
+          ))
+        ) : (
+          <div className="flex flex-col p-3 items-center mx-auto justify-center text-center text-gray-500">
+            <h2 className="text-center text-3xl mx-auto">
+              No Property available
+            </h2>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -7,33 +7,32 @@ const Rentals = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTerm, setFilterTerm] = useState("");
   const [properties, setProperties] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const token = sessionStorage.getItem("access_token");
-    const fetchProperties = async (token) => {
+    const fetchProperties = async () => {
       try {
+        const token = sessionStorage.getItem("access_token");
+        if (!token) return;
+
         const res = await axios.get("/properties", {
-          Authorization: `Bearer ${token}`,
+          headers: { Authorization: `Bearer ${token}` },
         });
+
         if (res.status === 200) {
-          const data = await res.data;
-          setProperties(data);
+          setProperties(res.data);
         }
       } catch (error) {
         console.error("An error occurred:", error);
       }
     };
-    if (token) {
-      fetchProperties(token);
-    }
+
+    fetchProperties();
 
     return () => {
       setProperties([]);
     };
   }, []);
-
-  // Navigate to view house details
-  const navigate = useNavigate();
 
   const handleViewMore = (id) => {
     navigate(`/rentals/${id}`);
@@ -48,7 +47,7 @@ const Rentals = () => {
         filterTerm={filterTerm}
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 overflow-y-auto">
-        {properties &&
+        {properties.length > 0 ? (
           properties.map((house, index) => (
             <div
               key={index}
@@ -73,7 +72,14 @@ const Rentals = () => {
                 </button>
               </div>
             </div>
-          ))}
+          ))
+        ) : (
+          <div className="flex flex-col p-3 items-center mx-auto justify-center text-center text-gray-500">
+            <h2 className="text-center text-3xl mx-auto">
+              No Houses available
+            </h2>
+          </div>
+        )}
       </div>
     </div>
   );

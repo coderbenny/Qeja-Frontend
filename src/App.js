@@ -15,6 +15,7 @@ import RoomMates from "./components/pages/RoomMates";
 import Rentals from "./components/pages/Rentals";
 import NotFound from "./components/pages/NotFound";
 import HouseDetails from "./components/pages/HouseDetails";
+import UserProfile from "./components/pages/UserProfile";
 
 import { Route, Routes } from "react-router-dom";
 import RequireAuth from "./components/Auth/RequireAuth";
@@ -29,6 +30,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/discover" element={<Discover />} />
         <Route path="/community-chat" element={<CommChat />} />
+        <Route path="/profile" element={<UserProfile />} />
 
         {/* Protected routes */}
         <Route element={<RequireAuth />}>

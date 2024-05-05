@@ -1,25 +1,30 @@
 /* Example of using Roboto font in CSS */
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 /* Example of applying Roboto font to specific elements */
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Roboto', sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Roboto", sans-serif;
 }
 
 p {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 /* You can also specify different weights and styles */
 .bold-text {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 700; /* Bold */
 }
 
 .italic-text {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-style: italic;
 }
 
@@ -43,20 +48,47 @@ p {
   -webkit-text-fill-color: transparent;
 }
 
-
 .filter-grayscale {
   filter: grayscale(100%);
 }
 
 .home-sub {
   opacity: 0;
-  transition: opacity 1.0s ease-in-out;
+  transition: opacity 1s ease-in-out;
 }
 
 .home-sub.show {
   opacity: 1;
 }
 
-.header-bg{
+.header-bg {
   background: linear-gradient(90deg, #00aeff, #ff9100);
+}
+
+.rental-card {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.8
+  ); /* Set initial card background with opacity */
+  transition: background-color 0.3s ease; /* Add transition for smooth effect */
+}
+
+.rental-card:hover {
+  background-color: rgba(255, 255, 255, 1); /* Adjust brightness on hover */
+}
+
+.view-details-btn {
+  background-color: #222bd8;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Add transition for button hover effect */
+}
+
+.view-details-btn:hover {
+  background-color: #2f3fd7; /* Adjust button color on hover */
 }

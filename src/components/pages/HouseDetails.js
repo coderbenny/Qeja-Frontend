@@ -31,35 +31,37 @@ function HouseDetails() {
   return (
     <div
       className="mx-auto h-screen w-full py-20 px-2"
-      style={{
-        backgroundImage: `url(${process.env.PUBLIC_URL}/22.jpg)`,
-        backgroundSize: "cover",
-        backgroundAttachment: "fixed", // Make the background image fixed
-      }}
+      // style={{
+      //   backgroundImage: `url(${process.env.PUBLIC_URL}/22.jpg)`,
+      //   backgroundSize: "cover",
+      //   backgroundAttachment: "fixed", // Make the background image fixed
+      // }}
     >
-      <h1
-        className="text-white text-2xl mb-5 tracking-wide cursor-pointer ml-1"
-        onClick={handleBack}
-      >
-        Back
-      </h1>
-
-      <div className="p-2 grid grid-cols-1 md:grid-cols-2 md:gap-10 h-[580px]">
+      <div className="p-2 grid grid-cols-1 md:grid-cols-2  h-[580px]">
         <div className="w-full bg-white p-2">
           <img src={house.pic1} alt="house" className="h-[380px] w-full mb-2" />
           <div className="flex justify-between">
-            <img src={house.pic2} alt="house" className="h-[200px] w-[370px]" />
-            <img src={house.pic3} alt="house" className="h-[200px] w-[370px]" />
+            <img src={house.pic2} alt="house" className="h-[220px] w-[370px]" />
+            <img src={house.pic3} alt="house" className="h-[220px] w-[370px]" />
           </div>
         </div>
         <div className="flex flex-col justify-between bg-white p-2">
           <SubDetails house={house} />
-          <button
-            type="button"
-            className="p-1 hover:bg-blue-600 bg-slate-700 shadow-md text-white mt-auto"
-          >
-            Schedule Viewing
-          </button>
+          <div className="flex justify-between mt-auto gap-2">
+            <button
+              type="button"
+              className="p-1 hover:bg-blue-700 bg-slate-700 shadow-md w-[500px] text-white "
+            >
+              Schedule Viewing
+            </button>
+            <button
+              onClick={handleBack}
+              type="button"
+              className="p-1 hover:bg-blue-700 bg-slate-700 shadow-md w-[500px] text-white mt-auto"
+            >
+              Back
+            </button>
+          </div>
         </div>
       </div>
     </div>

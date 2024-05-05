@@ -30,6 +30,11 @@ function Header() {
 
   return (
     <div
+      style={{
+        backgroundImage: `url(${process.env.PUBLIC_URL}/edited.jpg)`,
+        backgroundSize: "cover",
+        backgroundAttachment: "fixed", // Make the background image fixed
+      }}
       className={`fixed top-0 z-50 w-full text-white flex items-center justify-between p-1 h-16 transition-all ${
         isScrolled ? "bg-blue-950" : "bg-transparent"
       }`}

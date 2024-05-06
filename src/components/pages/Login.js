@@ -62,6 +62,8 @@ function Login() {
         </h2>
         <input
           type="email"
+          autoComplete="off"
+          required
           name="email"
           placeholder="Email"
           onChange={handleInputChange}
@@ -69,6 +71,8 @@ function Login() {
         />
         <input
           type="password"
+          autoComplete="off"
+          required
           name="password"
           placeholder="Password"
           onChange={handleInputChange}

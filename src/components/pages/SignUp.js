@@ -50,6 +50,8 @@ function Signup() {
         </h2>
         <input
           type="text"
+          autoComplete="off"
+          required
           name="name"
           placeholder="Name"
           // autoComplete="off"
@@ -58,6 +60,8 @@ function Signup() {
         />
         <input
           type="email"
+          autoComplete="off"
+          required
           name="email"
           placeholder="Email"
           onChange={handleInputChange}
@@ -65,6 +69,8 @@ function Signup() {
         />
         <select
           name="role_id"
+          autoComplete="off"
+          required
           onChange={handleInputChange}
           value={formData.role_id}
           className="w-full px-3 py-2 mb-4 rounded-md bg-gray-200 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring focus:ring-blue-400"
@@ -78,6 +84,8 @@ function Signup() {
         </select>
         <input
           type="password"
+          autoComplete="off"
+          required
           name="password"
           placeholder="Password"
           onChange={handleInputChange}

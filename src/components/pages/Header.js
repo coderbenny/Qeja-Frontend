@@ -9,8 +9,11 @@ import {
   // FaComments,
 } from "react-icons/fa";
 import AuthButton from "../ui/AuthButton";
+import { VscFeedback } from "react-icons/vsc";
+import useAuth from "../hooks/useAuth";
 
 function Header() {
+  const { user } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -42,9 +45,10 @@ function Header() {
     >
       <NavLink
         to="/"
-        className="flex items-center ml-3 text-2xl tracking-wider cursor-pointer hover:text-blue-400"
+        className="flex items-center ml-3 text-xl tracking-wider cursor-pointer hover:text-blue-400"
       >
-        <MdOutlineMapsHomeWork className="" />
+        <MdOutlineMapsHomeWork className="mr-1" />
+        Qeja
       </NavLink>
       <div className="flex justify-between">
         <NavLink
@@ -60,10 +64,10 @@ function Header() {
           <FaUserFriends className="mr-1" /> Roommates
         </NavLink>
         <NavLink
-          to="/properties-for-sale"
+          to="/explore"
           className="flex items-center mr-5 hover:text-blue-300 cursor-pointer"
         >
-          <FaBuilding className="mr-1" /> Property For Sale
+          <VscFeedback className="mr-1" /> Explore
         </NavLink>
         {/* <NavLink
           to="/community-chat"
@@ -73,13 +77,18 @@ function Header() {
         </NavLink> */}
       </div>
       <div className="flex items-center">
-        <NavLink
-          to="/profile"
-          className="flex items-center font-semibold underline mr-3 p-1"
-        >
-          <ImProfile className="mr-1" />
-          Profile
-        </NavLink>
+        {user ? (
+          <NavLink
+            to="/profile"
+            className="flex items-center font-semibold underline mr-3 p-1"
+          >
+            <ImProfile className="mr-1" />
+            Profile
+          </NavLink>
+        ) : (
+          ""
+        )}
+
         <AuthButton />
       </div>
     </div>

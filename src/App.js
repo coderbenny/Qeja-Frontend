@@ -17,6 +17,7 @@ import NotFound from "./components/pages/NotFound";
 import HouseDetails from "./components/pages/HouseDetails";
 import UserProfile from "./components/pages/UserProfile";
 import OtherProfile from "./components/pages/OtherProfile";
+import Explore from "./components/pages/Explore";
 
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
@@ -50,6 +51,7 @@ function App() {
         <Route path="/discover" element={<Discover />} />
         <Route path="/community-chat" element={<CommChat />} />
         <Route path="/profile" element={<UserProfile />} />
+        <Route path="/explore" element={<Explore />} />
 
         {/* Protected routes */}
         <Route element={<RequireAuth />}>

@@ -2,24 +2,18 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 
-import axios from "../context/axios";
+// import axios from "../context/axios";
 import useAuth from "../hooks/useAuth";
 
 const LogoutButton = () => {
-  const { setAuth } = useAuth();
+  const { setUser, setAuth } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogout = async () => {
-    try {
-      const res = await axios.delete("/logout");
-      if (res.status === 200) {
-        setAuth("");
-        sessionStorage.removeItem("access_token");
-        navigate("/login");
-      }
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
+  const handleLogout = () => {
+    setAuth("");
+    setUser("");
+    sessionStorage.removeItem("access_token");
+    navigate("/login");
   };
 
   return (
@@ -34,10 +28,10 @@ const LogoutButton = () => {
 };
 
 function AuthButton() {
-  const { auth } = useAuth();
+  const { user } = useAuth();
   return (
     <div>
-      {auth ? (
+      {user ? (
         <LogoutButton />
       ) : (
         <NavLink

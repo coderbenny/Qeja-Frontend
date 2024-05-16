@@ -3,11 +3,11 @@ import HomeSub from "../ui/HomeSub";
 import ReactTypingFxDemo from "../ui/ReactTypingEffectDemo";
 import FAQ from "./FAQ";
 import { IoIosArrowDropdown, IoIosArrowDropup } from "react-icons/io";
-import useAuth from "../hooks/useAuth";
 import axios from "../context/axios";
+import useAuth from "../hooks/useAuth";
 
 function Home() {
-  const { auth, setAuth } = useAuth();
+  const { user, setUser } = useAuth();
   const [showHomeSub, setShowHomeSub] = useState(true);
 
   const handleReadMoreClick = () => {
@@ -28,7 +28,7 @@ function Home() {
 
           if (response.status === 200) {
             const data = response.data;
-            setAuth({
+            setUser({
               name: data.name,
               email: data.email,
               token: token,
@@ -46,12 +46,12 @@ function Home() {
       }
     };
 
-    if (!auth) {
+    if (!user) {
       getUser();
     }
   }, []);
 
-  // console.log(auth);
+  console.log(user);
 
   return (
     <>
@@ -71,8 +71,8 @@ function Home() {
         <div className="flex flex-col w-full items-center">
           <div className="flex px-2 w-[550px] mb-4 justify-between h-[30px] items-center border-2 border-teal-500 rounded-xl text-gray-300 p-1 text-sm">
             <p className="px-1 text-white tracking-wider">
-              {auth
-                ? `Welcome ${auth.name}`
+              {user
+                ? `Welcome ${user.name}`
                 : "Register today and be part of a wonderful society"}
             </p>
             <span

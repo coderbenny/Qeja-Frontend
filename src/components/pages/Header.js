@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { ImProfile } from "react-icons/im";
 import { MdOutlineMapsHomeWork } from "react-icons/md";
 import {
   FaHouseUser,
   FaUserFriends,
   FaBuilding,
-  FaComments,
+  // FaComments,
 } from "react-icons/fa";
 import AuthButton from "../ui/AuthButton";
 
@@ -64,14 +65,23 @@ function Header() {
         >
           <FaBuilding className="mr-1" /> Property For Sale
         </NavLink>
-        <NavLink
+        {/* <NavLink
           to="/community-chat"
           className="flex items-center mr-5 hover:text-blue-300 cursor-pointer"
         >
           <FaComments className="mr-1" /> Community Chat
-        </NavLink>
+        </NavLink> */}
       </div>
-      <AuthButton />
+      <div className="flex items-center">
+        <NavLink
+          to="/profile"
+          className="flex items-center font-semibold underline mr-3 p-1"
+        >
+          <ImProfile className="mr-1" />
+          Profile
+        </NavLink>
+        <AuthButton />
+      </div>
     </div>
   );
 }

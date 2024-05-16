@@ -1,27 +1,26 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 
 import axios from "../context/axios";
 import useAuth from "../hooks/useAuth";
 function Login() {
-
   const navigate = useNavigate();
-  const location = useLocation()
-  const from = location.state?.from?.pathname || "/"
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
-  const {setAuth} = useAuth()
+  const { setAuth } = useAuth();
 
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -32,17 +31,15 @@ function Login() {
       if (res.status === 200) {
         const data = await res.data;
         // console.log(data)
-        setAuth({"name":data.name,"email":formData.email, "access_token":data.access_token});
-        sessionStorage.setItem("access_token", data.access_token)
-        navigate(from, {replace: true})
+        setAuth({ access_token: data.access_token });
+        sessionStorage.setItem("access_token", data.access_token);
+        navigate(from, { replace: true });
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
-       
         // Unauthorized error (status code 401)
         setError("Wrong password");
       } else if (error.response && error.response.status === 404) {
-
         // Unauthorized error (status code 401)
         setError("User does not exist");
       } else {

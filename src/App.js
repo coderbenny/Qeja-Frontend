@@ -58,6 +58,7 @@ function App() {
           <Route path="/properties-for-sale" element={<ForSale />} />
           <Route path="/room-mates/:id" element={<MateByID />} />
           <Route path="/room-mates" element={<RoomMates />} />
+          <Route path="/profile" element={<UserProfile />} />
         </Route>
 
         <Route exact path="/" element={<Home />} />

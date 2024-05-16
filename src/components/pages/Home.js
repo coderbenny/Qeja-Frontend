@@ -39,7 +39,7 @@ function Home() {
             throw new Error("Unexpected response status: " + response.status);
           }
         } else {
-          throw new Error("Access token not found in sessionStorage");
+          throw new Error("User not logged in!");
         }
       } catch (error) {
         console.error("An error occurred:", error);

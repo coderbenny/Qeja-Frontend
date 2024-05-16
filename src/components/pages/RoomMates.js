@@ -46,7 +46,7 @@ const RoomMates = () => {
   const navigate = useNavigate();
 
   const handleViewMore = (id) => {
-    navigate(`/room-mates/${id}`);
+    navigate(`/profiles/${id}`);
   };
 
   return (
@@ -72,9 +72,6 @@ const RoomMates = () => {
               />
               <div className="p-4">
                 <h3 className="text-xl font-semibold mb-1">{roommate.name}</h3>
-                <p className="text-gray-700 mb-1">
-                  <b>Location:</b> {roommate.location}
-                </p>
                 <div className="flex justify-between">
                   <button className="view-details-btn hover:bg-blue-700 text-white py-2 px-4 rounded-md transition duration-300 ease-in-out">
                     View Profile

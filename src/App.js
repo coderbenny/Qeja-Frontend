@@ -16,11 +16,12 @@ import Rentals from "./components/pages/Rentals";
 import NotFound from "./components/pages/NotFound";
 import HouseDetails from "./components/pages/HouseDetails";
 import UserProfile from "./components/pages/UserProfile";
+import OtherProfile from "./components/pages/OtherProfile";
 
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import RequireAuth from "./components/Auth/RequireAuth";
-import MateByID from "./components/pages/MateByID";
+// import MateByID from "./components/pages/MateByID";
 import axios from "./components/context/axios";
 
 function App() {
@@ -56,8 +57,9 @@ function App() {
           <Route path="/rentals/:id" element={<HouseDetails />} />
           <Route path="/properties-for-sale/:id" element={<ForSaleByID />} />
           <Route path="/properties-for-sale" element={<ForSale />} />
-          <Route path="/room-mates/:id" element={<MateByID />} />
+          {/* <Route path="/room-mates/:id" element={<MateByID />} /> */}
           <Route path="/room-mates" element={<RoomMates />} />
+          <Route path="/profiles/:id" element={<OtherProfile />} />
           <Route path="/profile" element={<UserProfile />} />
         </Route>
 

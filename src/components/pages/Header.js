@@ -83,7 +83,7 @@ function Header() {
             className="flex items-center font-semibold underline mr-3 p-1"
           >
             <ImProfile className="mr-1" />
-            Profile
+            My Profile
           </NavLink>
         ) : (
           ""

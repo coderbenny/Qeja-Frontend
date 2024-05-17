@@ -1,15 +1,62 @@
 import React from "react";
+import { Routes, Route } from "react-router-dom";
+import FeedPost from "../ui/FeedPost";
+// import PostDetails from "../ui/PostDetails";
 
 function Explore() {
-  const posts = ["one", "two", "three", "four", "five"];
+  const posts = [
+    {
+      id: 1,
+      user: "Jane Doe",
+      body: "Latest houses in Nairobi",
+      pics: ["pic1", "pic2"],
+    },
+    {
+      id: 2,
+      user: "Sam Kent",
+      body: "Cheapest houses",
+      pics: ["pic1", "pic2"],
+    },
+    {
+      id: 3,
+      user: "Wendy Sandra",
+      body: "New apartments in nairobi west",
+      pics: ["pic1", "pic2", "pic3"],
+    },
+    {
+      id: 4,
+      user: "Sidney Martin",
+      body: "The newest houses",
+      pics: ["pic1", "pic2", "pic3"],
+    },
+    {
+      id: 5,
+      user: "Candy Jones",
+      body: "Projects that i have going on",
+      pics: ["pic1", "pic2", "pic3"],
+    },
+  ];
 
   return (
     <div className="p-10">
-      <h1 className="mt-10">Explore</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-1 bg-gray-200 h-[600px]">
-        <div className="bg-slate-900 w-3/4"></div>
-        <div className="bg-black"></div>
+      <div className="flex mt-20 h-[630px]">
+        <Routes>
+          <Route path="/" element={<Feed posts={posts} />} />
+        </Routes>
+
+        {/* Sidebar */}
+        <div className="border-2 border-gray-300 w-1/4 rounded-md"></div>
       </div>
+    </div>
+  );
+}
+
+function Feed({ posts }) {
+  return (
+    <div className="w-3/4 p-3 max-h-[630px] overflow-y-auto">
+      {posts.map((post, index) => (
+        <FeedPost key={index} post={post} />
+      ))}
     </div>
   );
 }

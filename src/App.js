@@ -18,6 +18,7 @@ import HouseDetails from "./components/pages/HouseDetails";
 import UserProfile from "./components/pages/UserProfile";
 import OtherProfile from "./components/pages/OtherProfile";
 import Explore from "./components/pages/Explore";
+import PostDetails from "./components/ui/PostDetails";
 
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
@@ -52,6 +53,7 @@ function App() {
         <Route path="/community-chat" element={<CommChat />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/explore" element={<Explore />} />
+        <Route path="/posts/:id" element={<PostDetails />} />
 
         {/* Protected routes */}
         <Route element={<RequireAuth />}>

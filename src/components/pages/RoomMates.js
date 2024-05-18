@@ -70,18 +70,18 @@ const RoomMates = () => {
                 alt={roommate.name}
                 className="w-full h-48 object-cover"
               />
-              <div className="p-4">
+              <div className="flex items-center p-4 justify-between">
                 <h3 className="text-xl font-semibold mb-1">{roommate.name}</h3>
                 <div className="flex justify-between">
                   <button className="view-details-btn hover:bg-blue-700 text-white py-2 px-4 rounded-md transition duration-300 ease-in-out">
                     View Profile
                   </button>
-                  <button
+                  {/* <button
                     disabled
                     className="view-details-btn hover:bg-blue-700 text-white py-2 px-4 rounded-md transition duration-300 ease-in-out"
                   >
                     Follow
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>

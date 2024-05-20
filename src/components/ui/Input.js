@@ -11,6 +11,8 @@ export default function BasicTextFields({ name }) {
       }}
       noValidate
       autoComplete="off"
+      name={name}
+      onChange={handleChange}
     >
       <TextField id="standard-basic" label={name} variant="standard" />
     </Box>

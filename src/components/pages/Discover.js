@@ -6,24 +6,24 @@ function Discover() {
   const discoveries = [
     {
       id: 1,
-      title: "Unlock the Potential of Your Property",
-      description:
-        "Transform your property into a lucrative asset with our innovative solutions. From attracting the right tenants to maximizing rental income, unlock the full potential of your property effortlessly.",
-      icon: <FaHome />,
-    },
-    {
-      id: 2,
       title: "Looking to Rent a House?",
       description:
         "Your search for the perfect rental ends here! Discover a curated selection of houses tailored to your preferences. Say goodbye to endless scrolling and hello to your dream home.",
       icon: <FaKey />,
     },
     {
-      id: 3,
+      id: 2,
       title: "Looking for the Perfect Roommate?",
       description:
         "Finding the ideal roommate just got easier! Say goodbye to awkward interviews and incompatible matches. Our platform connects you with like-minded individuals, ensuring harmonious living experiences.",
       icon: <FaUserFriends />,
+    },
+    {
+      id: 3,
+      title: "Unlock the Potential of Your Property",
+      description:
+        "Transform your property into a lucrative asset with our innovative solutions. From attracting the right tenants to maximizing rental income, unlock the full potential of your property effortlessly.",
+      icon: <FaHome />,
     },
     {
       id: 4,
@@ -33,6 +33,7 @@ function Discover() {
       icon: <FaComments />,
     },
   ];
+  p;
 
   return (
     <div

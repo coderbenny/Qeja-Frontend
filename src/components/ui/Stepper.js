@@ -15,80 +15,74 @@ import SelectInput from "./Select";
 const steps = [
   {
     label: "Enter your details",
-    description: (setUsername) => (
+    description: (formData, handleChange) => (
       <div className="w-[300px]">
         <Input
           name="username"
           label="Full Name"
-          onChange={(event) => {
-            setUsername(event.target.value);
-          }}
+          value={formData.username}
+          onChange={handleChange}
         />
         <Input
           name="email"
           label="Email"
-          onChange={(setEmail) => {
-            setEmail(event.target.value);
-          }}
+          value={formData.email}
+          onChange={handleChange}
         />
         <SelectInput
           name="role"
-          onChange={(setRole) => {
-            setRole(event.target.value);
-          }}
+          value={formData.role}
+          onChange={handleChange}
         />
         <TextArea
           name="bio"
           label="Bio"
-          onChange={(setBio) => {
-            setBio(event.target.value);
-          }}
+          value={formData.bio}
+          onChange={handleChange}
         />
       </div>
     ),
   },
   {
     label: "Create a password",
-    description: (setPassword) => (
+    description: (formData, handleChange) => (
       <div className="w-[300px]">
         <Input
           name="password"
           label="Password"
           type="password"
-          onChange={(setBio) => {
-            setPassword(event.target.value);
-          }}
+          value={formData.password}
+          onChange={handleChange}
         />
         <Input
           name="confirmPassword"
           label="Confirm Password"
           type="password"
-          onChange={(setConfirmPassword) => {
-            setConfirmPassword(event.target.value);
-          }}
+          value={formData.confirmPassword}
+          onChange={handleChange}
         />
       </div>
     ),
   },
   {
     label: "Review & Submit",
-    description: ({ username, email, bio, role }) => (
+    description: (formData) => (
       <div className="w-[300px]">
         <h3 className="">
           <b className="mr-2">Name:</b>
-          {username}
+          {formData.username}
         </h3>
         <p className="">
           <b className="mr-2">Email:</b>
-          {email}
+          {formData.email}
         </p>
         <p className="">
           <b className="mr-2">Bio:</b>
-          {bio}
+          {formData.bio}
         </p>
         <p className="">
           <b className="mr-2">Role:</b>
-          {role}
+          {formData.role}
         </p>
       </div>
     ),
@@ -96,12 +90,6 @@ const steps = [
 ];
 
 export default function VerticalLinearStepper() {
-  const [username, setUsername] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [role, setRole] = React.useState("");
-  const [bio, setBio] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [confirmPassword, setConfirmPassword] = React.useState("");
   const [formData, setFormData] = React.useState({
     username: "",
     email: "",
@@ -124,7 +112,7 @@ export default function VerticalLinearStepper() {
   const handleReset = () => {
     setActiveStep(0);
     setFormData({
-      fullName: "",
+      username: "",
       email: "",
       role: "",
       bio: "",
@@ -146,8 +134,8 @@ export default function VerticalLinearStepper() {
     try {
       const res = await axios.post("/users", formData);
       if (res.status === 201) {
-        e.target.reset();
-        alert("Sign Up succesfull");
+        alert("Sign Up successful");
+        handleReset();
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -160,7 +148,6 @@ export default function VerticalLinearStepper() {
     }
   };
 
-  console.log(formData);
   return (
     <div
       className="h-screen mt-0"
@@ -170,7 +157,7 @@ export default function VerticalLinearStepper() {
       }}
     >
       <div className="flex flex-col items-center bg-[rgba(255,255,255,0.6)] p-3 shadow-md w-[600px] mt-14 rounded-md justify-center mx-auto">
-        <h2 className="text-blue-500 text-3xl  font-bold mb-2">Get Started</h2>
+        <h2 className="text-blue-500 text-3xl font-bold mb-2">Get Started</h2>
         <p className="w-[350px] mb-2">
           Fill in your information below to sign up and begin your journey with
           us.
@@ -191,7 +178,7 @@ export default function VerticalLinearStepper() {
                 <StepContent>
                   <Typography>
                     {index < 2
-                      ? step.description(handleChange)
+                      ? step.description(formData, handleChange)
                       : step.description(formData)}
                   </Typography>
                   <Box sx={{ mb: 2 }}>
@@ -224,11 +211,16 @@ export default function VerticalLinearStepper() {
                 All steps completed - Click register to complete registration.
               </Typography>
               <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
-                Register
+                Reset
               </Button>
             </Paper>
           )}
         </Box>
+        {error && (
+          <Typography color="error" className="mt-2">
+            {error}
+          </Typography>
+        )}
       </div>
     </div>
   );

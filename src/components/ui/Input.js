@@ -11,10 +11,14 @@ export default function BasicTextFields({ name }) {
       }}
       noValidate
       autoComplete="off"
-      name={name}
-      onChange={handleChange}
+      // onChange={handleChange}
     >
-      <TextField id="standard-basic" label={name} variant="standard" />
+      <TextField
+        id="standard-basic"
+        label={name}
+        name={name}
+        variant="standard"
+      />
     </Box>
   );
 }

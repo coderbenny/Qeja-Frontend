@@ -41,9 +41,9 @@ function Explore() {
         </Routes>
 
         {/* Sidebar */}
-        <div className="text bg-white p-3 w-1/4 rounded-md">
-          <div className="flex flex-col border-2 border-blue-400 rounded-md shadow-md justify-center items-center text-center h-[150px] mb-5">
-            <h1 className="font-bold text-2xl text-blue-400">Some Information Here</h1>
+        <div className="text border-2 border-gray-600 p-3 w-1/4 rounded-md hiddden md:display-block">
+          <div className="flex flex-col bg-gray-400 rounded-md shadow-md justify-center items-center text-center h-[150px] mb-5">
+            <h1 className="font-bold text-4xl text-white">Some Information Here</h1>
           </div>
           <div className="flex flex-col gap-2 justify-between">
             <button type="button" className="p-2 bg-blue-500 text-white">Create Post</button>

@@ -16,53 +16,22 @@ function FeedPost({ post }) {
     navigate(`/explore/posts/${id}`);
   };
 
+  const handleViewProfile = (id)=>{
+    navigate(`/profiles/${id}`)
+  }
+
   return (
-    <div className="flex flex-col text-white max-h-[300px] ml-10 shadow-md mb-4 p-6 border-2 border-gray-300 rounded-md">
+    <div className="flex flex-col text-white max-h-[350px] ml-10 mr-4 bg-slate-950 shadow-md mb-4 p-6 border-2 border-gray-600 rounded-md">
       <div className="flex mb-1 justify-between">
-        <h3 className="font-semibold">{post.user}</h3>
+        <h3 onClick={handleViewProfile} className="font-semibold hover:underline cursor-pointer">{post.user}</h3>
         <MdSaveAlt className="w-6 h-6 mr-5 cursor-pointer" />
       </div>
       <p className="mb-2">{post.body}</p>
-      {/* <div className="flex gap-1 h-[200px] mb-2">
-        {post.img1 ? (
-          <img
-            src={img1}
-            alt={post.img1}
-            className="h-[150px] w-[300px] bg-gray-500 shadow-md"
-          />
-        ) : (
-          ""
-        )}
-        {post.img2 ? (
-          <img
-            src={img2}
-            alt={post.img2}
-            className="h-[150px] w-[300px] bg-gray-500 shadow-md"
-          />
-        ) : (
-          ""
-        )}
-        {post.img3 ? (
-          <img
-            src={img3}
-            alt={post.img3}
-            className="h-[150px] w-[300px] bg-gray-500 shadow-md"
-          />
-        ) : (
-          ""
-        )}
-
-        {/* {post.pics.length > 0
-          ? post.pics.map((pic, index) => (
-              <img
-                key={index}
-                src="example"
-                alt={post.pic}
-                className="h-[150px] w-[300px] bg-gray-500 shadow-md"
-              />
-            ))
-          : ""} */}
-      {/* </div> */}
+      <div className="grid grid-cols-1 md:grid-cols-3 mb-2">
+        <img src={post.img1} alt="post" className="h-[150px] w-[300px]"/>
+        <img src={post.img2} alt="post" className="h-[150px] w-[300px]"/>
+        <img src={post.img3} alt="post" className="h-[150px] w-[300px]"/>
+      </div>
       <div className="flex justify-between items-center">
         <div className="flex flex-col items-center cursor-pointer">
           <FaEye className="h-6 w-6" />
@@ -73,9 +42,9 @@ function FeedPost({ post }) {
           onClick={handleLike}
         >
           {liked ? (
-            <FcLikePlaceholder className="h-6 w-6" />
+           <FcLike className="h-6 w-6" />
           ) : (
-            <FcLike className="h-6 w-6" />
+            <FcLikePlaceholder className="h-6 w-6" />
           )}
           <p className="text-sm">100</p>
         </div>

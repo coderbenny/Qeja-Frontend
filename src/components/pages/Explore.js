@@ -1,44 +1,65 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import FeedPost from "../ui/FeedPost";
+import axios from "../context/axios";
 // import PostDetails from "../ui/PostDetails";
 
 function Explore() {
-  const posts = [
-    {
-      id: 1,
-      user: "Jane Doe",
-      body: "Latest houses in Nairobi",
-      pics: ["pic1", "pic2"],
-    },
-    {
-      id: 2,
-      user: "Sam Kent",
-      body: "Cheapest houses",
-      pics: ["pic1", "pic2"],
-    },
-    {
-      id: 3,
-      user: "Wendy Sandra",
-      body: "New apartments in nairobi west",
-      pics: ["pic1", "pic2", "pic3"],
-    },
-    {
-      id: 4,
-      user: "Sidney Martin",
-      body: "The newest houses",
-      pics: ["pic1", "pic2", "pic3"],
-    },
-    {
-      id: 5,
-      user: "Candy Jones",
-      body: "Projects that i have going on",
-      pics: ["pic1", "pic2", "pic3"],
-    },
-  ];
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const getPosts = async () => {
+      try {
+        const res = await axios.get("/posts");
+        if (res.status === 200) {
+          const data = res.data;
+          setPosts(data);
+        }
+      } catch (error) {
+        console.log("An error occurred:", error);
+      }
+    };
+
+    getPosts();
+  }, []);
+
+  console.log(posts);
+
+  // const posts = [
+  //   {
+  //     id: 1,
+  //     user: "Jane Doe",
+  //     body: "Latest houses in Nairobi",
+  //     pics: ["pic1", "pic2"],
+  //   },
+  //   {
+  //     id: 2,
+  //     user: "Sam Kent",
+  //     body: "Cheapest houses",
+  //     pics: ["pic1", "pic2"],
+  //   },
+  //   {
+  //     id: 3,
+  //     user: "Wendy Sandra",
+  //     body: "New apartments in nairobi west",
+  //     pics: ["pic1", "pic2", "pic3"],
+  //   },
+  //   {
+  //     id: 4,
+  //     user: "Sidney Martin",
+  //     body: "The newest houses",
+  //     pics: ["pic1", "pic2", "pic3"],
+  //   },
+  //   {
+  //     id: 5,
+  //     user: "Candy Jones",
+  //     body: "Projects that i have going on",
+  //     pics: ["pic1", "pic2", "pic3"],
+  //   },
+  // ];
 
   return (
-    <div className="p-10">
+    <div className="p-10 bg-slate-950 text=white">
       <div className="flex mt-20 h-[630px]">
         <Routes>
           <Route path="/" element={<Feed posts={posts} />} />
@@ -54,9 +75,9 @@ function Explore() {
 function Feed({ posts }) {
   return (
     <div className="w-3/4 p-3 max-h-[630px] overflow-y-auto">
-      {posts.map((post, index) => (
-        <FeedPost key={index} post={post} />
-      ))}
+      {posts
+        ? posts.map((post, index) => <FeedPost key={index} post={post} />)
+        : "Loading"}
     </div>
   );
 }

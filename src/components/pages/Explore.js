@@ -6,63 +6,38 @@ import axios from "../context/axios";
 
 function Explore() {
   const [posts, setPosts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(3); // Fixed number of posts per page
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getPosts = async () => {
       try {
-        const res = await axios.get("/posts");
+        setLoading(true);
+        const res = await axios.get(`/posts?page=${currentPage}&limit=${postsPerPage}`);
         if (res.status === 200) {
           const data = res.data;
-          setPosts(data);
+          setPosts(prevPosts => [...prevPosts, ...data]);
         }
       } catch (error) {
         console.log("An error occurred:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     getPosts();
-  }, []);
+  }, [currentPage]); // Trigger fetch when currentPage changes
 
-  console.log(posts);
-
-  // const posts = [
-  //   {
-  //     id: 1,
-  //     user: "Jane Doe",
-  //     body: "Latest houses in Nairobi",
-  //     pics: ["pic1", "pic2"],
-  //   },
-  //   {
-  //     id: 2,
-  //     user: "Sam Kent",
-  //     body: "Cheapest houses",
-  //     pics: ["pic1", "pic2"],
-  //   },
-  //   {
-  //     id: 3,
-  //     user: "Wendy Sandra",
-  //     body: "New apartments in nairobi west",
-  //     pics: ["pic1", "pic2", "pic3"],
-  //   },
-  //   {
-  //     id: 4,
-  //     user: "Sidney Martin",
-  //     body: "The newest houses",
-  //     pics: ["pic1", "pic2", "pic3"],
-  //   },
-  //   {
-  //     id: 5,
-  //     user: "Candy Jones",
-  //     body: "Projects that i have going on",
-  //     pics: ["pic1", "pic2", "pic3"],
-  //   },
-  // ];
+  const handleLoadMore = () => {
+    setCurrentPage(prevPage => prevPage + 1);
+  };
 
   return (
     <div className="p-10 bg-black text=white">
       <div className="flex mt-20 h-[630px]">
         <Routes>
-          <Route path="/" element={<Feed posts={posts} />} />
+          <Route path="/" element={<Feed posts={posts} loading={loading} onLoadMore={handleLoadMore} />} />
         </Routes>
 
         {/* Sidebar */}
@@ -71,8 +46,8 @@ function Explore() {
             <h1 className="font-bold text-2xl text-blue-400">Some Information Here</h1>
           </div>
           <div className="flex flex-col gap-2 justify-between">
-          <button type="button" className="p-2 bg-blue-500 text-white">Create Post</button>
-          <button type="button" className="p-2 bg-blue-500 text-white">Saved Posts</button>
+            <button type="button" className="p-2 bg-blue-500 text-white">Create Post</button>
+            <button type="button" className="p-2 bg-blue-500 text-white">Saved Posts</button>
           </div>
         </div>
       </div>
@@ -80,15 +55,17 @@ function Explore() {
   );
 }
 
-function Feed({ posts }) {
+function Feed({ posts, loading, onLoadMore }) {
   return (
     <div className="flex flex-col w-3/4 p-3 max-h-[630px] items-center">
-      <input className="font-bold mb-4 bg-transparent border-2 border-gray-500 text-white justify-center p-1 mx-auto rounded-md text-center w-[300px]" placeholder="Type here to search..." /> 
-    <div className="max-h-[600px] overflow-y-auto"> 
-      {posts
-        ? posts.map((post, index) => <FeedPost key={index} post={post} />)
-        : "Loading"}
-    </div>
+      <input className="font-bold mb-4 bg-transparent border-2 border-gray-500 text-white justify-center p-1 mx-auto rounded-md text-center w-[300px]" placeholder="Type here to search..." />
+      <div className="max-h-[600px] overflow-y-auto">
+        {posts && posts.length > 0
+          ? posts.map((post, index) => <FeedPost key={index} post={post} />)
+          : "No posts available"}
+      </div>
+      {loading && <div>Loading...</div>}
+      <button onClick={onLoadMore} className="mt-4 p-2 bg-blue-500 text-white">Load More</button>
     </div>
   );
 }

@@ -13,7 +13,7 @@ function FeedPost({ post }) {
   };
 
   const openPost = (id) => {
-    navigate(`/explore/posts/${id}`);
+    navigate(`/posts/${id}`);
   };
 
   const handleViewProfile = (id)=>{

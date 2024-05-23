@@ -1,10 +1,9 @@
 import React,{useState,useEffect} from "react";
-import {useParams, NavLink, useNavigate} from "react-router-dom";
+import {useParams, NavLink} from "react-router-dom";
 import axios from "../context/axios";
 import Comments from "./Comments";
 
 function PostDetails() {
-  const navigate=useNavigate()
   const{id}=useParams()
   const[post,setPost]=useState('')
 
@@ -23,9 +22,6 @@ function PostDetails() {
     getpost(id)
   },[])
 
-  const handleViewPost = (id)=>{
-    navigate(`/posts/${id}`)
-  }
 
   return (
     <div className="flex flex-col  p-10 items-center h-screen bg-black text-white">
@@ -38,9 +34,9 @@ function PostDetails() {
           <h3 className="font-bold ho ver:text-underline mb-2">{post.user}</h3>
           <h3 className="mb-2">{post.body}</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 mb-2">
-            <img onClick={()=>handleViewPost(post.id)} src={post.img1} alt="post" className="h-[200px] w-[350px] cursor-pointer"/>
-            <img onClick={()=>handleViewPost(post.id)} src={post.img2} alt="post" className="h-[200px] w-[350px] cursor-pointer"/>
-            <img onClick={()=>handleViewPost(post.id)} src={post.img3} alt="post" className="h-[200px] w-[350px] cursor-pointer"/>
+            <img src={post.img1} alt="post" className="h-[200px] w-[350px] cursor-pointer"/>
+            <img src={post.img2} alt="post" className="h-[200px] w-[350px] cursor-pointer"/>
+            <img src={post.img3} alt="post" className="h-[200px] w-[350px] cursor-pointer"/>
           </div>
         </div>
         <Comments/>

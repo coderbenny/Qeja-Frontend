@@ -34,14 +34,14 @@ function Explore() {
   };
 
   return (
-    <div className="p-10 bg-black text=white">
-      <div className="flex mt-20 h-[630px]">
+    <div className="p-10 bg-black text-white">
+      <div className="flex flex-col md:flex-row mt-20 h-auto">
         <Routes>
           <Route path="/" element={<Feed posts={posts} loading={loading} onLoadMore={handleLoadMore} />} />
         </Routes>
 
         {/* Sidebar */}
-        <div className="text border-2 border-gray-600 p-3 w-1/4 rounded-md hiddden md:display-block">
+        <div className="text border-2 border-gray-600 p-3 w-full md:w-1/4 rounded-md hidden md:block">
           <div className="flex flex-col bg-gray-400 rounded-md shadow-md justify-center items-center text-center h-[150px] mb-5">
             <h1 className="font-bold text-4xl text-white">Some Information Here</h1>
           </div>
@@ -57,7 +57,7 @@ function Explore() {
 
 function Feed({ posts, loading, onLoadMore }) {
   return (
-    <div className="flex flex-col w-3/4 p-3 max-h-[630px] items-center">
+    <div className="flex flex-col w-full md:w-3/4 p-3 max-h-[630px] items-center">
       <input className="font-bold mb-4 bg-transparent border-2 border-gray-500 text-white justify-center p-1 mx-auto rounded-md text-center w-[300px]" placeholder="Type here to search..." />
       <div className="max-h-[600px] overflow-y-auto">
         {posts && posts.length > 0

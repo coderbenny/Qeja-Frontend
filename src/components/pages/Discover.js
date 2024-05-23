@@ -33,7 +33,6 @@ function Discover() {
       icon: <FaComments />,
     },
   ];
-  p;
 
   return (
     <div

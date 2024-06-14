@@ -29,6 +29,7 @@ function Home() {
           if (response.status === 200) {
             const data = response.data;
             setUser({
+              id: data.id,
               name: data.name,
               email: data.email,
               token: token,

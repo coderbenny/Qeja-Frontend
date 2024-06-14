@@ -29,20 +29,20 @@ import axios from "./components/context/axios";
 
 function App() {
   // Activating render backend when user visits the website
-  useEffect(() => {
-    const activateBackend = async () => {
-      try {
-        const res = await axios.get("/");
-        if (res.status === 200) {
-          const data = await res.data;
-          console.log(data);
-        }
-      } catch (error) {
-        console.log("An error occured:", error);
-      }
-    };
-    activateBackend();
-  }, []);
+  // useEffect(() => {
+  //   const activateBackend = async () => {
+  //     try {
+  //       const res = await axios.get("/");
+  //       if (res.status === 200) {
+  //         const data = await res.data;
+  //         console.log(data);
+  //       }
+  //     } catch (error) {
+  //       console.log("An error occured:", error);
+  //     }
+  //   };
+  //   activateBackend();
+  // }, []);
 
   return (
     <div className="App">

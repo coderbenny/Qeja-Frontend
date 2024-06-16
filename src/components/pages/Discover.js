@@ -36,7 +36,7 @@ function Discover() {
 
   return (
     <div
-      className="p-3 bg-slate-700 h-screen"
+      className="p-3 bg-slate-700 h-full"
       style={{
         backgroundImage: `url(${process.env.PUBLIC_URL}/2.jpg)`,
         backgroundSize: "cover",

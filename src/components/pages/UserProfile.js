@@ -65,7 +65,7 @@ function UserProfile() {
 
             <div className="text-center items-center">
               <div className="flex items-center w-full justify-between">
-                <h2 className="font-bold text-2xl text-gray-800">
+                <h2 className="font-bold text-2xl text-gray-800 capitalize">
                   {user?.name || "Guest"}
                 </h2>
               </div>

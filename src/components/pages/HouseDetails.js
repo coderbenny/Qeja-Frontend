@@ -55,9 +55,9 @@ function HouseDetails() {
           <div className="flex justify-between mt-auto gap-2">
             <button
               type="button"
-              className="p-1 hover:bg-blue-700 bg-slate-700 shadow-md w-[500px] text-white"
+              className="p-1 hover:bg-blue-700 items-center bg-slate-700 shadow-md w-[500px] text-white"
             >
-              Schedule Viewing
+              Send Message
             </button>
             <button
               onClick={handleBack}

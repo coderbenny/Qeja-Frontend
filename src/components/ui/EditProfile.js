@@ -3,7 +3,7 @@ import axios from "../context/axios";
 import { AuthContext } from "../context/AuthContext";
 
 function EditProfile({ profile, setEditing, setProfile }) {
-  const { setUser } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
 
   const [name, setName] = useState(profile?.name || "");
   const [bio, setBio] = useState(profile?.bio || "");
@@ -14,7 +14,7 @@ function EditProfile({ profile, setEditing, setProfile }) {
     e.preventDefault();
 
     const updatedFields = {};
-    if (name !== profile?.name) updatedFields.name = name;
+    if (name !== user?.name) updatedFields.name = name;
     if (bio !== (profile?.bio || "")) updatedFields.bio = bio;
     if (location !== (profile?.location || ""))
       updatedFields.location = location;
@@ -28,7 +28,7 @@ function EditProfile({ profile, setEditing, setProfile }) {
     }
 
     try {
-      const user_id = profile.id;
+      const user_id = user.id;
       const res = await axios.patch(`/users/${user_id}`, updatedFields);
       if (res.status === 200) {
         const updatedProfile = res.data;

@@ -25,7 +25,8 @@ import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import RequireAuth from "./components/Auth/RequireAuth";
 // import MateByID from "./components/pages/MateByID";
-import axios from "./components/context/axios";
+// import axios from "./components/context/axios";
+import Dashboard from "./components/pages/Dashboard";
 
 function App() {
   // Activating render backend when user visits the website
@@ -67,6 +68,7 @@ function App() {
           <Route path="/room-mates" element={<RoomMates />} />
           <Route path="/profiles/:id" element={<OtherProfile />} />
           <Route path="/profile" element={<UserProfile />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Route>
 
         <Route exact path="/" element={<Home />} />

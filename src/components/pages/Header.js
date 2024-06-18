@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { ImProfile } from "react-icons/im";
 import { MdOutlineMapsHomeWork } from "react-icons/md";
+import MenuIcon from "@mui/icons-material/Menu";
+import MenuOpenIcon from "@mui/icons-material/MenuOpen";
+
 import {
   FaHouseUser,
   FaUserFriends,
@@ -15,15 +18,12 @@ import useAuth from "../hooks/useAuth";
 function Header() {
   const { user } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.pageYOffset;
-      if (scrollTop > 0) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(scrollTop > 0);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -31,6 +31,14 @@ function Header() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const handleOpenMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
 
   return (
     <div
@@ -50,33 +58,30 @@ function Header() {
         <MdOutlineMapsHomeWork className="mr-1" />
         Qeja
       </NavLink>
-      <div className="flex justify-between">
+      <div className="justify-between hidden md:flex">
         <NavLink
           to="/rentals"
           className="flex items-center mr-5 hover:text-blue-300 cursor-pointer"
+          onClick={closeMenu}
         >
           <FaHouseUser className="mr-1" /> Rentals
         </NavLink>
         <NavLink
           to="/room-mates"
           className="flex items-center mr-5 hover:text-blue-300 cursor-pointer"
+          onClick={closeMenu}
         >
           <FaUserFriends className="mr-1" /> Roommates
         </NavLink>
         <NavLink
           to="/explore"
           className="flex items-center mr-5 hover:text-blue-300 cursor-pointer"
+          onClick={closeMenu}
         >
           <VscFeedback className="mr-1" /> Explore
         </NavLink>
-        {/* <NavLink
-          to="/community-chat"
-          className="flex items-center mr-5 hover:text-blue-300 cursor-pointer"
-        >
-          <FaComments className="mr-1" /> Community Chat
-        </NavLink> */}
       </div>
-      <div className="flex items-center">
+      <div className="items-center hidden md:flex">
         {user ? (
           <NavLink
             to="/profile"
@@ -90,6 +95,51 @@ function Header() {
         )}
 
         <AuthButton />
+      </div>
+      <div className="md:hidden relative">
+        {menuOpen ? (
+          <MenuOpenIcon
+            onClick={handleOpenMenu}
+            className="mr-2 h-[30px] w-[30px] cursor-pointer"
+          />
+        ) : (
+          <MenuIcon
+            onClick={handleOpenMenu}
+            className="mr-2 h-[30px] w-[30px] cursor-pointer"
+          />
+        )}
+        {menuOpen && (
+          <div className="origin-top-right absolute right-0 mt-4 w-40 bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 animate-slide-down">
+            <NavLink
+              to="/profile"
+              className="block py-2 px-4 text-gray-800 hover:bg-gray-200 transition duration-200"
+              onClick={closeMenu}
+            >
+              My Profile
+            </NavLink>
+            <NavLink
+              to="/rentals"
+              className="block py-2 px-4 text-gray-800 hover:bg-gray-200 transition duration-200"
+              onClick={closeMenu}
+            >
+              Rentals
+            </NavLink>
+            <NavLink
+              to="/room-mates"
+              className="block py-2 px-4 text-gray-800 hover:bg-gray-200 transition duration-200"
+              onClick={closeMenu}
+            >
+              Roommates
+            </NavLink>
+            <NavLink
+              to="/explore"
+              className="block py-2 px-4 text-gray-800 hover:bg-gray-200 transition duration-200"
+              onClick={closeMenu}
+            >
+              Explore
+            </NavLink>
+          </div>
+        )}
       </div>
     </div>
   );

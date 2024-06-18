@@ -30,7 +30,7 @@ function SubDetails({ house, title }) {
           Click to share
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-3 gap-4 mb-6">
         <div className="flex flex-col bg-gray-800 text-white rounded-md p-4">
           <h3 className="font-semibold mb-2">Location</h3>
           <p className="text-sm">{house.location}</p>
@@ -41,7 +41,11 @@ function SubDetails({ house, title }) {
         </div>
         <div className="flex flex-col bg-gray-800 text-white rounded-md p-4">
           <h3 className="font-semibold mb-2">Price</h3>
-          <p className="text-sm">{house.for_rent ? `Ksh.${house.rent} Per Month` : `Ksh.${house.rent}`}</p>
+          <p className="text-sm">
+            {house.for_rent
+              ? `Ksh.${house.rent} Per Month`
+              : `Ksh.${house.rent}`}
+          </p>
         </div>
       </div>
 

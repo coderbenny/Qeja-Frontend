@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-function SwipeCard() {
+function SwipeCard({ img1, img2, img3 }) {
   const swiperRef = useRef(null);
 
   useEffect(() => {
@@ -31,39 +31,16 @@ function SwipeCard() {
   }, []);
 
   return (
-    <div className="swiper h-[150px] shadow-md top-0 md:h-[420px] w-full">
+    <div className="swiper h-[200px] shadow-md top-0 md:h-[420px] w-full">
       <div className="swiper-wrapper">
         <div className="swiper-slide relative">
-          <img
-            src="/counting-money.jpg"
-            alt="ladies meeting"
-            className="object-fit"
-          />
-          <h1 className="bg-white md:p-1 font-bold text-3xl text-gray-500 absolute bottom-4 left-0 right-0 text-center">
-            Chamas & Societies
-          </h1>
+          <img src={img1} alt="house1" className="object-fit" />
         </div>
-
         <div className="swiper-slide relative">
-          <img
-            src="/black-meeting.jpg"
-            alt="ladies meeting"
-            className="object-fit"
-          />
-          <h1 className="bg-white md:p-1 font-bold text-3xl text-gray-500 absolute bottom-4 left-0 right-0 text-center">
-            Loans
-          </h1>
+          <img src={img2} alt="house2" className="object-fit" />
         </div>
-
         <div className="swiper-slide relative">
-          <img
-            src="/lady-selfie.jpg"
-            alt="ladies meeting"
-            className="object-fit"
-          />
-          <h1 className="bg-white md:p-1 font-bold text-3xl text-gray-500 absolute bottom-4 left-0 right-0 text-center">
-            Financial Freedom
-          </h1>
+          <img src={img3} alt="house3" className="object-fit" />
         </div>
       </div>
 

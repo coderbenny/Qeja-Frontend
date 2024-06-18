@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import axios from "../context/axios";
 import SubDetails from "../ui/SubDetails";
+import SwipeCard from "../ui/SwipeCard";
 
 function HouseDetails() {
   const navigate = useNavigate();
@@ -32,23 +33,7 @@ function HouseDetails() {
     <div className="mx-auto h-screen w-full py-20 px-2">
       <div className="p-2 grid grid-cols-1 md:grid-cols-2 h-[580px]">
         <div className="w-full bg-white p-2">
-          <img
-            src={house.pic1}
-            alt="house"
-            className="h-[380px] w-full object-fill mb-2"
-          />
-          <div className="flex justify-between">
-            <img
-              src={house.pic2}
-              alt="house"
-              className="h-[220px] w-[370px] object-cover"
-            />
-            <img
-              src={house.pic3}
-              alt="house"
-              className="h-[220px] w-[370px] object-cover"
-            />
-          </div>
+          <SwipeCard img1={house.pic1} img2={house.pic2} img3={house.pic3} />
         </div>
         <div className="flex flex-col justify-between bg-white p-2">
           <SubDetails title="House" house={house} />

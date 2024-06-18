@@ -57,7 +57,7 @@ function HouseDetails() {
               type="button"
               className="p-1 hover:bg-blue-700 items-center bg-slate-700 shadow-md w-[500px] text-white"
             >
-              Send Message
+              View Contact
             </button>
             <button
               onClick={handleBack}

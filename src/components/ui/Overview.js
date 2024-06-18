@@ -37,9 +37,15 @@ export default function Overview() {
                 </select>
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-2 max-h-[170px] overflow-y-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 max-h-[170px] overflow-y-auto">
               {units.map((u, index) => (
-                <div key={index} className="h-[160px] w-full bg-white"></div>
+                <div
+                  key={index}
+                  className="bg-white rounded-lg shadow-md p-4 h-40 flex flex-col justify-center items-center hover:shadow-lg transition-shadow duration-200"
+                >
+                  <h4 className="font-bold">Unit {u}</h4>
+                  <p className="text-gray-500">Location {u}</p>
+                </div>
               ))}
             </div>
           </div>

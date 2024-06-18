@@ -54,24 +54,26 @@ function Home() {
     }
   }, []);
 
+  console.log(user);
+
   return (
     <>
       <div
-        className="flex flex-col items-center justify-center min-h-screen"
+        className="flex flex-col items-center justify-center h-screen"
         style={{
           backgroundImage: `url(${process.env.PUBLIC_URL}/edited.jpg)`,
           backgroundSize: "cover",
         }}
       >
-        <div className="h-[180px] sm:h-[300px]">
-          <h1 className="font-bold mt-20 text-gradient-2 shadow-md text-6xl sm:text-9xl typing-effect uppercase bg-slate-900 text-center">
+        <div className="h-[180px]">
+          <h1 className="font-bold text-gradient-2 shadow-md tracking-widest text-9xl typing-effect uppercase bg-slate-900">
             Qeja
           </h1>
           <ReactTypingFxDemo />
         </div>
-        <div className="flex flex-col w-full items-center px-4 sm:px-0">
-          <div className="flex w-full max-w-[550px] mb-4 justify-between h-[30px] items-center border-2 border-teal-500 rounded-xl text-gray-300 p-1 text-sm">
-            <p className="px-1 text-white tracking-wider text-center sm:text-left">
+        <div className="flex flex-col w-full items-center w-full">
+          <div className="flex px-2 w-[550px] mb-4 justify-between h-[30px] items-center border-2 border-teal-500 rounded-xl text-gray-300 p-1 text-sm">
+            <p className="px-1 text-white tracking-wider">
               {user
                 ? `Welcome ${user.name}`
                 : "Register today and be part of a wonderful society"}

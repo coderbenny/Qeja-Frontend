@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Filters from "../ui/Filter";
 import axios from "../context/axios";
+import HouseCard from "../ui/HouseCard";
 
 const Rentals = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTerm, setFilterTerm] = useState("");
   const [properties, setProperties] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -34,10 +33,6 @@ const Rentals = () => {
     };
   }, []);
 
-  const handleViewMore = (id) => {
-    navigate(`/rentals/${id}`);
-  };
-
   return (
     <div className="mx-auto w-full py-20 px-4 cursor-pointer bg-gray-100">
       <Filters
@@ -49,29 +44,7 @@ const Rentals = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 overflow-y-auto">
         {properties.length > 0 ? (
           properties.map((house, index) => (
-            <div
-              key={index}
-              className="rental-card bg-white rounded-md border-2 border-gray-200 overflow-hidden transition duration-300 ease-in-out transform hover:shadow-lg mb-1"
-              onClick={() => handleViewMore(house.id)}
-            >
-              <img
-                src={house.pic1}
-                alt={house.description}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="text-lg font-semibold mb-2">Property Name</h3>
-                <p className="text-gray-700 mb-1">
-                  <b>Location:</b> {house.location}
-                </p>
-                <p className="text-gray-700 mb-1">
-                  <b>Price:</b> Kes.{house.rent}
-                </p>
-                <button className="view-details-btn hover:bg-blue-700 text-white py-2 px-4 rounded-md transition duration-300 ease-in-out">
-                  View Details
-                </button>
-              </div>
-            </div>
+            <HouseCard key={index} house={house} />
           ))
         ) : (
           <div className="flex flex-col p-3 items-center mx-auto justify-center text-center text-gray-500">

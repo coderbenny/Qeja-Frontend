@@ -7,6 +7,7 @@ import { FaCamera } from "react-icons/fa";
 function OtherProfile() {
   const { id } = useParams();
   const [user, setUser] = useState("");
+  const [followed, setFollowed] = useState(false);
   console.log(user);
 
   useEffect(() => {
@@ -28,6 +29,47 @@ function OtherProfile() {
     };
     getUser(id);
   }, []);
+
+  const handleFollow = async () => {
+    const token = sessionStorage.getItem("access_token");
+    if (!followed) {
+      try {
+        const res = await axios.post(
+          `/follow/${user.id}`,
+          {},
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (res.status === 200) {
+          setFollowed(true);
+        }
+      } catch (error) {
+        alert("An error occured", error);
+      }
+    }
+    try {
+      const token = sessionStorage.getItem("access_token");
+      const res = await axios.post(
+        `/unfollow/${user.id}`,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (res.status === 200) {
+        setFollowed(false);
+      }
+    } catch (error) {
+      alert("An error occured");
+    }
+  };
 
   return (
     <div className="h-screen p-5">
@@ -56,8 +98,11 @@ function OtherProfile() {
           ) : (
             ""
           )} */}
-          <button className="p-1 w-full rounded-md bg-blue-600 shadow-sm hover:shadow-md text-white font-bold">
-            Follow
+          <button
+            onClick={() => handleFollow()}
+            className="p-1 w-full rounded-md bg-blue-600 shadow-sm hover:shadow-md text-white font-bold"
+          >
+            {followed ? "Unfollow" : "Follow"}
           </button>
         </div>
       </div>

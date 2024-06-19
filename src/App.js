@@ -25,24 +25,25 @@ import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import RequireAuth from "./components/Auth/RequireAuth";
 // import MateByID from "./components/pages/MateByID";
-import axios from "./components/context/axios";
+// import axios from "./components/context/axios";
+import Dashboard from "./components/pages/Dashboard";
 
 function App() {
   // Activating render backend when user visits the website
-  useEffect(() => {
-    const activateBackend = async () => {
-      try {
-        const res = await axios.get("/");
-        if (res.status === 200) {
-          const data = await res.data;
-          console.log(data);
-        }
-      } catch (error) {
-        console.log("An error occured:", error);
-      }
-    };
-    activateBackend();
-  }, []);
+  // useEffect(() => {
+  //   const activateBackend = async () => {
+  //     try {
+  //       const res = await axios.get("/");
+  //       if (res.status === 200) {
+  //         const data = await res.data;
+  //         console.log(data);
+  //       }
+  //     } catch (error) {
+  //       console.log("An error occured:", error);
+  //     }
+  //   };
+  //   activateBackend();
+  // }, []);
 
   return (
     <div className="App">
@@ -56,17 +57,18 @@ function App() {
         <Route path="/explore" element={<Explore />} />
         <Route path="/posts/:id" element={<PostDetails />} />
         <Route path="/get-started" element={<VerticalLinearStepper />} />
+        <Route path="/rentals" element={<Rentals />} />
+        <Route path="/rentals/:id" element={<HouseDetails />} />
 
         {/* Protected routes */}
         <Route element={<RequireAuth />}>
-          <Route path="/rentals" element={<Rentals />} />
-          <Route path="/rentals/:id" element={<HouseDetails />} />
           <Route path="/properties-for-sale/:id" element={<ForSaleByID />} />
           <Route path="/properties-for-sale" element={<ForSale />} />
           {/* <Route path="/room-mates/:id" element={<MateByID />} /> */}
           <Route path="/room-mates" element={<RoomMates />} />
           <Route path="/profiles/:id" element={<OtherProfile />} />
           <Route path="/profile" element={<UserProfile />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Route>
 
         <Route exact path="/" element={<Home />} />

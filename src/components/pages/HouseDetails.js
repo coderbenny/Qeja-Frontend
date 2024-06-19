@@ -3,8 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import axios from "../context/axios";
 import SubDetails from "../ui/SubDetails";
+import SwipeCard from "../ui/SwipeCard";
+import useAuth from "../hooks/useAuth";
 
 function HouseDetails() {
+  const { auth } = useAuth();
   const navigate = useNavigate();
   const [house, setHouse] = useState({});
   const id = useParams();
@@ -32,33 +35,26 @@ function HouseDetails() {
     <div className="mx-auto h-screen w-full py-20 px-2">
       <div className="p-2 grid grid-cols-1 md:grid-cols-2 h-[580px]">
         <div className="w-full bg-white p-2">
-          <img
-            src={house.pic1}
-            alt="house"
-            className="h-[380px] w-full object-fill mb-2"
-          />
-          <div className="flex justify-between">
-            <img
-              src={house.pic2}
-              alt="house"
-              className="h-[220px] w-[370px] object-cover"
-            />
-            <img
-              src={house.pic3}
-              alt="house"
-              className="h-[220px] w-[370px] object-cover"
-            />
-          </div>
+          <SwipeCard img1={house.pic1} img2={house.pic2} img3={house.pic3} />
         </div>
         <div className="flex flex-col justify-between bg-white p-2">
           <SubDetails title="House" house={house} />
           <div className="flex justify-between mt-auto gap-2">
-            <button
-              type="button"
-              className="p-1 hover:bg-blue-700 bg-slate-700 shadow-md w-[500px] text-white"
-            >
-              Schedule Viewing
-            </button>
+            {auth ? (
+              <button
+                type="button"
+                className="p-1 hover:bg-blue-700 items-center bg-slate-700 shadow-md w-[500px] text-white"
+              >
+                View Contact
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="p-1 hover:bg-blue-700 items-center bg-slate-700 shadow-md w-[500px] text-white"
+              >
+                Login to View Contact
+              </button>
+            )}
             <button
               onClick={handleBack}
               type="button"

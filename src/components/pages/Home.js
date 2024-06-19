@@ -29,6 +29,7 @@ function Home() {
           if (response.status === 200) {
             const data = response.data;
             setUser({
+              id: data.id,
               name: data.name,
               email: data.email,
               token: token,
@@ -70,7 +71,7 @@ function Home() {
           </h1>
           <ReactTypingFxDemo />
         </div>
-        <div className="flex flex-col w-full items-center">
+        <div className="flex flex-col w-full items-center w-full">
           <div className="flex px-2 w-[550px] mb-4 justify-between h-[30px] items-center border-2 border-teal-500 rounded-xl text-gray-300 p-1 text-sm">
             <p className="px-1 text-white tracking-wider">
               {user
@@ -78,7 +79,7 @@ function Home() {
                 : "Register today and be part of a wonderful society"}
             </p>
             <span
-              className="flex items-center font-semibold text-slate-950 px-2 juatify-center font-semibold cursor-pointer bg-teal-400 text-sm rounded-md"
+              className="flex items-center text-slate-950 px-2 juatify-center font-semibold cursor-pointer bg-teal-400 text-sm rounded-md"
               onClick={handleReadMoreClick}
             >
               {showHomeSub ? "See Less" : "See More"}{" "}

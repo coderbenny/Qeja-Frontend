@@ -4,8 +4,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "../context/axios";
 import SubDetails from "../ui/SubDetails";
 import SwipeCard from "../ui/SwipeCard";
+import useAuth from "../hooks/useAuth";
 
 function HouseDetails() {
+  const { auth } = useAuth();
   const navigate = useNavigate();
   const [house, setHouse] = useState({});
   const id = useParams();
@@ -38,12 +40,21 @@ function HouseDetails() {
         <div className="flex flex-col justify-between bg-white p-2">
           <SubDetails title="House" house={house} />
           <div className="flex justify-between mt-auto gap-2">
-            <button
-              type="button"
-              className="p-1 hover:bg-blue-700 items-center bg-slate-700 shadow-md w-[500px] text-white"
-            >
-              View Contact
-            </button>
+            {auth ? (
+              <button
+                type="button"
+                className="p-1 hover:bg-blue-700 items-center bg-slate-700 shadow-md w-[500px] text-white"
+              >
+                View Contact
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="p-1 hover:bg-blue-700 items-center bg-slate-700 shadow-md w-[500px] text-white"
+              >
+                Login to View Contact
+              </button>
+            )}
             <button
               onClick={handleBack}
               type="button"

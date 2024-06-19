@@ -57,11 +57,11 @@ function App() {
         <Route path="/explore" element={<Explore />} />
         <Route path="/posts/:id" element={<PostDetails />} />
         <Route path="/get-started" element={<VerticalLinearStepper />} />
+        <Route path="/rentals" element={<Rentals />} />
+        <Route path="/rentals/:id" element={<HouseDetails />} />
 
         {/* Protected routes */}
         <Route element={<RequireAuth />}>
-          <Route path="/rentals" element={<Rentals />} />
-          <Route path="/rentals/:id" element={<HouseDetails />} />
           <Route path="/properties-for-sale/:id" element={<ForSaleByID />} />
           <Route path="/properties-for-sale" element={<ForSale />} />
           {/* <Route path="/room-mates/:id" element={<MateByID />} /> */}

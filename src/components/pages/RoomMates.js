@@ -33,13 +33,13 @@ const RoomMates = () => {
       }
     };
 
-    if (token) {
-      fetchRoommates(token, auth);
-    }
+    // if (token) {
+    fetchRoommates();
+    // }
 
-    // return () => {
-    //   setRoommates([]);
-    // };
+    return () => {
+      setRoommates([]);
+    };
   }, []);
 
   // Navigate to view house details

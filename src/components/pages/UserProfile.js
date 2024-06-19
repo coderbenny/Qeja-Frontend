@@ -80,8 +80,8 @@ function UserProfile() {
                   <p className="text-gray-600">{profile?.following || "--"}</p>
                 </div>
               </div>
-              <div className="flex flex-col mb-2">
-                <p className="text-gray-700">{profile?.bio || ""}</p>
+              <div className="flex flex-col mb-2 w-[250px]">
+                <p className="text-left text-gray-700">{profile?.bio || ""}</p>
               </div>
             </div>
           </div>

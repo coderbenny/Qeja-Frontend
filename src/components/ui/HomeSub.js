@@ -20,7 +20,7 @@ function HomeSub() {
         {auth ? (
           <NavLink
             to="/dashboard"
-            className="w-full sm:w-auto p-3 rounded-md px-4 bg-blue-800 mb-2 sm:mb-0 sm:mr-4 hover:bg-blue-600"
+            className="w-full text-white sm:w-auto p-3 rounded-md px-4 bg-blue-800 mb-2 sm:mb-0 sm:mr-4 hover:bg-blue-600"
           >
             Dashboard
           </NavLink>

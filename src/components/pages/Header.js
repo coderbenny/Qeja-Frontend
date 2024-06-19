@@ -64,7 +64,7 @@ function Header() {
           className="flex items-center mr-5 hover:text-blue-300 cursor-pointer"
           onClick={closeMenu}
         >
-          <FaHouseUser className="mr-1" /> Rentals
+          <FaHouseUser className="mr-1" /> Properties
         </NavLink>
         <NavLink
           to="/room-mates"

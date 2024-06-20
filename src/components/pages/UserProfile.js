@@ -10,6 +10,8 @@ function UserProfile() {
   const [profile, setProfile] = useState({});
   const [editing, setEditing] = useState(false);
 
+  console.log(user);
+
   useEffect(() => {
     const getUserProfile = async () => {
       try {
@@ -40,6 +42,10 @@ function UserProfile() {
 
   const handleEditClick = () => {
     setEditing(true);
+  };
+
+  const handleuploadpic = async () => {
+    console.log("Handling picture upload.");
   };
 
   return (
@@ -73,11 +79,11 @@ function UserProfile() {
               <div className="flex mb-2">
                 <div className="text-center mr-5">
                   <h4 className="font-semibold text-gray-700">Followers</h4>
-                  <p className="text-gray-600">{profile?.followers || "--"}</p>
+                  <p className="text-gray-600">{user?.followers || "--"}</p>
                 </div>
                 <div className="text-center">
                   <h4 className="font-semibold text-gray-700">Following</h4>
-                  <p className="text-gray-600">{profile?.following || "--"}</p>
+                  <p className="text-gray-600">{user?.following || "--"}</p>
                 </div>
               </div>
               <div className="flex flex-col mb-2 w-[250px]">

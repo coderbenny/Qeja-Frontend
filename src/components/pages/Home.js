@@ -35,8 +35,8 @@ function Home() {
               token: token,
               role_id: data.role_id,
               profile: data.profile,
-              followers: data.followers,
-              following: data.following,
+              followers: data.followers.length,
+              following: data.followed.length,
             });
           } else {
             throw new Error("Unexpected response status: " + response.status);

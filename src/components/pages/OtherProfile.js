@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 // import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import axios from "../context/axios";
 import { FaCamera } from "react-icons/fa";
+import { AuthContext } from "../context/AuthContext";
 
 function OtherProfile() {
+  const { user } = useContext(AuthContext);
   const { id } = useParams();
-  const [user, setUser] = useState("");
+  const [mate, setMate] = useState("");
   const [followed, setFollowed] = useState(false);
-  console.log(user);
+  console.log(mate);
 
   useEffect(() => {
     const getUser = async (id) => {
@@ -21,7 +23,7 @@ function OtherProfile() {
         });
         if (res.status === 200) {
           const data = res.data;
-          setUser(data);
+          setMate(data);
         }
       } catch (error) {
         console.error("An error occured", error);
@@ -35,7 +37,7 @@ function OtherProfile() {
     if (!followed) {
       try {
         const res = await axios.post(
-          `/follow/${user.id}`,
+          `/follow/${mate.id}`,
           {},
           {
             headers: {
@@ -54,7 +56,7 @@ function OtherProfile() {
     try {
       const token = sessionStorage.getItem("access_token");
       const res = await axios.post(
-        `/unfollow/${user.id}`,
+        `/unfollow/${mate.id}`,
         {},
         {
           headers: {
@@ -79,25 +81,25 @@ function OtherProfile() {
         </div>
         <div className="text-center">
           <h2 className="font-bold text-center text-2xl">
-            {user ? user.name : "Guest"}
+            {mate ? mate.name : "Guest"}
           </h2>
           <div className="flex">
             <div className="text-center mr-5">
               <h4 className="font-semibold">Followers</h4>
-              <p className="">{user.followers ? user.followers : "--"}</p>
+              <p className="">{mate?.followers ? mate.followers : "--"}</p>
             </div>
             <div className="text-center">
               <h4 className="font-semibold">Following</h4>
-              <p className="">{user.following ? user.following : "--"}</p>
+              <p className="">{mate?.following ? mate.following : "--"}</p>
             </div>
           </div>
-          {/* {user.profile.bio ? (
-            <div className="flex flex-col">
-              <p className="">{user.profile.bio}</p>
+          {mate?.profile ? (
+            <div className="flex flex-col mb-1">
+              <p className="">{mate.profile.bio}</p>
             </div>
           ) : (
             ""
-          )} */}
+          )}
           <button
             onClick={() => handleFollow()}
             className="p-1 w-full rounded-md bg-blue-600 shadow-sm hover:shadow-md text-white font-bold"

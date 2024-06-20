@@ -44,6 +44,10 @@ function UserProfile() {
     setEditing(true);
   };
 
+  const handleuploadpic = async () => {
+    console.log("Handling picture upload.");
+  };
+
   return (
     <div className="h-full p-5 bg-gradient-to-r from-blue-500 to-indigo-600">
       {!editing ? (

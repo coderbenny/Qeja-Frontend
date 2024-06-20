@@ -138,6 +138,13 @@ function Header() {
             >
               Explore
             </NavLink>
+            <NavLink
+              to="/login"
+              className="block py-2 px-4 text-gray-800 hover:bg-gray-200 transition duration-200"
+              onClick={closeMenu}
+            >
+              Logout
+            </NavLink>
           </div>
         )}
       </div>

@@ -10,7 +10,7 @@ function OtherProfile() {
   const { id } = useParams();
   const [mate, setMate] = useState("");
   const [followed, setFollowed] = useState(false);
-  console.log(user);
+  console.log(mate);
 
   useEffect(() => {
     const getUser = async (id) => {

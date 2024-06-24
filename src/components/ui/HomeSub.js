@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
+// import useAuth from "../hooks/useAuth";
+import { AuthContext } from "../context/AuthContext";
 
 function HomeSub() {
-  const { auth } = useAuth();
+  // const { auth } = useAuth();
+  const { user } = useContext(AuthContext);
 
   return (
     <div className="w-full sm:max-w-[550px] text-center rounded-bl-md rounded-br-md p-4">
@@ -17,21 +19,20 @@ function HomeSub() {
         the process and connect you with like-minded individuals.
       </p>
       <div className="flex flex-col sm:flex-row items-center justify-center">
-        {auth ? (
+        {user?.role_id === 1 ? (
           <NavLink
             to="/dashboard"
             className="w-full text-white sm:w-auto p-3 rounded-md px-4 bg-blue-800 mb-2 sm:mb-0 sm:mr-4 hover:bg-blue-600"
           >
             Dashboard
           </NavLink>
-        ) : (
-          <NavLink
-            to="/signup"
-            className="w-full sm:w-auto p-3 rounded-md text-white px-4 bg-blue-800 mb-2 sm:mb-0 sm:mr-4 hover:bg-blue-600"
-          >
-            Get Started
-          </NavLink>
-        )}
+        ) : null}
+        {/* <NavLink
+          to="/signup"
+          className="w-full sm:w-auto p-3 rounded-md text-white px-4 bg-blue-800 mb-2 sm:mb-0 sm:mr-4 hover:bg-blue-600"
+        >
+          Get Started
+        </NavLink> */}
         <NavLink
           to="/discover"
           className="w-full sm:w-auto p-3 px-4 border-2 text-white border-blue-600 rounded-md hover:bg-blue-600"

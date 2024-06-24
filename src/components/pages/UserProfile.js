@@ -4,6 +4,7 @@ import useAuth from "../hooks/useAuth";
 import EditProfile from "../ui/EditProfile";
 import axios from "../context/axios";
 // import SwipeCard from "../ui/SwipeCard";
+import CustomTabPanel from "../ui/CustomTabPanel";
 
 function UserProfile() {
   const { user } = useAuth();
@@ -92,7 +93,7 @@ function UserProfile() {
             </div>
           </div>
           <div className="bg-gray-200 h-[250px] rounded-md w-full shadow-md p-4">
-            {/* <SwipeCard /> */}
+            <CustomTabPanel />
           </div>
         </div>
       ) : (

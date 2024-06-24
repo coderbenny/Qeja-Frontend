@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-// import { FaEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import axios from "../context/axios";
 import { FaCamera } from "react-icons/fa";
@@ -8,34 +7,44 @@ import { AuthContext } from "../context/AuthContext";
 function OtherProfile() {
   const { user } = useContext(AuthContext);
   const { id } = useParams();
-  const [mate, setMate] = useState("");
+  const [mate, setMate] = useState(null);
   const [followed, setFollowed] = useState(false);
-  console.log(mate);
+
+  // Helper function to check if user ID exists in followers array
+  const isUserFollowed = (followers, userId) => {
+    const followersSet = new Set(followers.map((follower) => follower.id));
+    return followersSet.has(userId);
+  };
 
   useEffect(() => {
     const getUser = async (id) => {
       try {
+        const token = sessionStorage.getItem("access_token");
         const res = await axios.get(`/users/${id}`, {
           headers: {
-            "Content-Application": "application/json",
-            Authorization: `Bearer {token}`,
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         });
         if (res.status === 200) {
           const data = res.data;
           setMate(data);
+          if (Array.isArray(data.followers)) {
+            const isFollowed = isUserFollowed(data.followers, user.id);
+            setFollowed(isFollowed);
+          }
         }
       } catch (error) {
-        console.error("An error occured", error);
+        console.error("An error occurred", error);
       }
     };
     getUser(id);
-  }, []);
+  }, [id, user.id]);
 
   const handleFollow = async () => {
     const token = sessionStorage.getItem("access_token");
-    if (!followed) {
-      try {
+    try {
+      if (!followed) {
         const res = await axios.post(
           `/follow/${mate.id}`,
           {},
@@ -48,30 +57,37 @@ function OtherProfile() {
         );
         if (res.status === 200) {
           setFollowed(true);
+          // Update followers count in the mate state
+          setMate((prevMate) => ({
+            ...prevMate,
+            followers: [...prevMate.followers, { id: user.id }],
+          }));
         }
-      } catch (error) {
-        alert("An error occured", error);
-      }
-    }
-    try {
-      const token = sessionStorage.getItem("access_token");
-      const res = await axios.post(
-        `/unfollow/${mate.id}`,
-        {},
-        {
+      } else {
+        const res = await axios.delete(`/unfollow/${mate.id}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
+        });
+        if (res.status === 200) {
+          setFollowed(false);
+          // Update followers count in the mate state
+          setMate((prevMate) => ({
+            ...prevMate,
+            followers: prevMate.followers.filter(
+              (follower) => follower.id !== user.id
+            ),
+          }));
         }
-      );
-      if (res.status === 200) {
-        setFollowed(false);
       }
     } catch (error) {
-      alert("An error occured");
+      alert("An error occurred", error);
     }
   };
+
+  console.log(mate);
+  console.log(user);
 
   return (
     <div className="h-screen p-5">
@@ -86,22 +102,20 @@ function OtherProfile() {
           <div className="flex">
             <div className="text-center mr-5">
               <h4 className="font-semibold">Followers</h4>
-              <p className="">{mate?.followers ? mate.followers : "--"}</p>
+              <p>{mate?.followers ? mate.followers.length : "--"}</p>
             </div>
             <div className="text-center">
               <h4 className="font-semibold">Following</h4>
-              <p className="">{mate?.following ? mate.following : "--"}</p>
+              <p>{mate?.following ? mate.following.length : "--"}</p>
             </div>
           </div>
-          {mate?.profile ? (
+          {mate?.profile && (
             <div className="flex flex-col mb-1">
-              <p className="">{mate.profile.bio}</p>
+              <p>{mate.profile.bio}</p>
             </div>
-          ) : (
-            ""
           )}
           <button
-            onClick={() => handleFollow()}
+            onClick={handleFollow}
             className="p-1 w-full rounded-md bg-blue-600 shadow-sm hover:shadow-md text-white font-bold"
           >
             {followed ? "Unfollow" : "Follow"}

@@ -10,7 +10,7 @@ export default function Overview() {
   };
 
   return (
-    <div className="">
+    <div className="px-4">
       <h1 className="font-bold text-xl mb-3 text-red-600">Overview</h1>
 
       <div className="">
@@ -20,7 +20,7 @@ export default function Overview() {
               Messages
             </h3>
             <div className="flex flex-col justify-center">
-              {user.received_messages.length > 0 ? (
+              {user?.received_messages.length > 0 ? (
                 user.received_messages.map((m, index) => (
                   <div
                     key={index}
@@ -46,14 +46,14 @@ export default function Overview() {
               <h3 className="font-bold text-lg text-center text-red-600">
                 My Units
               </h3>
-              <div className="flex bg-white p-1 rounded-md">
+              <div className="flex flex-wrap bg-white p-1 rounded-md">
                 <label className="items-center px-1">Filter By</label>
-                <select className="mr-2">
+                <select className="mr-2 mb-2 md:mb-0">
                   <option value="1">Rooms</option>
                   <option value="2">Yes</option>
                   <option value="3">No</option>
                 </select>
-                <select className="mr-2">
+                <select className="mr-2 mb-2 md:mb-0">
                   <option value="1">Balcony</option>
                   <option value="2">Yes</option>
                   <option value="3">No</option>

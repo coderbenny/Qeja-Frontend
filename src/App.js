@@ -25,25 +25,25 @@ import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import RequireAuth from "./components/Auth/RequireAuth";
 // import MateByID from "./components/pages/MateByID";
-// import axios from "./components/context/axios";
+import axios from "./components/context/axios";
 import Dashboard from "./components/pages/Dashboard";
 
 function App() {
   // Activating render backend when user visits the website
-  // useEffect(() => {
-  //   const activateBackend = async () => {
-  //     try {
-  //       const res = await axios.get("/");
-  //       if (res.status === 200) {
-  //         const data = await res.data;
-  //         console.log(data);
-  //       }
-  //     } catch (error) {
-  //       console.log("An error occured:", error);
-  //     }
-  //   };
-  //   activateBackend();
-  // }, []);
+  useEffect(() => {
+    const activateBackend = async () => {
+      try {
+        const res = await axios.get("/");
+        if (res.status === 200) {
+          const data = await res.data;
+          console.log(data);
+        }
+      } catch (error) {
+        console.log("An error occured:", error);
+      }
+    };
+    activateBackend();
+  }, []);
 
   return (
     <div className="App">

@@ -63,13 +63,13 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        Item One
+        Liked Posts
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Item Two
+        Followers
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        Item Three
+        Following
       </CustomTabPanel>
     </Box>
   );

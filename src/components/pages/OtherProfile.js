@@ -122,7 +122,7 @@ function OtherProfile() {
           </button>
         </div>
       </div>
-      <div className="bg-gray-400 h-[450px] rounded-md w-full"></div>
+      {/* <div className="bg-gray-400 h-[450px] rounded-md w-full"></div> */}
     </div>
   );
 }

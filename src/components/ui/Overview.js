@@ -43,7 +43,7 @@ export default function Overview() {
         <div className="bg-gray-200 h-[230px] w-full">
           <div className="p-2">
             <div className="flex justify-between mb-2">
-              <h3 className="font-bold text-lg text-center text-blue-600">
+              <h3 className="font-bold text-lg text-center text-red-600">
                 My Units
               </h3>
               <div className="flex bg-white p-1 rounded-md">

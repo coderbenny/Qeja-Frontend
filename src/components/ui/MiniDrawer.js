@@ -17,13 +17,13 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-// import InboxIcon from "@mui/icons-material/MoveToInbox";
 import HomeIcon from "@mui/icons-material/Home";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import EmailIcon from "@mui/icons-material/Email";
 import SummarizeIcon from "@mui/icons-material/Summarize";
 import Overview from "./Overview";
+import AddProperty from "../pages/AddProperty";
 
 const drawerWidth = 240;
 
@@ -144,7 +144,7 @@ export default function MiniDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
-          {["Overview", "Inbox", "Properties", "Analytics"].map(
+          {["Overview", "Inbox", "Add Property", "Analytics"].map(
             (text, index) => (
               <ListItem key={text} disablePadding sx={{ display: "block" }}>
                 <ListItemButton
@@ -163,7 +163,7 @@ export default function MiniDrawer() {
                   >
                     {text === "Overview" && <SummarizeIcon />}
                     {text === "Inbox" && <EmailIcon />}
-                    {text === "Properties" && <HomeIcon />}
+                    {text === "Add Property" && <HomeIcon />}
                     {text === "Analytics" && <BarChartIcon />}
                   </ListItemIcon>
                   <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
@@ -176,7 +176,8 @@ export default function MiniDrawer() {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <Overview />
+        {/* <Overview /> */}
+        <AddProperty />
       </Box>
     </Box>
   );

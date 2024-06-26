@@ -84,7 +84,9 @@ export default function Overview() {
                   </div>
                 ))
               ) : (
-                <p className="font-semibold">No Properties available</p>
+                <p className="font-semibold text-gray-500">
+                  No Properties available
+                </p>
               )}
             </div>
           </div>

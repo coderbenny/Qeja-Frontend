@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import axios from "../context/axios";
 import { AuthContext } from "../context/AuthContext";
+import { storage } from "../context/Firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 function EditProfile({ profile, setEditing, setProfile }) {
   const { user, setUser } = useContext(AuthContext);
@@ -9,9 +11,29 @@ function EditProfile({ profile, setEditing, setProfile }) {
   const [bio, setBio] = useState(profile?.bio || "");
   const [location, setLocation] = useState(profile?.location || "");
   const [profilePic, setProfilePic] = useState(profile?.profile_pic || "");
+  const [imageFile, setImageFile] = useState(null); // To store the selected image file
+
+  const handleFileChange = (e) => {
+    if (e.target.files[0]) {
+      setImageFile(e.target.files[0]);
+    }
+  };
 
   const handleSave = async (e) => {
     e.preventDefault();
+
+    // If imageFile is set, upload it to Firebase Storage
+    if (imageFile) {
+      const storageRef = ref(storage, `profiles/${imageFile.name}`);
+      try {
+        await uploadBytes(storageRef, imageFile);
+        const downloadURL = await getDownloadURL(storageRef);
+        setProfilePic(downloadURL);
+      } catch (error) {
+        console.error("An error occurred while uploading image:", error);
+        throw error;
+      }
+    }
 
     const updatedFields = {};
     if (name !== user?.name) updatedFields.name = name;
@@ -73,11 +95,12 @@ function EditProfile({ profile, setEditing, setProfile }) {
               value={location}
               onChange={(e) => setLocation(e.target.value)}
             />
-            <label className="mb-2 text-gray-600">Profile Picture URL</label>
+            <label className="mb-2 text-gray-600">Profile Picture</label>
             <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
               className="mb-4 p-2 border-2 border-gray-300 rounded-md"
-              value={profilePic}
-              onChange={(e) => setProfilePic(e.target.value)}
             />
             <div className="flex justify-between">
               <button

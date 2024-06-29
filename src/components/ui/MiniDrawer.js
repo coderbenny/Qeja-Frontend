@@ -1,6 +1,5 @@
 import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
-import { NavLink } from "react-router-dom";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
@@ -22,8 +21,11 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import EmailIcon from "@mui/icons-material/Email";
 import SummarizeIcon from "@mui/icons-material/Summarize";
+
 import Overview from "./Overview";
 import AddProperty from "../pages/AddProperty";
+import Inbox from "./Inbox";
+import Analytics from "./Analytics";
 
 const drawerWidth = 240;
 
@@ -53,7 +55,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "flex-end",
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
 
@@ -95,6 +96,7 @@ const Drawer = styled(MuiDrawer, {
 export default function MiniDrawer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [selectedComponent, setSelectedComponent] = React.useState("Overview");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -102,6 +104,21 @@ export default function MiniDrawer() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const renderComponent = () => {
+    switch (selectedComponent) {
+      case "Overview":
+        return <Overview />;
+      case "Inbox":
+        return <Inbox />;
+      case "Add Property":
+        return <AddProperty />;
+      case "Analytics":
+        return <Analytics />;
+      default:
+        return <Overview />;
+    }
   };
 
   return (
@@ -124,12 +141,10 @@ export default function MiniDrawer() {
           <Typography variant="h6" noWrap component="div">
             Dashboard
           </Typography>
-          <NavLink to="/" style={{ color: "inherit", textDecoration: "none" }}>
-            <IconButton color="inherit">
-              <ArrowBackIcon />
-              Back
-            </IconButton>
-          </NavLink>
+          <IconButton color="inherit" component="a" href="/">
+            <ArrowBackIcon />
+            Back
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -144,40 +159,47 @@ export default function MiniDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
-          {["Overview", "Inbox", "Add Property", "Analytics"].map(
-            (text, index) => (
-              <ListItem key={text} disablePadding sx={{ display: "block" }}>
-                <ListItemButton
+          {[
+            { text: "Overview", icon: <SummarizeIcon /> },
+            { text: "Inbox", icon: <EmailIcon /> },
+            { text: "Add Property", icon: <HomeIcon /> },
+            { text: "Analytics", icon: <BarChartIcon /> },
+          ].map((item) => (
+            <ListItem
+              key={item.text}
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => setSelectedComponent(item.text)}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
                   sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
                   }}
                 >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {text === "Overview" && <SummarizeIcon />}
-                    {text === "Inbox" && <EmailIcon />}
-                    {text === "Add Property" && <HomeIcon />}
-                    {text === "Analytics" && <BarChartIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                </ListItemButton>
-              </ListItem>
-            )
-          )}
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText
+                  primary={item.text}
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+          ))}
         </List>
         <Divider />
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        {/* <Overview /> */}
-        <AddProperty />
+        {renderComponent()}
       </Box>
     </Box>
   );

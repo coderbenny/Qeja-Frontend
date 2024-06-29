@@ -1,3 +1,8 @@
+import { storage } from "../context/Firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import axios from "../context/axios";
+import { AuthContext } from "../context/AuthContext";
+
 import * as React from "react";
 import {
   Box,
@@ -57,8 +62,12 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 const steps = ["Location & Description", "Amenities", "Additional Details"];
 
 export default function AddProperty() {
+  const { user } = React.useContext(AuthContext);
   const [activeStep, setActiveStep] = React.useState(0);
   const [amenities, setAmenities] = React.useState({
+    location: "",
+    description: "",
+    rent: "",
     wifi: "",
     gated: "",
     hot_shower: "",
@@ -66,12 +75,12 @@ export default function AddProperty() {
     balcony: "",
     parking: "",
     available: "",
+    rooms: "",
+    user_id: user.id,
   });
-  const [images, setImages] = React.useState({
-    image1: null,
-    image2: null,
-    image3: null,
-  });
+
+  const [images, setImages] = React.useState({});
+  const [loading, setLoading] = React.useState(false);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -81,39 +90,75 @@ export default function AddProperty() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleToggleChange = (event, newValue, name) => {
-    setAmenities({ ...amenities, [name]: newValue });
+  const handleToggleChange = (event, newValue, amenityKey) => {
+    if (newValue !== null) {
+      setAmenities({ ...amenities, [amenityKey]: newValue === "true" });
+    }
   };
 
-  const handleImageChange = (event, imageName) => {
+  const handleImageChange = (event) => {
     const file = event.target.files[0];
-    setImages({ ...images, [imageName]: file });
+    const name = event.target.name;
+    if (file) {
+      setImages((prevImages) => ({ ...prevImages, [name]: file }));
+    }
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission
-    const formData = new FormData();
-    formData.append("location", event.target.location.value);
-    formData.append("description", event.target.description.value);
-    formData.append("image1", images.image1);
-    formData.append("image2", images.image2);
-    formData.append("image3", images.image3);
-    // Add more form data as needed
+  const handleUploadImages = async () => {
+    const imageUrls = {};
 
-    // Example of sending formData to a backend
-    // fetch("/api/property", {
-    //   method: "POST",
-    //   body: formData,
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //   console.log("Success:", data);
-    // })
-    // .catch(error => {
-    //   console.error("Error:", error);
-    // });
+    for (const [imageName, imageFile] of Object.entries(images)) {
+      if (!imageFile) continue;
+      const storageRef = ref(storage, `images/${imageFile.name}`);
+      try {
+        await uploadBytes(storageRef, imageFile);
+        const downloadURL = await getDownloadURL(storageRef);
+        imageUrls[imageName] = downloadURL;
+      } catch (error) {
+        console.error("An error occurred while uploading images:", error);
+        throw error;
+      }
+    }
+    return imageUrls;
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const token = sessionStorage.getItem("access_token");
+    try {
+      const imageUrls = await handleUploadImages();
+      const updatedAmenities = {
+        ...amenities,
+        rooms: parseInt(amenities.rooms),
+        pic1: imageUrls["img1"],
+        pic2: imageUrls["img2"],
+        pic3: imageUrls["img3"],
+      };
+      const res = await axios.post("/properties", updatedAmenities, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res.status === 201) {
+        alert("Property Added Successfully");
+      }
+    } catch (error) {
+      alert("An error occurred while adding the property.");
+      console.error("An error occurred:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setAmenities({ ...amenities, [name]: value });
+  };
+
+  console.log(images);
+  console.log(amenities);
 
   return (
     <BackgroundContainer>
@@ -135,6 +180,9 @@ export default function AddProperty() {
                         label="Property Location"
                         name="location"
                         required
+                        onChange={(event) =>
+                          handleInputChange(event, "location")
+                        }
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -143,8 +191,8 @@ export default function AddProperty() {
                         fullWidth
                         type="file"
                         InputLabelProps={{ shrink: true }}
-                        onChange={(event) => handleImageChange(event, "image1")}
-                        name="image1"
+                        onChange={(event) => handleImageChange(event, "img1")}
+                        name="img1"
                         required
                       />
                     </Grid>
@@ -154,8 +202,8 @@ export default function AddProperty() {
                         fullWidth
                         type="file"
                         InputLabelProps={{ shrink: true }}
-                        onChange={(event) => handleImageChange(event, "image2")}
-                        name="image2"
+                        onChange={(event) => handleImageChange(event, "img2")}
+                        name="img2"
                         required
                       />
                     </Grid>
@@ -165,8 +213,8 @@ export default function AddProperty() {
                         fullWidth
                         type="file"
                         InputLabelProps={{ shrink: true }}
-                        onChange={(event) => handleImageChange(event, "image3")}
-                        name="image3"
+                        onChange={(event) => handleImageChange(event, "img3")}
+                        name="img3"
                         required
                       />
                     </Grid>
@@ -179,6 +227,9 @@ export default function AddProperty() {
                         multiline
                         rows={4}
                         required
+                        onChange={(event) =>
+                          handleInputChange(event, "description")
+                        }
                       />
                     </Grid>
                   </Grid>
@@ -202,66 +253,66 @@ export default function AddProperty() {
                     <Grid item xs={12}>
                       <Typography variant="h6">WiFi</Typography>
                       <ToggleButtonGroup
-                        value={amenities.wifi}
+                        value={amenities.wifi.toString()}
                         exclusive
                         onChange={(event, newValue) =>
                           handleToggleChange(event, newValue, "wifi")
                         }
                       >
-                        <ToggleButton value="yes">Yes</ToggleButton>
-                        <ToggleButton value="no">No</ToggleButton>
+                        <ToggleButton value="true">Yes</ToggleButton>
+                        <ToggleButton value="false">No</ToggleButton>
                       </ToggleButtonGroup>
                     </Grid>
                     <Grid item xs={12}>
                       <Typography variant="h6">Gated</Typography>
                       <ToggleButtonGroup
-                        value={amenities.gated}
+                        value={amenities.gated.toString()}
                         exclusive
                         onChange={(event, newValue) =>
                           handleToggleChange(event, newValue, "gated")
                         }
                       >
-                        <ToggleButton value="yes">Yes</ToggleButton>
-                        <ToggleButton value="no">No</ToggleButton>
+                        <ToggleButton value="true">Yes</ToggleButton>
+                        <ToggleButton value="false">No</ToggleButton>
                       </ToggleButtonGroup>
                     </Grid>
                     <Grid item xs={12}>
                       <Typography variant="h6">Hot Shower</Typography>
                       <ToggleButtonGroup
-                        value={amenities.hot_shower}
+                        value={amenities.hot_shower.toString()}
                         exclusive
                         onChange={(event, newValue) =>
                           handleToggleChange(event, newValue, "hot_shower")
                         }
                       >
-                        <ToggleButton value="yes">Yes</ToggleButton>
-                        <ToggleButton value="no">No</ToggleButton>
+                        <ToggleButton value="true">Yes</ToggleButton>
+                        <ToggleButton value="false">No</ToggleButton>
                       </ToggleButtonGroup>
                     </Grid>
                     <Grid item xs={12}>
                       <Typography variant="h6">Kitchen</Typography>
                       <ToggleButtonGroup
-                        value={amenities.kitchen}
+                        value={amenities.kitchen.toString()}
                         exclusive
                         onChange={(event, newValue) =>
                           handleToggleChange(event, newValue, "kitchen")
                         }
                       >
-                        <ToggleButton value="yes">Yes</ToggleButton>
-                        <ToggleButton value="no">No</ToggleButton>
+                        <ToggleButton value="true">Yes</ToggleButton>
+                        <ToggleButton value="false">No</ToggleButton>
                       </ToggleButtonGroup>
                     </Grid>
                     <Grid item xs={12}>
                       <Typography variant="h6">Balcony</Typography>
                       <ToggleButtonGroup
-                        value={amenities.balcony}
+                        value={amenities.balcony.toString()}
                         exclusive
                         onChange={(event, newValue) =>
                           handleToggleChange(event, newValue, "balcony")
                         }
                       >
-                        <ToggleButton value="yes">Yes</ToggleButton>
-                        <ToggleButton value="no">No</ToggleButton>
+                        <ToggleButton value="true">Yes</ToggleButton>
+                        <ToggleButton value="false">No</ToggleButton>
                       </ToggleButtonGroup>
                     </Grid>
                   </Grid>
@@ -289,35 +340,48 @@ export default function AddProperty() {
                       <StyledTextField
                         variant="outlined"
                         fullWidth
-                        label="Rent"
+                        label="Rent per Month"
                         name="rent"
+                        type="number"
                         required
+                        onChange={(event) => handleInputChange(event, "number")}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <StyledTextField
+                        variant="outlined"
+                        fullWidth
+                        label="Rooms"
+                        name="rooms"
+                        type="number"
+                        required
+                        onChange={(event) => handleInputChange(event, "rooms")}
                       />
                     </Grid>
                     <Grid item xs={12}>
                       <Typography variant="h6">Parking</Typography>
                       <ToggleButtonGroup
-                        value={amenities.parking}
+                        value={amenities.parking.toString()}
                         exclusive
                         onChange={(event, newValue) =>
                           handleToggleChange(event, newValue, "parking")
                         }
                       >
-                        <ToggleButton value="yes">Yes</ToggleButton>
-                        <ToggleButton value="no">No</ToggleButton>
+                        <ToggleButton value="true">Yes</ToggleButton>
+                        <ToggleButton value="false">No</ToggleButton>
                       </ToggleButtonGroup>
                     </Grid>
                     <Grid item xs={12}>
                       <Typography variant="h6">Available</Typography>
                       <ToggleButtonGroup
-                        value={amenities.available}
+                        value={amenities.available.toString()}
                         exclusive
                         onChange={(event, newValue) =>
                           handleToggleChange(event, newValue, "available")
                         }
                       >
-                        <ToggleButton value="yes">Yes</ToggleButton>
-                        <ToggleButton value="no">No</ToggleButton>
+                        <ToggleButton value="true">Yes</ToggleButton>
+                        <ToggleButton value="false">No</ToggleButton>
                       </ToggleButtonGroup>
                     </Grid>
                   </Grid>
@@ -328,7 +392,7 @@ export default function AddProperty() {
                         variant="contained"
                         sx={{ mt: 1, mr: 1 }}
                       >
-                        Submit
+                        {loading ? "Please Wait..." : "Add Property"}
                       </Button>
                       <Button onClick={handleBack} sx={{ mt: 1, mr: 1 }}>
                         Back

@@ -1,12 +1,24 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import axios from "../context/axios";
 
 export default function Overview() {
   const { user } = useContext(AuthContext);
 
-  const handleDelete = (propertyId) => {
-    // Add your delete logic here
-    console.log("Delete property with ID:", propertyId);
+  const handleDelete = (id) => {
+    const token = sessionStorage.getItem("access_token");
+    try {
+      const res = axios.delete(`/properties/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res.status === 204) {
+        alert("property deleted succesfully");
+      }
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return (

@@ -3,28 +3,32 @@ import { AuthContext } from "../context/AuthContext";
 import axios from "../context/axios";
 
 export default function Overview() {
-  const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     const token = sessionStorage.getItem("access_token");
     try {
-      const res = axios.delete(`/properties/${id}`, {
+      const res = await axios.delete(`/properties/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       if (res.status === 204) {
-        alert("property deleted succesfully");
+        alert("Property deleted successfully");
+        // Update user state by removing the deleted property
+        const updatedProperties = user.properties.filter(
+          (property) => property.id !== id
+        );
+        setUser({ ...user, properties: updatedProperties });
       }
     } catch (error) {
-      alert(error);
+      alert("Failed to delete property: " + error);
     }
   };
 
   return (
     <div className="px-4">
       <h1 className="font-bold text-xl mb-3 text-red-600">Overview</h1>
-
       <div className="">
         <div className="flex flex-col md:flex-row gap-2 mb-3">
           <div className="rounded-md bg-gray-200 h-[200px] w-full mb-2 md:mb-0">

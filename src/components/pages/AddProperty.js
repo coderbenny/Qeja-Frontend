@@ -62,7 +62,7 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 const steps = ["Location & Description", "Amenities", "Additional Details"];
 
 export default function AddProperty() {
-  const { user } = React.useContext(AuthContext);
+  const { user, setUser } = React.useContext(AuthContext);
   const [activeStep, setActiveStep] = React.useState(0);
   const [amenities, setAmenities] = React.useState({
     location: "",
@@ -143,6 +143,10 @@ export default function AddProperty() {
       });
       if (res.status === 201) {
         alert("Property Added Successfully");
+        setUser({
+          ...user,
+          properties: [...user.properties, updatedAmenities],
+        });
       }
     } catch (error) {
       alert("An error occurred while adding the property.");

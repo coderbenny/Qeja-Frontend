@@ -84,7 +84,7 @@ function Login() {
         </button>
         <p className="text-sm text-gray-600 mt-4 text-center">
           Don't have an account?{" "}
-          <NavLink to="/signup" className="text-blue-500">
+          <NavLink to="/get-started" className="text-blue-500">
             Sign up
           </NavLink>
         </p>

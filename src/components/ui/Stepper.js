@@ -1,5 +1,6 @@
-import * as React from "react";
-import axios from "axios";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "../context/axios";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -8,101 +9,124 @@ import StepContent from "@mui/material/StepContent";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import Input from "./Input";
-import TextArea from "./TextArea";
-import SelectInput from "./Select";
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
+
+const roleMapping = {
+  1: "Property Owner",
+  2: "Seeking Rental",
+  3: "Seeking Roommate",
+};
 
 const steps = [
   {
     label: "Enter your details",
     description: (formData, handleChange) => (
-      <div className="w-[300px]">
-        <Input
-          name="username"
+      <Box sx={{ mb: 2 }}>
+        <TextField
+          fullWidth
+          margin="normal"
+          name="name"
+          required
           label="Full Name"
-          value={formData.username}
+          value={formData.name}
           onChange={handleChange}
         />
-        <Input
+        <TextField
+          fullWidth
+          required
+          margin="normal"
           name="email"
           label="Email"
+          type="email"
           value={formData.email}
           onChange={handleChange}
         />
-        <SelectInput
-          name="role"
-          value={formData.role}
+        <TextField
+          fullWidth
+          margin="normal"
+          select
+          required
+          name="role_id"
+          label="Role"
+          value={formData.role_id}
           onChange={handleChange}
-        />
-        <TextArea
-          name="bio"
-          label="Bio"
-          value={formData.bio}
-          onChange={handleChange}
-        />
-      </div>
+        >
+          <MenuItem value="1">Property Owner</MenuItem>
+          <MenuItem value="2">Seeking Rental</MenuItem>
+          <MenuItem value="3">Seeking Roommate</MenuItem>
+        </TextField>
+      </Box>
     ),
   },
   {
     label: "Create a password",
     description: (formData, handleChange) => (
-      <div className="w-[300px]">
-        <Input
+      <Box sx={{ mb: 2 }}>
+        <TextField
+          fullWidth
+          margin="normal"
           name="password"
+          required
           label="Password"
           type="password"
           value={formData.password}
           onChange={handleChange}
         />
-        <Input
+        <TextField
+          fullWidth
+          margin="normal"
           name="confirmPassword"
+          required
           label="Confirm Password"
           type="password"
           value={formData.confirmPassword}
           onChange={handleChange}
+          error={formData.password !== formData.confirmPassword}
+          helperText={
+            formData.password !== formData.confirmPassword &&
+            "Passwords do not match"
+          }
         />
-      </div>
+      </Box>
     ),
   },
   {
     label: "Review & Submit",
     description: (formData) => (
-      <div className="w-[300px]">
-        <h3 className="">
-          <b className="mr-2">Name:</b>
-          {formData.username}
-        </h3>
-        <p className="">
-          <b className="mr-2">Email:</b>
-          {formData.email}
-        </p>
-        <p className="">
-          <b className="mr-2">Bio:</b>
-          {formData.bio}
-        </p>
-        <p className="">
-          <b className="mr-2">Role:</b>
-          {formData.role}
-        </p>
-      </div>
+      <Box sx={{ mb: 2 }}>
+        <Typography variant="body1">
+          <strong>Name:</strong> {formData.name}
+        </Typography>
+        <Typography variant="body1">
+          <strong>Email:</strong> {formData.email}
+        </Typography>
+        <Typography variant="body1">
+          <strong>Role:</strong> {roleMapping[formData.role_id]}
+        </Typography>
+      </Box>
     ),
   },
 ];
 
 export default function VerticalLinearStepper() {
-  const [formData, setFormData] = React.useState({
-    username: "",
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: "",
     email: "",
-    role: "",
-    bio: "",
+    role_id: "",
     password: "",
     confirmPassword: "",
   });
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [error, setError] = React.useState("");
+  const [activeStep, setActiveStep] = useState(0);
+  const [error, setError] = useState("");
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if (activeStep === steps.length - 1) {
+      handleSubmit();
+    } else {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
   };
 
   const handleBack = () => {
@@ -112,10 +136,9 @@ export default function VerticalLinearStepper() {
   const handleReset = () => {
     setActiveStep(0);
     setFormData({
-      username: "",
+      name: "",
       email: "",
-      role: "",
-      bio: "",
+      role_id: "",
       password: "",
       confirmPassword: "",
     });
@@ -129,13 +152,20 @@ export default function VerticalLinearStepper() {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    const { confirmPassword, ...dataToSend } = formData; // Exclude confirmPassword
+
     try {
-      const res = await axios.post("/users", formData);
+      const res = await axios.post("/users", dataToSend);
       if (res.status === 201) {
         alert("Sign Up successful");
         handleReset();
+        navigate("/login");
       }
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -156,12 +186,19 @@ export default function VerticalLinearStepper() {
         backgroundSize: "cover",
       }}
     >
-      <div className="flex flex-col items-center bg-[rgba(255,255,255,0.6)] p-3 shadow-md w-[600px] mt-14 rounded-md justify-center mx-auto">
-        <h2 className="text-blue-500 text-3xl font-bold mb-2">Get Started</h2>
-        <p className="w-[350px] mb-2">
+      <Box className="flex flex-col items-center bg-[rgba(255,255,255,0.6)] p-3 shadow-md w-[600px] mt-14 rounded-md justify-center mx-auto">
+        <Typography
+          variant="h4"
+          component="h2"
+          gutterBottom
+          className="text-blue-500 text-3xl font-bold mb-2"
+        >
+          Get Started
+        </Typography>
+        <Typography variant="body1" className="w-[350px] mb-2">
           Fill in your information below to sign up and begin your journey with
           us.
-        </p>
+        </Typography>
         <Box sx={{ maxWidth: 400 }}>
           <Stepper activeStep={activeStep} orientation="vertical">
             {steps.map((step, index) => (
@@ -185,9 +222,7 @@ export default function VerticalLinearStepper() {
                     <div>
                       <Button
                         variant="contained"
-                        onClick={
-                          index === steps.length - 1 ? handleSubmit : handleNext
-                        }
+                        onClick={handleNext}
                         sx={{ mt: 1, mr: 1 }}
                       >
                         {index === steps.length - 1 ? "Register" : "Continue"}
@@ -221,7 +256,7 @@ export default function VerticalLinearStepper() {
             {error}
           </Typography>
         )}
-      </div>
+      </Box>
     </div>
   );
 }

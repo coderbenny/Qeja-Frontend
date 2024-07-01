@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  TextField,
+  Box,
+} from "@mui/material";
 import axios from "../context/axios";
 import SubDetails from "../ui/SubDetails";
 import SwipeCard from "../ui/SwipeCard";
@@ -10,7 +18,9 @@ function HouseDetails() {
   const { auth } = useAuth();
   const navigate = useNavigate();
   const [house, setHouse] = useState({});
-  const id = useParams();
+  const { id } = useParams();
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const fetchHouse = async (id) => {
@@ -22,15 +32,40 @@ function HouseDetails() {
     };
 
     if (id) {
-      fetchHouse(id["id"]);
+      fetchHouse(id);
     }
-  }, []);
+  }, [id]);
 
   const handleBack = () => {
     navigate("/rentals");
   };
 
-  // console.log(house);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setMessage("");
+  };
+
+  const handleSendMessage = async (owner_id) => {
+    // Logic to send message to the owner
+    try {
+      const res = await axios.post(`/users/${owner_id}`, {
+        userId: auth.user.id,
+        propertyId: id,
+        message,
+      });
+      if (res.status === 200) {
+        alert("Message sent successfully!");
+        handleClose();
+      }
+    } catch (error) {
+      alert("Failed to send message. Please try again later.");
+    }
+  };
+
   return (
     <div className="mx-auto h-screen w-full py-20 px-2">
       <div className="p-2 grid grid-cols-1 md:grid-cols-2 h-[580px]">
@@ -40,31 +75,51 @@ function HouseDetails() {
         <div className="flex flex-col justify-between bg-white p-2">
           <SubDetails title="House" house={house} />
           <div className="flex justify-between mt-auto gap-2">
-            {auth ? (
-              <button
-                type="button"
-                className="p-1 hover:bg-blue-700 items-center bg-slate-700 shadow-md w-[500px] text-white"
-              >
-                View Contact
-              </button>
-            ) : (
-              <button
-                type="button"
-                className="p-1 hover:bg-blue-700 items-center bg-slate-700 shadow-md w-[500px] text-white"
-              >
-                Login to View Contact
-              </button>
-            )}
-            <button
+            <Button
+              onClick={handleClickOpen}
+              variant="contained"
+              color="primary"
+              fullWidth
+            >
+              Message Owner
+            </Button>
+            <Button
               onClick={handleBack}
-              type="button"
-              className="p-1 hover:bg-blue-700 bg-slate-700 shadow-md w-[500px] text-white mt-auto"
+              variant="contained"
+              color="primary"
+              fullWidth
             >
               Back
-            </button>
+            </Button>
           </div>
         </div>
       </div>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Message Owner</DialogTitle>
+        <DialogContent>
+          <Box component="form" noValidate autoComplete="off">
+            <TextField
+              autoFocus
+              margin="dense"
+              id="message"
+              label="Enter your message"
+              type="text"
+              fullWidth
+              variant="outlined"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="secondary">
+            Cancel
+          </Button>
+          <Button onClick={handleSendMessage} color="primary">
+            Send
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

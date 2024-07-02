@@ -100,11 +100,15 @@ function OtherProfile() {
           <div className="flex justify-center md:justify-start space-x-8 my-4">
             <div>
               <h4 className="font-semibold">Followers</h4>
-              <p>{mate?.followers ? mate.followers.length : "--"}</p>
+              <p className="text-center">
+                {mate?.followers ? mate.followers.length : "--"}
+              </p>
             </div>
             <div>
               <h4 className="font-semibold">Following</h4>
-              <p>{mate?.following ? mate.following.length : "--"}</p>
+              <p className="text-center">
+                {mate?.following ? mate.following.length : "--"}
+              </p>
             </div>
           </div>
           {mate?.profile && <p className="text-gray-700">{mate.profile.bio}</p>}

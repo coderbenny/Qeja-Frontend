@@ -49,15 +49,15 @@ function HouseDetails() {
     setMessage("");
   };
 
-  const handleSendMessage = async (owner_id) => {
-    // Logic to send message to the owner
+  const handleSendMessage = async (e) => {
+    e.preventDefault();
     try {
-      const res = await axios.post(`/users/${owner_id}`, {
-        userId: auth.user.id,
-        propertyId: id,
-        message,
+      const res = await axios.post(`/send-message`, {
+        sender_id: auth.user.id,
+        receiver_id: house.owner_id,
+        content: message,
       });
-      if (res.status === 200) {
+      if (res.status === 201) {
         alert("Message sent successfully!");
         handleClose();
       }
@@ -96,8 +96,13 @@ function HouseDetails() {
       </div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Message Owner</DialogTitle>
-        <DialogContent>
-          <Box component="form" noValidate autoComplete="off">
+        <Box
+          component="form"
+          noValidate
+          autoComplete="off"
+          onSubmit={handleSendMessage}
+        >
+          <DialogContent>
             <TextField
               autoFocus
               margin="dense"
@@ -109,16 +114,16 @@ function HouseDetails() {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
-          </Box>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="secondary">
-            Cancel
-          </Button>
-          <Button onClick={handleSendMessage} color="primary">
-            Send
-          </Button>
-        </DialogActions>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="secondary">
+              Cancel
+            </Button>
+            <Button type="submit" color="primary">
+              Send
+            </Button>
+          </DialogActions>
+        </Box>
       </Dialog>
     </div>
   );

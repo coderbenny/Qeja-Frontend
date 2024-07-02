@@ -22,13 +22,15 @@ function EditProfile({ profile, setEditing, setProfile }) {
   const handleSave = async (e) => {
     e.preventDefault();
 
+    let profilePicURL = profilePic;
+
     // If imageFile is set, upload it to Firebase Storage
     if (imageFile) {
       const storageRef = ref(storage, `profiles/${imageFile.name}`);
       try {
         await uploadBytes(storageRef, imageFile);
-        const downloadURL = await getDownloadURL(storageRef);
-        setProfilePic(downloadURL);
+        profilePicURL = await getDownloadURL(storageRef);
+        setProfilePic(profilePicURL);
       } catch (error) {
         console.error("An error occurred while uploading image:", error);
         throw error;
@@ -40,8 +42,8 @@ function EditProfile({ profile, setEditing, setProfile }) {
     if (bio !== (profile?.bio || "")) updatedFields.bio = bio;
     if (location !== (profile?.location || ""))
       updatedFields.location = location;
-    if (profilePic !== (profile?.profile_pic || ""))
-      updatedFields.profile_pic = profilePic;
+    if (profilePicURL !== (profile?.profile_pic || ""))
+      updatedFields.profile_pic = profilePicURL;
 
     if (Object.keys(updatedFields).length === 0) {
       alert("No changes made");

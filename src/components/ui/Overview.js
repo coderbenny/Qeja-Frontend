@@ -41,7 +41,10 @@ export default function Overview() {
                   <div
                     key={index}
                     className="border-2 border-gray-300 h-[50px]"
-                  ></div>
+                  >
+                    <p className="">{m.sender.name}</p>
+                    <p className="">{m.content}</p>
+                  </div>
                 ))
               ) : (
                 <p className="flex items-center justify-center text-center mt-5">

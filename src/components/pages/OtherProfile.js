@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import axios from "../context/axios";
-import { FaCamera } from "react-icons/fa";
 import { AuthContext } from "../context/AuthContext";
 
 function OtherProfile() {
@@ -86,43 +85,47 @@ function OtherProfile() {
     }
   };
 
-  console.log(mate);
-  console.log(user);
-
   return (
-    <div className="h-screen p-5">
-      <div className="flex bg-gray-200 h-[300px] border-2 border-gray-200 rounded-md shadow-md mb-4 w-full items-center justify-center">
-        <div className="mt-12 mr-5 items-center flex h-[170px] shadow-md border-2 border-gray-300 rounded-full w-[170px] justify-center">
-          <FaCamera className="cursor-pointer" />
-        </div>
-        <div className="text-center">
-          <h2 className="font-bold text-center text-2xl">
+    <div className="min-h-screen p-4 bg-gray-100 mt-12">
+      <div className="flex flex-col items-center justify-center bg-white shadow-md rounded-md p-4 md:flex-row md:p-8 md:max-w-4xl mx-auto">
+        <img
+          src={mate?.profile.profile_pic}
+          alt="profile"
+          className="w-32 h-32 md:w-48 md:h-48 rounded-full border-4 border-gray-300 object-cover shadow-md"
+        />
+        <div className="mt-4 md:mt-0 md:ml-8 text-center md:text-left">
+          <h2 className="text-2xl md:text-3xl font-bold capitalize">
             {mate ? mate.name : "Guest"}
           </h2>
-          <div className="flex">
-            <div className="text-center mr-5">
+          <div className="flex justify-center md:justify-start space-x-8 my-4">
+            <div>
               <h4 className="font-semibold">Followers</h4>
               <p>{mate?.followers ? mate.followers.length : "--"}</p>
             </div>
-            <div className="text-center">
+            <div>
               <h4 className="font-semibold">Following</h4>
               <p>{mate?.following ? mate.following.length : "--"}</p>
             </div>
           </div>
-          {mate?.profile && (
-            <div className="flex flex-col mb-1">
-              <p>{mate.profile.bio}</p>
-            </div>
-          )}
-          <button
-            onClick={handleFollow}
-            className="p-1 w-full rounded-md bg-blue-600 shadow-sm hover:shadow-md text-white font-bold"
-          >
-            {followed ? "Unfollow" : "Follow"}
-          </button>
+          {mate?.profile && <p className="text-gray-700">{mate.profile.bio}</p>}
+          <div className="flex gap-2 items-center">
+            <button
+              onClick={handleFollow}
+              className={`mt-4 p-2 w-full md:w-auto rounded-md bg-blue-600 text-white font-bold ${
+                followed ? "hover:bg-blue-700" : "hover:bg-blue-500"
+              } shadow-sm`}
+            >
+              {followed ? "Unfollow" : "Follow"}
+            </button>
+            <NavLink
+              to="/room-mates"
+              className="px-3 mt-4 p-2 w-full md:w-auto rounded-md bg-blue-600 text-white font-bold hover:bg-blue-500 shadow-sm"
+            >
+              Back
+            </NavLink>
+          </div>
         </div>
       </div>
-      {/* <div className="bg-gray-400 h-[450px] rounded-md w-full"></div> */}
     </div>
   );
 }

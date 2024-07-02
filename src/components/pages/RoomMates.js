@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Filters from "../ui/Filter";
 import axios from "../context/axios";
 import useAuth from "../hooks/useAuth";
+import { AuthContext } from "../context/AuthContext";
 
 const RoomMates = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTerm, setFilterTerm] = useState("");
   const [roommates, setRoommates] = useState([]);
 
-  const { auth } = useAuth();
+  const { user } = useContext(AuthContext);
   // console.log(roommates);
 
   useEffect(() => {
-    const token = sessionStorage.getItem("access_token");
-    const fetchRoommates = async (token) => {
+    const fetchRoommates = async () => {
+      const token = sessionStorage.getItem("access_token");
       try {
         const res = await axios.get("/roommates", {
           headers: {
@@ -24,7 +25,7 @@ const RoomMates = () => {
         if (res.status === 200) {
           const data = await res.data;
           const filteredRoommates = data.filter(
-            (roommate) => roommate.name !== auth.name
+            (roommate) => roommate.name !== user.name
           );
           setRoommates(filteredRoommates);
         }
@@ -66,12 +67,14 @@ const RoomMates = () => {
               onClick={() => handleViewMore(roommate.id)}
             >
               <img
-                src={roommate.profile_pic}
+                src={roommate.profile?.profile_pic}
                 alt={roommate.name}
                 className="w-full h-48 object-cover"
               />
               <div className="flex items-center p-4 justify-between">
-                <h3 className="text-xl font-semibold mb-1">{roommate.name}</h3>
+                <h3 className="text-xl font-semibold mb-1 capitalize">
+                  {roommate.name}
+                </h3>
                 <div className="flex justify-between">
                   <button className="view-details-btn hover:bg-blue-700 text-white py-2 px-4 rounded-md transition duration-300 ease-in-out">
                     View Profile

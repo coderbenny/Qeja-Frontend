@@ -71,7 +71,7 @@ function EditProfile({ profile, setEditing, setProfile }) {
   };
 
   return (
-    <div className="h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600">
+    <div className="h-screen flex items-center justify-center">
       <div className="flex flex-col items-center bg-white border-2 border-gray-300 rounded-md shadow-lg mb-4 w-full max-w-md p-4 mt-10">
         <h2 className="text-2xl font-bold mb-4 text-gray-800">Edit Profile</h2>
         <form

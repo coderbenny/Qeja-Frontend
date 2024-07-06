@@ -31,19 +31,21 @@ export default function Overview() {
       <h1 className="font-bold text-xl mb-3 text-red-600">Overview</h1>
       <div className="">
         <div className="flex flex-col md:flex-row gap-2 mb-3">
-          <div className="rounded-md bg-gray-200 h-[200px] w-full mb-2 md:mb-0">
-            <h3 className="font-bold text-lg text-center text-blue-600">
+          <div className="rounded-md bg-gray-200 h-[200px] w-full mb-2 md:mb-0 p-4 overflow-y-auto">
+            <h3 className="font-bold text-lg text-center text-blue-600 mb-2">
               Messages
             </h3>
-            <div className="flex flex-col justify-center">
+            <div className="flex flex-col gap-2">
               {user?.received_messages.length > 0 ? (
                 user.received_messages.map((m, index) => (
                   <div
                     key={index}
-                    className="border-2 border-gray-300 h-[50px]"
+                    className="border-2 border-gray-300 rounded-lg p-2 bg-white shadow-sm"
                   >
-                    <p className="">{m.sender.name}</p>
-                    <p className="">{m.content}</p>
+                    <p className="font-semibold capitalize text-gray-800">
+                      {m.sender.name}
+                    </p>
+                    <p className="text-gray-600">{m.content}</p>
                   </div>
                 ))
               ) : (
@@ -53,13 +55,14 @@ export default function Overview() {
               )}
             </div>
           </div>
-          <div className="rounded-md bg-gray-200 h-[200px] w-full">
-            <h3 className="font-bold text-lg text-center text-blue-600">
+          <div className="rounded-md bg-gray-200 h-[200px] w-full p-4">
+            <h3 className="font-bold text-lg text-center text-blue-600 mb-2">
               Followers
             </h3>
+            {/* Add content or styling for followers if needed */}
           </div>
         </div>
-        <div className="bg-gray-200 h-[230px] w-full">
+        <div className="bg-gray-200 h-[230px] w-full p-4">
           <div className="p-2">
             <div className="flex justify-between mb-2">
               <h3 className="font-bold text-lg text-center text-red-600">

@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Filters from "../ui/Filter";
 import axios from "../context/axios";
-import useAuth from "../hooks/useAuth";
 import { AuthContext } from "../context/AuthContext";
 
 const RoomMates = () => {
@@ -11,40 +10,37 @@ const RoomMates = () => {
   const [roommates, setRoommates] = useState([]);
 
   const { user } = useContext(AuthContext);
-  // console.log(roommates);
+  const navigate = useNavigate();
+
+  const fetchRoommates = useCallback(async () => {
+    const token = sessionStorage.getItem("access_token");
+    if (!token) return;
+
+    try {
+      const res = await axios.get("/roommates", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res.status === 200) {
+        const data = res.data;
+        const filteredRoommates = data.filter(
+          (roommate) => roommate.name !== user.name
+        );
+        setRoommates(filteredRoommates);
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  }, [user.name]);
 
   useEffect(() => {
-    const fetchRoommates = async () => {
-      const token = sessionStorage.getItem("access_token");
-      try {
-        const res = await axios.get("/roommates", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        if (res.status === 200) {
-          const data = await res.data;
-          const filteredRoommates = data.filter(
-            (roommate) => roommate.name !== user.name
-          );
-          setRoommates(filteredRoommates);
-        }
-      } catch (error) {
-        console.error("An error occurred:", error);
-      }
-    };
-
-    // if (token) {
     fetchRoommates();
-    // }
 
     return () => {
       setRoommates([]);
     };
-  }, []);
-
-  // Navigate to view house details
-  const navigate = useNavigate();
+  }, [fetchRoommates]);
 
   const handleViewMore = (id) => {
     navigate(`/profiles/${id}`);
@@ -57,12 +53,13 @@ const RoomMates = () => {
         setSearchTerm={setSearchTerm}
         setFilterTerm={setFilterTerm}
         filterTerm={filterTerm}
+        placeholder="Search by name..."
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 overflow-y-auto">
         {roommates.length > 0 ? (
-          roommates.map((roommate, index) => (
+          roommates.map((roommate) => (
             <div
-              key={index}
+              key={roommate.id}
               className="rental-card bg-white rounded-md border-2 border-gray-200 overflow-hidden transition duration-300 ease-in-out transform hover:shadow-lg mb-1"
               onClick={() => handleViewMore(roommate.id)}
             >
@@ -75,17 +72,9 @@ const RoomMates = () => {
                 <h3 className="text-xl font-semibold mb-1 capitalize">
                   {roommate.name}
                 </h3>
-                <div className="flex justify-between">
-                  <button className="view-details-btn hover:bg-blue-700 text-white py-2 px-4 rounded-md transition duration-300 ease-in-out">
-                    View Profile
-                  </button>
-                  {/* <button
-                    disabled
-                    className="view-details-btn hover:bg-blue-700 text-white py-2 px-4 rounded-md transition duration-300 ease-in-out"
-                  >
-                    Follow
-                  </button> */}
-                </div>
+                <button className="view-details-btn hover:bg-blue-700 text-white py-2 px-4 rounded-md transition duration-300 ease-in-out">
+                  View Profile
+                </button>
               </div>
             </div>
           ))

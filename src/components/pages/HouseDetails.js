@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   Dialog,
@@ -12,10 +12,10 @@ import {
 import axios from "../context/axios";
 import SubDetails from "../ui/SubDetails";
 import SwipeCard from "../ui/SwipeCard";
-import useAuth from "../hooks/useAuth";
+import { AuthContext } from "../context/AuthContext";
 
 function HouseDetails() {
-  const { auth } = useAuth();
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [house, setHouse] = useState({});
   const { id } = useParams();
@@ -26,7 +26,7 @@ function HouseDetails() {
     const fetchHouse = async (id) => {
       const res = await axios.get(`/properties/${id}`);
       if (res.status === 200) {
-        const data = res.data;
+        const data = await res.data;
         setHouse(data);
       }
     };
@@ -52,11 +52,19 @@ function HouseDetails() {
   const handleSendMessage = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`/send-message`, {
-        sender_id: auth.user.id,
-        receiver_id: house.owner_id,
-        content: message,
-      });
+      const res = await axios.post(
+        "/send-message",
+        {
+          sender_id: user.id,
+          receiver_id: house.owner_id,
+          content: message,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (res.status === 201) {
         alert("Message sent successfully!");
         handleClose();
@@ -100,7 +108,7 @@ function HouseDetails() {
           component="form"
           noValidate
           autoComplete="off"
-          onSubmit={handleSendMessage}
+          onSubmit={(e) => handleSendMessage(e)}
         >
           <DialogContent>
             <TextField

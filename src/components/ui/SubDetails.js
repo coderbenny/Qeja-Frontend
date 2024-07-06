@@ -116,7 +116,7 @@ function SubDetails({ house, title }) {
         <h3 className="text-lg bg-gray-800 text-white rounded-md py-2 px-4">
           Owner
         </h3>
-        <p className="py-2 px-4">{house.owner}</p>
+        <p className="py-2 px-4 capitalize">{house.owner}</p>
       </div>
     </div>
   );

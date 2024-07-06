@@ -89,7 +89,7 @@ function OtherProfile() {
     <div className="min-h-screen p-4 bg-gray-100 mt-12">
       <div className="flex flex-col items-center justify-center bg-white shadow-md rounded-md p-4 md:flex-row md:p-8 md:max-w-4xl mx-auto">
         <img
-          src={mate?.profile.profile_pic}
+          src={mate?.profile?.profile_pic}
           alt="profile"
           className="w-32 h-32 md:w-48 md:h-48 rounded-full border-4 border-gray-300 object-cover shadow-md"
         />

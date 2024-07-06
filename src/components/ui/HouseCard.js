@@ -1,41 +1,8 @@
-import { useState } from "react";
-import { FcLikePlaceholder, FcLike } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
-import axios from "../context/axios";
+// import axios from "../context/axios";
 
 export default function HouseCard({ house }) {
-  const [liked, setLiked] = useState(false);
   const navigate = useNavigate();
-
-  const likeProperty = async (propertyId) => {
-    try {
-      const token = sessionStorage.getItem("access_token");
-      const res = await axios.post(
-        `/properties/${propertyId}/like`,
-        {},
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        setLiked(true); // Update local state to reflect property has been liked
-        alert("You have successfully liked the property.");
-      }
-    } catch (error) {
-      console.log("An error occurred:", error);
-    }
-  };
-
-  const handleLikeToggle = (propertyId) => {
-    if (!liked) {
-      likeProperty(propertyId);
-    } else {
-      // Implement unliking logic if needed
-    }
-  };
 
   const handleViewMore = (id) => {
     navigate(`/rentals/${id}`);
@@ -49,20 +16,7 @@ export default function HouseCard({ house }) {
         className="w-full h-48 object-cover"
       />
       <div className="p-4">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold mb-2">Property</h3>
-          {liked ? (
-            <FcLike
-              className="h-[20px] w-[20px]"
-              onClick={() => handleLikeToggle(house.id)}
-            />
-          ) : (
-            <FcLikePlaceholder
-              className="h-[20px] w-[20px]"
-              onClick={() => console.log("Unliked property number " + house.id)}
-            />
-          )}
-        </div>
+        <h3 className="text-lg font-semibold mb-2">Property</h3>
         <p className="text-gray-700 mb-1">
           <b>Location:</b> {house.location}
         </p>

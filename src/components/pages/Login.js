@@ -27,7 +27,11 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/login", formData);
+      const res = await axios.post("/login", formData, {
+        headers: {
+          "Content-Type": "Application/json",
+        },
+      });
       if (res.status === 200) {
         const data = await res.data;
         // console.log(data)

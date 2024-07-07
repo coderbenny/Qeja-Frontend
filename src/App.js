@@ -27,6 +27,7 @@ import RequireAuth from "./components/Auth/RequireAuth";
 // import MateByID from "./components/pages/MateByID";
 import axios from "./components/context/axios";
 import Dashboard from "./components/pages/Dashboard";
+import Footer from "./components/pages/Footer";
 
 function App() {
   // Activating render backend when user visits the website
@@ -74,6 +75,7 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <Footer />
     </div>
   );
 }

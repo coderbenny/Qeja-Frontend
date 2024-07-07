@@ -5,6 +5,7 @@ import FAQ from "./FAQ";
 import { IoIosArrowDropdown, IoIosArrowDropup } from "react-icons/io";
 import axios from "../context/axios";
 import useAuth from "../hooks/useAuth";
+import Contact from "./Contact";
 
 function Home() {
   const { user, setUser } = useAuth();
@@ -97,6 +98,7 @@ function Home() {
         </div>
       </div>
       <FAQ />
+      <Contact />
     </>
   );
 }

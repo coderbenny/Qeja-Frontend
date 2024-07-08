@@ -6,10 +6,13 @@ import { IoIosArrowDropdown, IoIosArrowDropup } from "react-icons/io";
 import axios from "../context/axios";
 import useAuth from "../hooks/useAuth";
 import Contact from "./Contact";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const navigate = useNavigate();
   const { user, setUser } = useAuth();
   const [showHomeSub, setShowHomeSub] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const handleReadMoreClick = () => {
     setShowHomeSub(!showHomeSub);
@@ -54,15 +57,24 @@ function Home() {
         }
       } catch (error) {
         console.error("An error occurred:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     if (!user) {
       getUser();
+    } else {
+      setLoading(false);
     }
   }, [user, setUser]);
 
-  console.log(user);
+  useEffect(() => {
+    if (!loading && user && !user.profile) {
+      alert("Please update your profile details");
+      navigate("/profile");
+    }
+  }, [loading, user, navigate]);
 
   return (
     <>

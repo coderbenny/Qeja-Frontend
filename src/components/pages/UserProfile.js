@@ -69,17 +69,17 @@ function UserProfile() {
             </div>
 
             <div className="md:w-2/3 mt-4 md:mt-0 md:ml-8 text-center md:text-left">
-              <h2 className="text-2xl md:text-3xl font-bold">
+              <h2 className="text-2xl md:text-3xl font-bold capitalize">
                 {user?.name || "Guest"}
               </h2>
               <div className="flex justify-center md:justify-start space-x-8 my-4">
                 <div>
                   <h4 className="font-semibold">Followers</h4>
-                  <p>{user?.followers || "--"}</p>
+                  <p className="text-center">{user?.followers || "--"}</p>
                 </div>
                 <div>
                   <h4 className="font-semibold">Following</h4>
-                  <p>{user?.following || "--"}</p>
+                  <p className="text-center">{user?.following || "--"}</p>
                 </div>
               </div>
               <div className="mt-4 w-full">

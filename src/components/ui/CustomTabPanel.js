@@ -57,16 +57,16 @@ export default function BasicTabs() {
           aria-label="basic tabs example"
           centered
         >
-          <Tab label="Liked Posts" {...a11yProps(0)} />
-          <Tab label="Followers" {...a11yProps(1)} />
-          <Tab label="Following" {...a11yProps(2)} />
+          <Tab label="My Posts" {...a11yProps(0)} />
+          <Tab label="Saved" {...a11yProps(1)} />
+          <Tab label="" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        Liked Posts
+        My Posts
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Followers
+        Saved
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         Following

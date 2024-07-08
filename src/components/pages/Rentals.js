@@ -1,11 +1,9 @@
 import React, { useEffect, useState, useCallback } from "react";
-import Filters from "../ui/Filter";
 import axios from "../context/axios";
 import HouseCard from "../ui/HouseCard";
 
 const Rentals = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterTerm, setFilterTerm] = useState("");
   const [properties, setProperties] = useState([]);
 
   const fetchProperties = useCallback(async () => {
@@ -36,18 +34,30 @@ const Rentals = () => {
     };
   }, [fetchProperties]);
 
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredProperties = properties.filter((property) =>
+    property.location.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="mx-auto w-full py-20 px-4 cursor-pointer bg-gray-100">
-      <Filters
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        setFilterTerm={setFilterTerm}
-        filterTerm={filterTerm}
-        placeholder="Search by house location..."
-      />
+      <div className="mb-4">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          placeholder="Search by house location..."
+          className="border rounded px-4 py-2 mb-2 w-full"
+        />
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 overflow-y-auto">
-        {properties.length > 0 ? (
-          properties.map((house) => <HouseCard key={house.id} house={house} />)
+        {filteredProperties.length > 0 ? (
+          filteredProperties.map((house) => (
+            <HouseCard key={house.id} house={house} />
+          ))
         ) : (
           <div className="flex flex-col p-3 items-center mx-auto justify-center text-center text-gray-500">
             <h2 className="text-center text-3xl mx-auto">

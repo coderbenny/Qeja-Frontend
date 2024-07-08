@@ -54,7 +54,9 @@ function UserProfile() {
             <div className="md:w-1/3 flex flex-col items-center justify-center">
               <div className="relative mb-2 flex items-center justify-center mx-auto h-[200px] md:h-[250px] shadow-md border-2 border-gray-300 rounded-full w-[200px] md:w-[250px] overflow-hidden bg-gray-200">
                 <img
-                  src={profile?.profile_pic || "/default-profile.png"}
+                  src={
+                    profile?.profile_pic || "https://via.placeholder.com/150"
+                  }
                   alt="Profile"
                   className="h-full w-full object-cover"
                 />

@@ -93,11 +93,15 @@ function Home() {
         </div>
         <div className="flex flex-col w-full items-center">
           <div className="flex md:px-2 w-full sm:w-[550px] mb-4 justify-between h-[30px] items-center border-2 border-teal-500 md:rounded-xl text-gray-300 p-1 text-xs sm:text-sm">
-            <p className="px-1 text-white tracking-wider">
-              {user
-                ? `Welcome ${user.name}`
-                : "Register today and be part of a wonderful society"}
-            </p>
+            {user ? (
+              <p className="px-1 text-white tracking-wider capitalize">
+                Welcome {user.name}
+              </p>
+            ) : (
+              <p className="px-1 text-white tracking-wider">
+                Register today and be part of a wonderful society.
+              </p>
+            )}
             <span
               className="flex items-center text-slate-950 px-2 justify-center font-semibold cursor-pointer bg-teal-400 text-xs sm:text-sm rounded-md"
               onClick={handleReadMoreClick}

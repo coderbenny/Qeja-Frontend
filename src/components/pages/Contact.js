@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Container,
   Box,
@@ -7,8 +7,42 @@ import {
   Typography,
   Grid,
 } from "@mui/material";
+import axios from "axios";
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "https://formspree.io/f/mzzpbwng",
+        formData
+      );
+      console.log("Form submitted successfully:", response.data);
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+      alert("Submitted successfully. We will get in touch shortly.");
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      // Handle error, e.g., show an error message
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -39,7 +73,7 @@ const Contact = () => {
             you have suggestions, comments, or any other feedback, please fill
             out the form below, and we'll get back to you soon.
           </Typography>
-          <Box component="form" sx={{ mt: 3 }}>
+          <Box component="form" sx={{ mt: 3 }} onSubmit={handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -48,6 +82,8 @@ const Contact = () => {
                   id="name"
                   label="Name"
                   variant="outlined"
+                  value={formData.name}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -58,6 +94,8 @@ const Contact = () => {
                   label="Email"
                   type="email"
                   variant="outlined"
+                  value={formData.email}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -66,6 +104,8 @@ const Contact = () => {
                   id="subject"
                   label="Subject"
                   variant="outlined"
+                  value={formData.subject}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -77,6 +117,8 @@ const Contact = () => {
                   multiline
                   rows={4}
                   variant="outlined"
+                  value={formData.message}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>

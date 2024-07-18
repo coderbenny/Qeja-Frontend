@@ -7,6 +7,7 @@ import axios from "../context/axios";
 import useAuth from "../hooks/useAuth";
 import Contact from "./Contact";
 import { useNavigate } from "react-router-dom";
+import HowToRegister from "./HowToRegister";
 
 function Home() {
   const navigate = useNavigate();
@@ -113,6 +114,7 @@ function Home() {
           {showHomeSub && <HomeSub />}
         </div>
       </div>
+      <HowToRegister />
       <FAQ />
       <Contact />
     </>

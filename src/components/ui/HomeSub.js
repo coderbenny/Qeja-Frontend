@@ -33,12 +33,16 @@ function HomeSub() {
         >
           Get Started
         </NavLink> */}
-        <NavLink
-          to="/discover"
-          className="w-full sm:w-auto p-3 px-4 border-2 text-white border-blue-600 rounded-md hover:bg-blue-600"
-        >
-          Learn More
-        </NavLink>
+        {user?.role_id === 1 ? (
+          ""
+        ) : (
+          <NavLink
+            to="/discover"
+            className="w-full sm:w-auto p-3 px-4 border-2 text-white border-blue-600 rounded-md hover:bg-blue-600"
+          >
+            Learn More
+          </NavLink>
+        )}
       </div>
     </div>
   );

@@ -80,7 +80,7 @@ function Home() {
   return (
     <>
       <div
-        className="flex flex-col items-center justify-center h-screen"
+        className="flex flex-col items-center justify-center h-[100vh]"
         style={{
           backgroundImage: `url(${process.env.PUBLIC_URL}/edited.jpg)`,
           backgroundSize: "cover",

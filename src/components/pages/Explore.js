@@ -36,7 +36,7 @@ function Explore() {
   };
 
   return (
-    <div className="h-screen p-10">
+    <div className="h-[100vh] p-10">
       <div className="flex flex-col md:flex-row mt-20 h-auto">
         <div className="w-full md:w-3/4">
           <Routes>

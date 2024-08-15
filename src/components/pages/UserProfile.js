@@ -47,7 +47,7 @@ function UserProfile() {
   };
 
   return (
-    <div className="min-h-screen p-4 bg-gray-100 mt-12">
+    <div className="min-h-[100vh] p-4 bg-gray-100 mt-12">
       {!editing ? (
         <>
           <div className="flex flex-col items-center bg-white shadow-md rounded-md p-4 md:flex-row md:p-8 md:max-w-4xl mx-auto">

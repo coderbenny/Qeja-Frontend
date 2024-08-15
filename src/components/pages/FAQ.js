@@ -38,7 +38,7 @@ function FAQ() {
   ];
 
   return (
-    <div className="p-3 bg-slate-950 h-screen ">
+    <div className="p-3 bg-slate-950 h-[100vh]">
       <h3 className="mb-4 text-2xl tracking-widest text-center text-white mt-5 font-bold">
         Frequently Asked Questions
       </h3>

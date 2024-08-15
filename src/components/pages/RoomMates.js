@@ -53,7 +53,7 @@ const RoomMates = () => {
   );
 
   return (
-    <div className="mx-auto w-full py-20 px-4 cursor-pointer bg-gray-100">
+    <div className="mx-auto h-[100vh] w-full py-20 px-4 cursor-pointer bg-gray-100">
       <div className="mb-4">
         <input
           type="text"

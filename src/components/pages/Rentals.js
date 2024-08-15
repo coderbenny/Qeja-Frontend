@@ -43,7 +43,7 @@ const Rentals = () => {
   );
 
   return (
-    <div className="mx-auto w-full py-20 px-4 cursor-pointer bg-gray-100">
+    <div className="h-[100vh] mx-auto w-full py-20 px-4 cursor-pointer bg-gray-100">
       <div className="mb-4">
         <input
           type="text"

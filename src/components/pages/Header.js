@@ -55,8 +55,9 @@ function Header() {
         to="/"
         className="flex items-center ml-3 text-xl tracking-wider cursor-pointer hover:text-blue-400"
       >
-        <MdOutlineMapsHomeWork className="mr-1" />
-        Qeja
+        {/* <MdOutlineMapsHomeWork className="mr-1" /> */}
+        <img src="logo-colored.svg" alt="logo" className="h-20 w-20" />
+        {/* Qeja */}
       </NavLink>
       <div className="justify-between hidden md:flex">
         <NavLink

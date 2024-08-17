@@ -1,15 +1,26 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
-
 import axios from "../context/axios";
 import useAuth from "../hooks/useAuth";
+import {
+  Container,
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Link,
+  Alert,
+  Avatar,
+  CssBaseline,
+} from "@mui/material";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+
 function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
   const { setAuth } = useAuth();
-
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     email: "",
@@ -34,17 +45,14 @@ function Login() {
       });
       if (res.status === 200) {
         const data = await res.data;
-        // console.log(data)
         setAuth({ access_token: data.access_token });
         sessionStorage.setItem("access_token", data.access_token);
         navigate(from, { replace: true });
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        // Unauthorized error (status code 401)
         setError("Wrong password");
       } else if (error.response && error.response.status === 404) {
-        // Unauthorized error (status code 401)
         setError("User does not exist");
       } else {
         setError("An error occurred: " + error.message);
@@ -53,47 +61,87 @@ function Login() {
   };
 
   return (
-    <div className="shadow-xl flex justify-center items-center h-screen bg-gradient-to-r from-teal-400 to-blue-500">
-      <form
-        className="bg-white p-8 rounded-lg shadow-md w-80"
-        onSubmit={handleSubmit}
-      >
-        <h2 className="text-3xl font-bold text-gray-800 mb-4 text-center">
-          Login
-        </h2>
-        <input
-          type="email"
-          autoComplete="off"
-          required
-          name="email"
-          placeholder="Email"
-          onChange={handleInputChange}
-          className="w-full px-3 py-2 mb-4 rounded-md bg-gray-200 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring focus:ring-blue-400"
-        />
-        <input
-          type="password"
-          autoComplete="off"
-          required
-          name="password"
-          placeholder="Password"
-          onChange={handleInputChange}
-          className="w-full px-3 py-2 mb-6 rounded-md bg-gray-200 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring focus:ring-blue-400"
-        />
-        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-        <button
-          type="submit"
-          className="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+    <Box
+      sx={{
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundImage: `url(/edited.jpg)`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            backgroundColor: "rgba(255, 255, 255, 0.8)",
+            padding: 4,
+            borderRadius: 2,
+            boxShadow: 3,
+          }}
         >
-          Login
-        </button>
-        <p className="text-sm text-gray-600 mt-4 text-center">
-          Don't have an account?{" "}
-          <NavLink to="/get-started" className="text-blue-500">
-            Sign up
-          </NavLink>
-        </p>
-      </form>
-    </div>
+          <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Login
+          </Typography>
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={formData.email}
+              onChange={handleInputChange}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              value={formData.password}
+              onChange={handleInputChange}
+            />
+            {error && (
+              <Alert severity="error" sx={{ mt: 2 }}>
+                {error}
+              </Alert>
+            )}
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Login
+            </Button>
+            <Typography variant="body2" color="textSecondary" align="center">
+              Don't have an account?{" "}
+              <Link component={NavLink} to="/get-started" variant="body2">
+                Sign up
+              </Link>
+            </Typography>
+          </Box>
+        </Box>
+      </Container>
+    </Box>
   );
 }
 

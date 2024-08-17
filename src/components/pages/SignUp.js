@@ -40,9 +40,12 @@ function Signup() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gradient-to-r from-teal-400 to-blue-500">
+    <div
+      // style={{ height: "100vh" }}
+      className="flex justify-center items-center bg-gradient-to-r from-teal-400 to-blue-500"
+    >
       <form
-        className="bg-white p-8 rounded-lg shadow-md w-80"
+        className="bg-white p-8 mb-3 h-[100vh] rounded-lg shadow-md w-80"
         onSubmit={handleSubmit}
       >
         <h2 className="text-3xl font-bold text-gray-800 mb-4 text-center">

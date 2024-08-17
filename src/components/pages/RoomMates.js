@@ -1,7 +1,14 @@
-import React, { useContext, useEffect, useState, useCallback } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../context/axios";
 import { AuthContext } from "../context/AuthContext";
+import debounce from "lodash.debounce";
 
 const RoomMates = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -23,14 +30,14 @@ const RoomMates = () => {
       if (res.status === 200) {
         const data = res.data;
         const filteredRoommates = data.filter(
-          (roommate) => roommate.name !== user.name
+          (roommate) => roommate.email !== user.email
         );
         setRoommates(filteredRoommates);
       }
     } catch (error) {
       console.error("An error occurred:", error);
     }
-  }, [user.name]);
+  }, [user.email]);
 
   useEffect(() => {
     fetchRoommates();
@@ -44,21 +51,40 @@ const RoomMates = () => {
     navigate(`/profiles/${id}`);
   };
 
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const filteredRoommates = roommates.filter((roommate) =>
-    roommate.profile?.location?.toLowerCase().includes(searchTerm.toLowerCase())
+  const debouncedSearchChange = useMemo(
+    () =>
+      debounce((e) => {
+        setSearchTerm(e.target.value);
+      }, 300),
+    []
   );
+
+  useEffect(() => {
+    return () => {
+      debouncedSearchChange.cancel();
+    };
+  }, [debouncedSearchChange]);
+
+  const filteredRoommates = useMemo(
+    () =>
+      roommates.filter((roommate) =>
+        roommate.profile?.location
+          ?.toLowerCase()
+          .includes(searchTerm.toLowerCase())
+      ),
+    [roommates, searchTerm]
+  );
+
+  console.log(filteredRoommates);
+  console.log(roommates);
 
   return (
     <div className="mx-auto h-[100vh] w-full py-20 px-4 cursor-pointer bg-gray-100">
       <div className="mb-4">
         <input
           type="text"
-          value={searchTerm}
-          onChange={handleSearchChange}
+          defaultValue={searchTerm}
+          onChange={debouncedSearchChange}
           placeholder="Search by location..."
           className="border rounded px-4 py-2 mb-2 w-full"
         />

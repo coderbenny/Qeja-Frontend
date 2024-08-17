@@ -19,6 +19,8 @@ function Home() {
     setShowHomeSub(!showHomeSub);
   };
 
+  console.log(user);
+
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -46,8 +48,8 @@ function Home() {
               followers: Array.isArray(data.followers)
                 ? data.followers.length
                 : 0,
-              following: Array.isArray(data.followed)
-                ? data.followed.length
+              following: Array.isArray(data.following)
+                ? data.following.length
                 : 0,
             });
           } else {

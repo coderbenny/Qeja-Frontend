@@ -180,10 +180,11 @@ export default function VerticalLinearStepper() {
 
   return (
     <div
-      className="h-screen mt-0"
+      className="mt-0"
       style={{
         backgroundImage: `url(${process.env.PUBLIC_URL}/edited.jpg)`,
         backgroundSize: "cover",
+        height: "100vh",
       }}
     >
       <Box className="flex flex-col items-center bg-[rgba(255,255,255,0.6)] p-3 shadow-md w-[600px] mt-14 rounded-md justify-center mx-auto">
@@ -191,7 +192,7 @@ export default function VerticalLinearStepper() {
           variant="h4"
           component="h2"
           gutterBottom
-          className="text-blue-500 text-3xl font-bold mb-2"
+          className="text-blue-600 text-3xl font-bold mb-2"
         >
           Get Started
         </Typography>

@@ -7,35 +7,44 @@ import {
   Typography,
   Box,
   Paper,
-  Alert,
+  Snackbar,
+  Alert as MuiAlert,
 } from "@mui/material";
 import axios from "../context/axios";
 import { AuthContext } from "../context/AuthContext";
 
 function Activation() {
-  const { user } = useContext(AuthContext);
-  const [email, setEmail] = useState(user.email);
+  // const { user } = useContext(AuthContext);
+  const [email, setEmail] = useState("");
   const [activationCode, setActivationCode] = useState("");
   const [error, setError] = useState("");
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  // console.log(email);
-
   const handleActivate = async () => {
+    const details = { email: email, activation_code: parseInt(activationCode) };
+    console.log(details);
     try {
-      const response = await axios.post("/activate", {
-        email: email,
-        activation_code: activationCode,
-      });
+      const response = await axios.post("/activate", details);
       if (response.status === 200) {
-        Alert("Account activated successfully.");
-        navigate("/");
+        setMessage("Account activated successfully.");
+        setOpen(true);
+        setTimeout(() => navigate("/login"), 2000);
       }
     } catch (err) {
       setError(
-        "An error occurred while activating your account. Please try again."
+        err.response?.data?.message ||
+          "An error occurred while activating your account. Please try again."
       );
     }
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
   };
 
   return (
@@ -84,6 +93,15 @@ function Activation() {
             </Button>
           </Box>
         </Paper>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <MuiAlert
+            onClose={handleClose}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            {message}
+          </MuiAlert>
+        </Snackbar>
       </Container>
     </Box>
   );

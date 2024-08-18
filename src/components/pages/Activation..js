@@ -14,7 +14,7 @@ import axios from "../context/axios";
 import { AuthContext } from "../context/AuthContext";
 
 function Activation() {
-  // const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [activationCode, setActivationCode] = useState("");
   const [error, setError] = useState("");
@@ -30,6 +30,9 @@ function Activation() {
       if (response.status === 200) {
         setMessage("Account activated successfully.");
         setOpen(true);
+        if (user) {
+          setUser({ ...user, is_active: true });
+        }
         setTimeout(() => navigate("/login"), 2000);
       }
     } catch (err) {

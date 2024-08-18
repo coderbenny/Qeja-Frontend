@@ -46,6 +46,11 @@ function UserProfile() {
     setEditing(false);
   };
 
+  // if (!user.profile) {
+  //   alert("Please update your profile details");
+  //   setEditing(true);
+  // }
+
   return (
     <div className="min-h-[100vh] p-4 bg-gray-100 mt-12">
       {!editing ? (

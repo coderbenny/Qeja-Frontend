@@ -76,6 +76,8 @@ function Home() {
   useEffect(() => {
     if (!loading && user && !user.is_active) {
       alert("Please Activate your account");
+      setUser("");
+      sessionStorage.setItem("access_token", null);
       navigate("/activate-account");
     }
   }, [loading, user, navigate]);

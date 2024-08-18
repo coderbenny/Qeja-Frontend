@@ -42,6 +42,7 @@ function Home() {
               token: token,
               role_id: data.role_id,
               profile: data.profile,
+              is_active: data.is_active,
               properties: data.properties,
               received_messages: data.received_messages,
               sent_messages: data.sent_messages,
@@ -73,9 +74,9 @@ function Home() {
   }, [user, setUser]);
 
   useEffect(() => {
-    if (!loading && user && !user.profile) {
-      alert("Please update your profile details");
-      navigate("/profile");
+    if (!loading && user && !user.is_active) {
+      alert("Please Activate your account");
+      navigate("/activate-account");
     }
   }, [loading, user, navigate]);
 

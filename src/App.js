@@ -28,6 +28,7 @@ import RequireAuth from "./components/Auth/RequireAuth";
 import axios from "./components/context/axios";
 import Dashboard from "./components/pages/Dashboard";
 import Footer from "./components/pages/Footer";
+import Activation from "./components/pages/Activation.";
 
 function App() {
   // Activating render backend when user visits the website
@@ -58,6 +59,7 @@ function App() {
         <Route path="/explore" element={<Explore />} />
         <Route path="/posts/:id" element={<PostDetails />} />
         <Route path="/get-started" element={<VerticalLinearStepper />} />
+        <Route path="/activate-account" element={<Activation />} />
 
         {/* Protected routes */}
         <Route element={<RequireAuth />}>

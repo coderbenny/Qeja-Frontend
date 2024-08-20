@@ -16,7 +16,7 @@ import { VscFeedback } from "react-icons/vsc";
 import useAuth from "../hooks/useAuth";
 
 function Header() {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -37,6 +37,12 @@ function Header() {
   };
 
   const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
+  const handleLogout = async () => {
+    setUser("");
+    sessionStorage.setItem("access_token", "");
     setMenuOpen(false);
   };
 
@@ -142,7 +148,7 @@ function Header() {
             <NavLink
               to="/login"
               className="block py-2 px-4 text-gray-800 hover:bg-gray-200 transition duration-200"
-              onClick={closeMenu}
+              onClick={handleLogout}
             >
               Logout
             </NavLink>

@@ -13,10 +13,29 @@ function HomeSub() {
         Discover. Rent. Connect
       </h2>
       <p className="text-gray-200 mb-5 whitespace-normal text-sm sm:text-base">
-        Your premier destination for seamless housing solutions. <br />
-        Whether you are searching for your dream home or ready to rent out your
-        property, we are here to simplify the process and connect you with
-        like-minded individuals.
+        Are you{" "}
+        <b>
+          <i>searching</i>
+        </b>{" "}
+        for your dream home or ready to{" "}
+        <b>
+          <i>rent out</i>
+        </b>{" "}
+        your property? We are here to{" "}
+        <b>
+          <i>simplify</i>
+        </b>{" "}
+        the process and{" "}
+        <b>
+          <i>connect</i>
+        </b>{" "}
+        you with like-minded individuals.
+        <br />
+        Welcome to your{" "}
+        <b>
+          <i>premier</i>
+        </b>{" "}
+        destination for seamless housing solutions
       </p>
       <div className="flex flex-col sm:flex-row items-center justify-center">
         {user?.role_id === 1 ? (

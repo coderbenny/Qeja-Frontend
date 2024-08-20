@@ -5,11 +5,11 @@ const ReactTypingEffectDemo = () => {
   return (
     <>
       <ReactTypingEffect
-        text={["Properties", "Roommates"]}
+        text={["Owners", "Rentals"]}
         cursorRenderer={(cursor) => <h1 className="text-blue-400">{cursor}</h1>}
         displayTextRenderer={(text, i) => {
           return (
-            <h1 className="text-blue-400 ml-[240px] text-xl font-semibold mb-5 tracking-widest">
+            <h1 className="text-blue-400 ml-[280px] text-xl font-semibold mb-5 tracking-widest">
               {text.split("").map((char, i) => {
                 const key = `${i}`;
                 return (

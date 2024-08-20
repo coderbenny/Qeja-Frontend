@@ -14,9 +14,9 @@ function HomeSub() {
       </h2>
       <p className="text-gray-200 mb-5 whitespace-normal text-sm sm:text-base">
         Your premier destination for seamless housing solutions. <br />
-        Whether you are searching for your dream home, seeking a compatible
-        roommate, or ready to rent out your property, we are here to simplify
-        the process and connect you with like-minded individuals.
+        Whether you are searching for your dream home or ready to rent out your
+        property, we are here to simplify the process and connect you with
+        like-minded individuals.
       </p>
       <div className="flex flex-col sm:flex-row items-center justify-center">
         {user?.role_id === 1 ? (

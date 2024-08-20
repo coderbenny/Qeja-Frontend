@@ -4,7 +4,7 @@ import axios from "../context/axios";
 import { AuthContext } from "../context/AuthContext";
 
 function OtherProfile() {
-  const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const { id } = useParams();
   const [mate, setMate] = useState(null);
   const [followed, setFollowed] = useState(false);
@@ -19,14 +19,11 @@ function OtherProfile() {
             Authorization: `Bearer ${token}`,
           },
         });
+        // set user to state and then check if user has been followed by the current user
         if (res.status === 200) {
           const data = res.data;
           setMate(data);
-          // Check if the current user ID exists in the followers array
-          if (
-            Array.isArray(data.followers) &&
-            data.followers.includes(user.id)
-          ) {
+          if (data.followers?.includes(user.id)) {
             setFollowed(true);
           } else {
             setFollowed(false);
@@ -36,14 +33,13 @@ function OtherProfile() {
         console.error("An error occurred", error);
       }
     };
-    getUser(id); // Fetch user data when component mounts
+    getUser(id);
   }, [id, user.id]);
 
   const handleFollow = async () => {
     const token = sessionStorage.getItem("access_token");
     try {
       if (!followed) {
-        // Follow the user
         const res = await axios.post(
           `/follow/${mate.id}`,
           {},
@@ -55,15 +51,17 @@ function OtherProfile() {
           }
         );
         if (res.status === 200) {
-          // Update local state after successful follow
           setFollowed(true);
           setMate((prevMate) => ({
             ...prevMate,
-            followers: [...prevMate.followers, user.id],
+            followers: [...(prevMate.followers || []), user.id],
+          }));
+          setUser((prevUser) => ({
+            ...prevUser,
+            following: [...(prevUser.following || []), mate.id],
           }));
         }
       } else {
-        // Unfollow the user
         const res = await axios.delete(`/unfollow/${mate.id}`, {
           headers: {
             "Content-Type": "application/json",
@@ -71,12 +69,17 @@ function OtherProfile() {
           },
         });
         if (res.status === 200) {
-          // Update local state after successful unfollow
           setFollowed(false);
           setMate((prevMate) => ({
             ...prevMate,
-            followers: prevMate.followers.filter(
+            followers: prevMate.followers?.filter(
               (follower) => follower !== user.id
+            ),
+          }));
+          setUser((prevUser) => ({
+            ...prevUser,
+            following: prevUser.following?.filter(
+              (followingId) => followingId !== mate.id
             ),
           }));
         }
@@ -92,7 +95,7 @@ function OtherProfile() {
       {mate && (
         <div className="flex flex-col items-center justify-center bg-white shadow-md rounded-md p-4 md:flex-row md:p-8 md:max-w-4xl mx-auto">
           <img
-            src={mate.profile.profile_pic}
+            src={mate.profile?.profile_pic}
             alt="profile"
             className="w-32 h-32 md:w-48 md:h-48 rounded-full border-4 border-gray-300 object-cover shadow-md"
           />
@@ -114,7 +117,7 @@ function OtherProfile() {
                 </p>
               </div>
             </div>
-            {mate.profile.bio && (
+            {mate.profile?.bio && (
               <p className="text-gray-700">{mate.profile.bio}</p>
             )}
             <div className="flex gap-2 items-center">

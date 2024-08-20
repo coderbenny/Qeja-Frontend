@@ -90,8 +90,8 @@ const RoomMates = () => {
         />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 overflow-y-auto">
-        {filteredRoommates.length > 0 ? (
-          filteredRoommates.map((roommate) => (
+        {roommates.length > 0 ? (
+          roommates.map((roommate) => (
             <div
               key={roommate.id}
               className="rental-card bg-white rounded-md border-2 border-gray-200 overflow-hidden transition duration-300 ease-in-out transform hover:shadow-lg mb-1"

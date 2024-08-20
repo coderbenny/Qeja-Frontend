@@ -85,7 +85,7 @@ const RoomMates = () => {
           type="text"
           defaultValue={searchTerm}
           onChange={debouncedSearchChange}
-          placeholder="Search by location..."
+          placeholder="Search users by location..."
           className="border rounded px-4 py-2 mb-2 w-full"
         />
       </div>
@@ -122,9 +122,7 @@ const RoomMates = () => {
           ))
         ) : (
           <div className="flex flex-col p-3 items-center mx-auto justify-center text-center text-gray-500">
-            <h2 className="text-center text-3xl mx-auto">
-              No Roommates available
-            </h2>
+            <h2 className="text-center text-3xl mx-auto">No Users available</h2>
           </div>
         )}
       </div>

@@ -115,7 +115,7 @@ export default function AddProperty() {
         const downloadURL = await getDownloadURL(storageRef);
         imageUrls[imageName] = downloadURL;
       } catch (error) {
-        console.error("An error occurred while uploading images:", error);
+        console.error(`Failed to upload ${imageName}:`, error);
         throw error;
       }
     }
@@ -126,21 +126,24 @@ export default function AddProperty() {
     e.preventDefault();
     setLoading(true);
     const token = sessionStorage.getItem("access_token");
+
     try {
-      const imageUrls = await handleUploadImages();
+      const imageUrls = Object.keys(images).length
+        ? await handleUploadImages()
+        : {};
       const updatedAmenities = {
         ...amenities,
         rooms: parseInt(amenities.rooms),
-        pic1: imageUrls["img1"],
-        pic2: imageUrls["img2"],
-        pic3: imageUrls["img3"],
+        ...imageUrls,
       };
+
       const res = await axios.post("/properties", updatedAmenities, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
+
       if (res.status === 201) {
         alert("Property Added Successfully");
         setUser({
@@ -161,9 +164,6 @@ export default function AddProperty() {
     setAmenities({ ...amenities, [name]: value });
   };
 
-  console.log(images);
-  console.log(amenities);
-
   return (
     <BackgroundContainer>
       <StyledContainer maxWidth="sm">
@@ -173,239 +173,229 @@ export default function AddProperty() {
           </Typography>
           <StyledForm onSubmit={handleSubmit}>
             <Stepper activeStep={activeStep} orientation="vertical">
-              <Step key={steps[0]}>
-                <StepLabel>{steps[0]}</StepLabel>
-                <StepContent>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                      <StyledTextField
-                        variant="outlined"
-                        fullWidth
-                        label="Property Location"
-                        name="location"
-                        required
-                        onChange={(event) =>
-                          handleInputChange(event, "location")
-                        }
-                      />
+              {steps.map((label, index) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                  <StepContent>
+                    <Grid container spacing={2}>
+                      {index === 0 && (
+                        <>
+                          <Grid item xs={12}>
+                            <StyledTextField
+                              variant="outlined"
+                              fullWidth
+                              label="Property Location"
+                              name="location"
+                              required
+                              onChange={handleInputChange}
+                            />
+                          </Grid>
+                          <Grid item xs={12}>
+                            <StyledTextField
+                              variant="outlined"
+                              fullWidth
+                              type="file"
+                              InputLabelProps={{ shrink: true }}
+                              onChange={handleImageChange}
+                              name="img1"
+                              required
+                            />
+                          </Grid>
+                          <Grid item xs={12}>
+                            <StyledTextField
+                              variant="outlined"
+                              fullWidth
+                              type="file"
+                              InputLabelProps={{ shrink: true }}
+                              onChange={handleImageChange}
+                              name="img2"
+                              required
+                            />
+                          </Grid>
+                          <Grid item xs={12}>
+                            <StyledTextField
+                              variant="outlined"
+                              fullWidth
+                              type="file"
+                              InputLabelProps={{ shrink: true }}
+                              onChange={handleImageChange}
+                              name="img3"
+                              required
+                            />
+                          </Grid>
+                          <Grid item xs={12}>
+                            <StyledTextField
+                              variant="outlined"
+                              fullWidth
+                              label="Description"
+                              name="description"
+                              multiline
+                              rows={4}
+                              required
+                              onChange={handleInputChange}
+                            />
+                          </Grid>
+                        </>
+                      )}
+                      {index === 1 && (
+                        <>
+                          <Grid item xs={12}>
+                            <Typography variant="h6">WiFi</Typography>
+                            <ToggleButtonGroup
+                              value={amenities.wifi.toString()}
+                              exclusive
+                              onChange={(event, newValue) =>
+                                handleToggleChange(event, newValue, "wifi")
+                              }
+                            >
+                              <ToggleButton value="true">Yes</ToggleButton>
+                              <ToggleButton value="false">No</ToggleButton>
+                            </ToggleButtonGroup>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Typography variant="h6">Gated</Typography>
+                            <ToggleButtonGroup
+                              value={amenities.gated.toString()}
+                              exclusive
+                              onChange={(event, newValue) =>
+                                handleToggleChange(event, newValue, "gated")
+                              }
+                            >
+                              <ToggleButton value="true">Yes</ToggleButton>
+                              <ToggleButton value="false">No</ToggleButton>
+                            </ToggleButtonGroup>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Typography variant="h6">Hot Shower</Typography>
+                            <ToggleButtonGroup
+                              value={amenities.hot_shower.toString()}
+                              exclusive
+                              onChange={(event, newValue) =>
+                                handleToggleChange(
+                                  event,
+                                  newValue,
+                                  "hot_shower"
+                                )
+                              }
+                            >
+                              <ToggleButton value="true">Yes</ToggleButton>
+                              <ToggleButton value="false">No</ToggleButton>
+                            </ToggleButtonGroup>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Typography variant="h6">Kitchen</Typography>
+                            <ToggleButtonGroup
+                              value={amenities.kitchen.toString()}
+                              exclusive
+                              onChange={(event, newValue) =>
+                                handleToggleChange(event, newValue, "kitchen")
+                              }
+                            >
+                              <ToggleButton value="true">Yes</ToggleButton>
+                              <ToggleButton value="false">No</ToggleButton>
+                            </ToggleButtonGroup>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Typography variant="h6">Balcony</Typography>
+                            <ToggleButtonGroup
+                              value={amenities.balcony.toString()}
+                              exclusive
+                              onChange={(event, newValue) =>
+                                handleToggleChange(event, newValue, "balcony")
+                              }
+                            >
+                              <ToggleButton value="true">Yes</ToggleButton>
+                              <ToggleButton value="false">No</ToggleButton>
+                            </ToggleButtonGroup>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Typography variant="h6">Parking</Typography>
+                            <ToggleButtonGroup
+                              value={amenities.parking.toString()}
+                              exclusive
+                              onChange={(event, newValue) =>
+                                handleToggleChange(event, newValue, "parking")
+                              }
+                            >
+                              <ToggleButton value="true">Yes</ToggleButton>
+                              <ToggleButton value="false">No</ToggleButton>
+                            </ToggleButtonGroup>
+                          </Grid>
+                        </>
+                      )}
+                      {index === 2 && (
+                        <>
+                          <Grid item xs={12}>
+                            <StyledTextField
+                              variant="outlined"
+                              fullWidth
+                              label="Rent"
+                              name="rent"
+                              required
+                              onChange={handleInputChange}
+                            />
+                          </Grid>
+                          <Grid item xs={12}>
+                            <StyledTextField
+                              variant="outlined"
+                              fullWidth
+                              label="Number of Rooms"
+                              name="rooms"
+                              required
+                              onChange={handleInputChange}
+                            />
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Typography variant="h6">Available</Typography>
+                            <ToggleButtonGroup
+                              value={amenities.available.toString()}
+                              exclusive
+                              onChange={(event, newValue) =>
+                                handleToggleChange(event, newValue, "available")
+                              }
+                            >
+                              <ToggleButton value="true">Yes</ToggleButton>
+                              <ToggleButton value="false">No</ToggleButton>
+                            </ToggleButtonGroup>
+                          </Grid>
+                        </>
+                      )}
                     </Grid>
-                    <Grid item xs={12}>
-                      <StyledTextField
-                        variant="outlined"
-                        fullWidth
-                        type="file"
-                        InputLabelProps={{ shrink: true }}
-                        onChange={(event) => handleImageChange(event, "img1")}
-                        name="img1"
-                        required
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <StyledTextField
-                        variant="outlined"
-                        fullWidth
-                        type="file"
-                        InputLabelProps={{ shrink: true }}
-                        onChange={(event) => handleImageChange(event, "img2")}
-                        name="img2"
-                        required
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <StyledTextField
-                        variant="outlined"
-                        fullWidth
-                        type="file"
-                        InputLabelProps={{ shrink: true }}
-                        onChange={(event) => handleImageChange(event, "img3")}
-                        name="img3"
-                        required
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <StyledTextField
-                        variant="outlined"
-                        fullWidth
-                        label="Description"
-                        name="description"
-                        multiline
-                        rows={4}
-                        required
-                        onChange={(event) =>
-                          handleInputChange(event, "description")
-                        }
-                      />
-                    </Grid>
-                  </Grid>
-                  <Box sx={{ mb: 2 }}>
-                    <div>
-                      <Button
-                        variant="contained"
-                        onClick={handleNext}
-                        sx={{ mt: 1, mr: 1 }}
-                      >
-                        Continue
-                      </Button>
-                    </div>
-                  </Box>
-                </StepContent>
-              </Step>
-              <Step key={steps[1]}>
-                <StepLabel>{steps[1]}</StepLabel>
-                <StepContent>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                      <Typography variant="h6">WiFi</Typography>
-                      <ToggleButtonGroup
-                        value={amenities.wifi.toString()}
-                        exclusive
-                        onChange={(event, newValue) =>
-                          handleToggleChange(event, newValue, "wifi")
-                        }
-                      >
-                        <ToggleButton value="true">Yes</ToggleButton>
-                        <ToggleButton value="false">No</ToggleButton>
-                      </ToggleButtonGroup>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Typography variant="h6">Gated</Typography>
-                      <ToggleButtonGroup
-                        value={amenities.gated.toString()}
-                        exclusive
-                        onChange={(event, newValue) =>
-                          handleToggleChange(event, newValue, "gated")
-                        }
-                      >
-                        <ToggleButton value="true">Yes</ToggleButton>
-                        <ToggleButton value="false">No</ToggleButton>
-                      </ToggleButtonGroup>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Typography variant="h6">Hot Shower</Typography>
-                      <ToggleButtonGroup
-                        value={amenities.hot_shower.toString()}
-                        exclusive
-                        onChange={(event, newValue) =>
-                          handleToggleChange(event, newValue, "hot_shower")
-                        }
-                      >
-                        <ToggleButton value="true">Yes</ToggleButton>
-                        <ToggleButton value="false">No</ToggleButton>
-                      </ToggleButtonGroup>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Typography variant="h6">Kitchen</Typography>
-                      <ToggleButtonGroup
-                        value={amenities.kitchen.toString()}
-                        exclusive
-                        onChange={(event, newValue) =>
-                          handleToggleChange(event, newValue, "kitchen")
-                        }
-                      >
-                        <ToggleButton value="true">Yes</ToggleButton>
-                        <ToggleButton value="false">No</ToggleButton>
-                      </ToggleButtonGroup>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Typography variant="h6">Balcony</Typography>
-                      <ToggleButtonGroup
-                        value={amenities.balcony.toString()}
-                        exclusive
-                        onChange={(event, newValue) =>
-                          handleToggleChange(event, newValue, "balcony")
-                        }
-                      >
-                        <ToggleButton value="true">Yes</ToggleButton>
-                        <ToggleButton value="false">No</ToggleButton>
-                      </ToggleButtonGroup>
-                    </Grid>
-                  </Grid>
-                  <Box sx={{ mb: 2 }}>
-                    <div>
-                      <Button
-                        variant="contained"
-                        onClick={handleNext}
-                        sx={{ mt: 1, mr: 1 }}
-                      >
-                        Continue
-                      </Button>
-                      <Button onClick={handleBack} sx={{ mt: 1, mr: 1 }}>
-                        Back
-                      </Button>
-                    </div>
-                  </Box>
-                </StepContent>
-              </Step>
-              <Step key={steps[2]}>
-                <StepLabel>{steps[2]}</StepLabel>
-                <StepContent>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                      <StyledTextField
-                        variant="outlined"
-                        fullWidth
-                        label="Rent per Month"
-                        name="rent"
-                        type="number"
-                        required
-                        onChange={(event) => handleInputChange(event, "number")}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <StyledTextField
-                        variant="outlined"
-                        fullWidth
-                        label="Rooms"
-                        name="rooms"
-                        type="number"
-                        required
-                        onChange={(event) => handleInputChange(event, "rooms")}
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Typography variant="h6">Parking</Typography>
-                      <ToggleButtonGroup
-                        value={amenities.parking.toString()}
-                        exclusive
-                        onChange={(event, newValue) =>
-                          handleToggleChange(event, newValue, "parking")
-                        }
-                      >
-                        <ToggleButton value="true">Yes</ToggleButton>
-                        <ToggleButton value="false">No</ToggleButton>
-                      </ToggleButtonGroup>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Typography variant="h6">Available</Typography>
-                      <ToggleButtonGroup
-                        value={amenities.available.toString()}
-                        exclusive
-                        onChange={(event, newValue) =>
-                          handleToggleChange(event, newValue, "available")
-                        }
-                      >
-                        <ToggleButton value="true">Yes</ToggleButton>
-                        <ToggleButton value="false">No</ToggleButton>
-                      </ToggleButtonGroup>
-                    </Grid>
-                  </Grid>
-                  <Box sx={{ mb: 2 }}>
-                    <div>
-                      <Button
-                        type="submit"
-                        variant="contained"
-                        sx={{ mt: 1, mr: 1 }}
-                      >
-                        {loading ? "Please Wait..." : "Add Property"}
-                      </Button>
-                      <Button onClick={handleBack} sx={{ mt: 1, mr: 1 }}>
-                        Back
-                      </Button>
-                    </div>
-                  </Box>
-                </StepContent>
-              </Step>
+                    <Box sx={{ mb: 2 }}>
+                      <div>
+                        <Button
+                          variant="contained"
+                          onClick={handleNext}
+                          sx={{ mt: 1, mr: 1 }}
+                          disabled={activeStep === steps.length - 1}
+                        >
+                          {index === steps.length - 1 ? "Finish" : "Continue"}
+                        </Button>
+                        <Button
+                          disabled={activeStep === 0}
+                          onClick={handleBack}
+                          sx={{ mt: 1, mr: 1 }}
+                        >
+                          Back
+                        </Button>
+                      </div>
+                    </Box>
+                  </StepContent>
+                </Step>
+              ))}
             </Stepper>
+            {activeStep === steps.length && (
+              <Box sx={{ textAlign: "center", mt: 3 }}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  disabled={loading}
+                >
+                  {loading ? "Adding Property..." : "Add Property"}
+                </Button>
+              </Box>
+            )}
           </StyledForm>
         </StyledPaper>
       </StyledContainer>

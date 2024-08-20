@@ -72,7 +72,7 @@ function Header() {
           className="flex items-center mr-5 hover:text-blue-300 cursor-pointer"
           onClick={closeMenu}
         >
-          <FaUserFriends className="mr-1" /> Roommates
+          <FaUserFriends className="mr-1" /> Connect
         </NavLink>
         <NavLink
           to="/explore"

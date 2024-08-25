@@ -32,9 +32,9 @@ const Footer = () => {
           </Typography>
         </Box>
         <Box sx={{ mt: { xs: 2, sm: 0 }, textAlign: "center" }}>
-          <Typography variant="h6" component="h2" sx={{ fontWeight: "bold" }}>
+          {/* <Typography variant="h6" component="h2" sx={{ fontWeight: "bold" }}>
             Socials
-          </Typography>
+          </Typography> */}
           <Box
             sx={{ display: "flex", justifyContent: "center", gap: 2, mt: 1 }}
           >

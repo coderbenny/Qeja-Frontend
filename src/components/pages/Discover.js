@@ -1,6 +1,11 @@
 import React from "react";
 import DiscoveryCard from "../ui/DiscoveryCard";
-import { FaHome, FaKey, FaUserFriends, FaComments } from "react-icons/fa";
+import {
+  FaHome,
+  FaKey,
+  // FaUserFriends,
+  FaComments,
+} from "react-icons/fa";
 
 function Discover() {
   const discoveries = [
@@ -11,22 +16,22 @@ function Discover() {
         "Your search for the perfect rental ends here! Discover a curated selection of houses tailored to your preferences. Say goodbye to endless scrolling and hello to your dream home.",
       icon: <FaKey />,
     },
+    // {
+    //   id: 2,
+    //   title: "Looking for the Perfect Roommate?",
+    //   description:
+    //     "Finding the ideal roommate just got easier! Say goodbye to awkward interviews and incompatible matches. Our platform connects you with like-minded individuals, ensuring harmonious living experiences.",
+    //   icon: <FaUserFriends />,
+    // },
     {
       id: 2,
-      title: "Looking for the Perfect Roommate?",
-      description:
-        "Finding the ideal roommate just got easier! Say goodbye to awkward interviews and incompatible matches. Our platform connects you with like-minded individuals, ensuring harmonious living experiences.",
-      icon: <FaUserFriends />,
-    },
-    {
-      id: 3,
       title: "Unlock the Potential of Your Property",
       description:
         "Transform your property into a lucrative asset with our innovative solutions. From attracting the right tenants to maximizing rental income, unlock the full potential of your property effortlessly.",
       icon: <FaHome />,
     },
     {
-      id: 4,
+      id: 3,
       title: "Join Our Community Chat",
       description:
         "Connect with fellow users in our vibrant community chat! Whether you're a property owner, tenant, or seeker of roommates, engage in lively discussions, share tips, and make new connections. Your community awaits!",
@@ -47,8 +52,8 @@ function Discover() {
           Discover
         </h2>
         <p className="text-lg mb-6">
-          Experience the ease of finding your perfect home, tenant, or roommate.
-          Say goodbye to endless searches and complicated processes.
+          Experience the ease of finding your perfect home or tenant. Say
+          goodbye to endless searches and complicated processes.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* discovery cards */}

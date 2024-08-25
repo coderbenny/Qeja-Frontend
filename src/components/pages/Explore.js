@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import SaveIcon from "@mui/icons-material/Save";
+import CreatePost from "./CreatePost";
 
 function Explore() {
   const [posts, setPosts] = useState([]);
@@ -144,60 +145,6 @@ function Feed({ posts, loading, onLoadMore }) {
         </Box>
       </Paper>
     </Box>
-  );
-}
-
-function CreatePost() {
-  const [formData, setFormData] = useState({
-    title: "",
-    content: "",
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Implement post creation logic here
-  };
-
-  return (
-    <Container maxWidth="sm" sx={{ mt: 5 }}>
-      <Paper elevation={3} sx={{ p: 3 }}>
-        <Typography variant="h5" sx={{ mb: 3 }}>
-          Create a New Post
-        </Typography>
-        <Box
-          component="form"
-          onSubmit={handleSubmit}
-          sx={{ display: "flex", flexDirection: "column", gap: 2 }}
-        >
-          <TextField
-            label="Post Title"
-            name="title"
-            value={formData.title}
-            onChange={handleInputChange}
-            fullWidth
-            required
-          />
-          <TextField
-            label="Content"
-            name="content"
-            value={formData.content}
-            onChange={handleInputChange}
-            fullWidth
-            multiline
-            rows={4}
-            required
-          />
-          <Button type="submit" variant="contained" color="primary">
-            Post
-          </Button>
-        </Box>
-      </Paper>
-    </Container>
   );
 }
 

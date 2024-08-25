@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { ImProfile } from "react-icons/im";
-import { MdOutlineMapsHomeWork } from "react-icons/md";
+// import { MdOutlineMapsHomeWork } from "react-icons/md";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 
 import {
   FaHouseUser,
   FaUserFriends,
-  FaBuilding,
+  // FaBuilding,
   // FaComments,
 } from "react-icons/fa";
 import AuthButton from "../ui/AuthButton";

@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import axios from "../context/axios";
 import { AuthContext } from "../context/AuthContext";
-import LocalPostOfficeTwoToneIcon from "@mui/icons-material/LocalPostOfficeTwoTone"; // Import the icon
+import LocalPostOfficeTwoToneIcon from "@mui/icons-material/LocalPostOfficeTwoTone";
+import SendTwoToneIcon from "@mui/icons-material/SendTwoTone";
 
 function OtherProfile() {
   const { user, setUser } = useContext(AuthContext);
@@ -105,8 +106,8 @@ function OtherProfile() {
               <h2 className="text-2xl md:text-3xl font-bold capitalize">
                 {mate.name}
               </h2>
-              <LocalPostOfficeTwoToneIcon className="h-[30px] w-[30px] text-black" />{" "}
-              {/* Replace the SVG with the icon */}
+              {/* <LocalPostOfficeTwoToneIcon className="h-[30px] w-[30px] text-black" /> */}
+              <SendTwoToneIcon className="h-[30px] w-[30px] text-black" />
             </div>
             <div className="flex justify-center md:justify-start space-x-8 my-4">
               <div>

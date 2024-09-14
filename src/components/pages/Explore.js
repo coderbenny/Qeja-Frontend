@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import FeedPost from "../ui/FeedPost";
 import axios from "../context/axios";
@@ -11,18 +11,20 @@ import {
   TextField,
   Box,
   Paper,
-  // IconButton,
   Avatar,
+  Stack,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import SaveIcon from "@mui/icons-material/Save";
 import CreatePost from "./CreatePost";
+import { AuthContext } from "../context/AuthContext";
 
 function Explore() {
+  const { user } = useContext(AuthContext);
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(3);
   const [loading, setLoading] = useState(false);
+  const postsPerPage = 3;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,7 +45,7 @@ function Explore() {
     };
 
     getPosts();
-  }, [currentPage, postsPerPage]);
+  }, [currentPage]);
 
   const handleLoadMore = () => {
     setCurrentPage((prevPage) => prevPage + 1);
@@ -52,7 +54,6 @@ function Explore() {
   return (
     <Container maxWidth="lg" sx={{ minHeight: "100vh", mt: 10 }}>
       <Grid container spacing={3}>
-        {/* Feed Section */}
         <Grid item xs={12} md={8}>
           <Routes>
             <Route
@@ -62,6 +63,8 @@ function Explore() {
                   posts={posts}
                   loading={loading}
                   onLoadMore={handleLoadMore}
+                  onNewPost={() => navigate("/create-post")}
+                  user={user}
                 />
               }
             />
@@ -69,51 +72,58 @@ function Explore() {
           </Routes>
         </Grid>
 
-        {/* Sidebar Section */}
-        <Grid item xs={12} md={4}>
-          <Paper elevation={3} sx={{ p: 2 }}>
-            <Box
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-              sx={{ mb: 3 }}
-            >
-              <Avatar
+        {user && (
+          <Grid item xs={12} md={4}>
+            <Paper elevation={3} sx={{ p: 2 }}>
+              <Box
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
                 sx={{
-                  width: 150,
-                  height: 150,
                   mb: 3,
-                  backgroundColor: "grey.300",
+                  "@media (max-width: 600px)": {
+                    mb: 2,
+                  },
                 }}
-              />
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<AddIcon />}
-                onClick={() => navigate("/new-post")}
-                fullWidth
-                sx={{ mb: 2 }}
               >
-                Create Post
-              </Button>
-              <Button
-                variant="outlined"
-                color="primary"
-                startIcon={<SaveIcon />}
-                fullWidth
-              >
-                Saved Posts
-              </Button>
-            </Box>
-          </Paper>
-        </Grid>
+                <Avatar
+                  sx={{
+                    width: { xs: 100, md: 150 },
+                    height: { xs: 100, md: 150 },
+                    mb: { xs: 2, md: 3 },
+                    backgroundColor: "grey.300",
+                  }}
+                />
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontSize: { xs: "1rem", md: "1.25rem" },
+                    textAlign: "center",
+                  }}
+                >
+                  {user.name}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  sx={{
+                    fontSize: { xs: "0.75rem", md: "1rem" },
+                    textAlign: "center",
+                  }}
+                >
+                  {user.email}
+                </Typography>
+              </Box>
+            </Paper>
+          </Grid>
+        )}
       </Grid>
     </Container>
   );
 }
 
-function Feed({ posts, loading, onLoadMore }) {
+function Feed({ posts, loading, onLoadMore, onNewPost, user }) {
   return (
     <Box sx={{ mb: 4 }}>
       <TextField
@@ -122,7 +132,56 @@ function Feed({ posts, loading, onLoadMore }) {
         placeholder="Search posts..."
         sx={{ mb: 3 }}
       />
-      <Paper elevation={3} sx={{ p: 2, maxHeight: 600, overflowY: "auto" }}>
+      <Stack
+        direction={{ xs: "column", sm: "row" }}
+        spacing={2}
+        sx={{ mb: 3, justifyContent: "center" }}
+      >
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<AddIcon />}
+          onClick={onNewPost}
+          disabled={!user}
+          sx={{
+            fontWeight: "bold",
+            backgroundColor: user ? "#1976d2" : "grey",
+            boxShadow: 3,
+            fontSize: { xs: "0.875rem", sm: "1rem" },
+            width: { xs: "100%", sm: "auto" },
+          }}
+        >
+          Create Post
+        </Button>
+        <Button
+          variant="outlined"
+          color="primary"
+          startIcon={<SaveIcon />}
+          disabled={!user}
+          sx={{
+            fontWeight: "bold",
+            borderColor: user ? "#1976d2" : "grey",
+            color: user ? "#1976d2" : "grey",
+            boxShadow: 3,
+            fontSize: { xs: "0.875rem", sm: "1rem" },
+            width: { xs: "100%", sm: "auto" },
+          }}
+        >
+          Saved Posts
+        </Button>
+      </Stack>
+
+      <Paper
+        elevation={3}
+        sx={{
+          p: 2,
+          maxHeight: { xs: 400, sm: 600 },
+          overflowY: "auto",
+          "@media (max-width: 600px)": {
+            p: 1,
+          },
+        }}
+      >
         {posts && posts.length > 0 ? (
           posts.map((post, index) => <FeedPost key={index} post={post} />)
         ) : (
@@ -133,12 +192,25 @@ function Feed({ posts, loading, onLoadMore }) {
             <CircularProgress />
           </Box>
         )}
-        <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            mt: 2,
+            "@media (max-width: 600px)": {
+              mt: 1,
+            },
+          }}
+        >
           <Button
             variant="contained"
             color="primary"
             onClick={onLoadMore}
             disabled={loading}
+            sx={{
+              fontSize: { xs: "0.875rem", sm: "1rem" },
+              padding: { xs: "6px 12px", sm: "8px 16px" },
+            }}
           >
             Load More
           </Button>

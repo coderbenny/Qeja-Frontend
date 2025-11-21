@@ -1,13 +1,13 @@
-# Qeja - Real Estate Platform
+# Qeja Frontend — Real Estate Platform
 
 <div align="center">
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://qeja-frontend.vercel.app)
-[![React](https://img.shields.io/badge/React-18.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://reactjs.org/)
-[![Flask](https://img.shields.io/badge/Flask-Backend-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-000000?style=for-the-badge\&logo=vercel\&logoColor=white)](https://qeja-frontend.vercel.app)
+[![React](https://img.shields.io/badge/React-18.2.0-61DAFB?style=for-the-badge\&logo=react\&logoColor=black)](https://reactjs.org/)
+[![Flask Backend](https://img.shields.io/badge/Backend-Flask-000000?style=for-the-badge\&logo=flask\&logoColor=white)](https://flask.palletsprojects.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
-**A modern real estate platform connecting house hunters with rental and purchase opportunities**
+### **A modern real estate platform connecting property seekers with rentals and homes for purchase**
 
 [Live Demo](https://qeja-frontend.vercel.app) • [Report Bug](../../issues) • [Request Feature](../../issues)
 
@@ -17,157 +17,171 @@
 
 ## 📋 Table of Contents
 
-- [About The Project](#about-the-project)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Environment Variables](#environment-variables)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Deployment](#deployment)
-- [Roadmap](#roadmap)
-- [Contributing](#contributing)
-- [License](#license)
+* [Overview](#overview)
+* [Key Features](#key-features)
+* [Tech Stack](#tech-stack)
+* [Getting Started](#getting-started)
+
+  * [Prerequisites](#prerequisites)
+  * [Installation](#installation)
+  * [Environment Variables](#environment-variables)
+* [Available Scripts](#available-scripts)
+* [Project Structure](#project-structure)
+* [Deployment](#deployment)
+* [Roadmap](#roadmap)
+* [Contributing](#contributing)
+* [License](#license)
+* [Acknowledgments](#acknowledgments)
 
 ---
 
-## 🏠 About The Project
+## 🏠 Overview
 
-**Qeja** is a comprehensive real estate platform designed to streamline the house hunting experience. Whether you're looking for a rental property or a home to own, Qeja provides a centralized platform where users can browse listings, communicate with property owners, and engage with a community of fellow house hunters.
+**Qeja** is a full-featured real estate platform designed to simplify the process of discovering rental properties and homes for sale. Built with a modern UI powered by **React**, Qeja provides property listings, interactive forums, real-time chat, and an intuitive search experience.
 
-### Problem Statement
+### Why Qeja?
 
-Finding the right home can be a time-consuming and fragmented process. Qeja solves this by:
-- Consolidating rental and purchase listings in one place
-- Enabling direct communication between buyers/renters and property owners
-- Fostering a community where users can share experiences and advice
+Searching for a home is often scattered across multiple platforms. **Qeja solves this** by:
 
-### Target Audience
-
-- **House Hunters**: Individuals and families searching for rental properties or homes to purchase
-- **Property Owners**: Landlords and sellers looking to list their properties
-- **Real Estate Enthusiasts**: Users seeking community insights and market information
+* Centralizing verified listings
+* Providing a built-in chat system
+* Offering a community forum for property discussions
+* Delivering smooth navigation and responsive UI
 
 ---
 
-## ✨ Features
+## ✨ Key Features
 
-### Core Functionality
+### 🧩 Core Functionality
 
-- **🔐 User Authentication**: Secure sign-up and login system powered by Flask
-- **🏡 Property Listings**: Browse rental properties and homes for sale
-- **💬 Real-Time Chat**: Direct messaging between users and property owners
-- **📝 Community Forum**: Create and engage with posts, share experiences, and get advice
-- **📊 Dashboard**: Personalized user dashboard with saved properties and activity
-- **🔍 Advanced Search**: Filter properties by location, price, type, and more
-- **📱 Responsive Design**: Seamless experience across desktop, tablet, and mobile devices
+* **🔐 Secure User Authentication (Firebase)**
+* **🏠 Browse Properties** for rent & sale
+* **💬 Real-Time User Chat** with property owners
+* **📝 Social Community Forum** for posts and discussions
+* **✨ Advanced Property Filters** (price, location, type, amenities)
+* **❤️ Save Favorites** to personal dashboard
+* **📱 Fully Responsive UI** for mobile, tablet, and desktop
 
-### Unique Capabilities
+### 🎯 Unique Additions
 
-- Integrated chat system for instant communication
-- Community-driven insights through forum discussions
-- Interactive property visualization with Swiper carousels
-- Real-time data updates and notifications
+* Swiper-powered image carousels
+* Animated hero and UI sections
+* Chart.js powered dashboards
+* Tailwind + MUI hybrid styling
+* Smooth page transitions and typing animations
 
 ---
 
 ## 🛠 Tech Stack
 
-### Frontend
-- **Framework**: React 18.2.0
-- **UI Library**: Material-UI (MUI) 5.15.20
-- **Styling**: Tailwind CSS 3.4.3, Emotion
-- **Routing**: React Router DOM 6.23.0
-- **HTTP Client**: Axios 1.6.8
-- **Authentication**: Firebase 10.12.2
-- **Charts**: Chart.js 4.4.3 with React-ChartJS-2
-- **Carousel**: Swiper 11.1.4
-- **Icons**: React Icons 5.1.0, MUI Icons
-- **Animations**: React Typing Effect 2.0.5
+### **Frontend**
 
-### Backend
-- **Framework**: Flask (Python)
-- **Database**: SQLite
-- **Deployment**: Render
+* **React 18.2**
+* **Material-UI (MUI)**
+* **Tailwind CSS**
+* **React Router DOM**
+* **Axios**
+* **Firebase Authentication**
+* **Chart.js & React-ChartJS-2**
+* **Swiper Carousel**
+* **React Icons**
+* **React Typing Effect**
 
-### DevOps & Deployment
-- **Frontend Hosting**: Vercel
-- **Backend Hosting**: Render
-- **CI/CD**: GitHub Actions
-- **Containerization**: Docker
+### **Backend**
+
+* Flask REST API
+* SQLite database
+* Hosted on Render
+
+### **DevOps & Hosting**
+
+* Vercel (Frontend)
+* Render (Backend)
+* GitHub Actions (CI/CD)
 
 ---
 
 ## 🚀 Getting Started
 
-Follow these instructions to get a local copy up and running.
+Follow these steps to get the project running locally.
 
-### Prerequisites
+### ✔️ Prerequisites
 
-- Node.js (v14 or higher)
-- npm or yarn
-- Python 3.8+
-- Git
+Ensure you have:
 
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/coderbenny/Qeja-frontend.git
-   cd Qeja-frontend
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Set up environment variables**
-   
-   Create a `.env` file in the root directory and add your Firebase configuration:
-   ```env
-   REACT_APP_APIKEY=your_firebase_api_key
-   REACT_APP_AUTHDOMAIN=your_firebase_auth_domain
-   REACT_APP_PROJECTID=your_firebase_project_id
-   REACT_APP_STORAGEBUCKET=your_firebase_storage_bucket
-   REACT_APP_MESSAGINGSENDERID=your_firebase_messaging_sender_id
-   REACT_APP_APPID=your_firebase_app_id
-   REACT_APP_MEASUREMENTID=your_firebase_measurement_id
-   ```
-
-4. **Start the development server**
-   ```bash
-   npm start
-   ```
-
-   The application will open at `http://localhost:3000`
-
-### Environment Variables
-
-The following environment variables are required for Firebase integration:
-
-| Variable | Description |
-|----------|-------------|
-| `REACT_APP_APIKEY` | Firebase API Key |
-| `REACT_APP_AUTHDOMAIN` | Firebase Auth Domain |
-| `REACT_APP_PROJECTID` | Firebase Project ID |
-| `REACT_APP_STORAGEBUCKET` | Firebase Storage Bucket |
-| `REACT_APP_MESSAGINGSENDERID` | Firebase Messaging Sender ID |
-| `REACT_APP_APPID` | Firebase App ID |
-| `REACT_APP_MEASUREMENTID` | Firebase Measurement ID |
+* Node.js 16+
+* npm or yarn
+* Git
+* Python 3.8+ (for backend dev)
 
 ---
 
-## 💻 Usage
+## 🔧 Installation
 
-### Available Scripts
+### 1️⃣ Clone the repository
 
-- **`npm start`**: Runs the app in development mode
-- **`npm run build`**: Builds the app for production
-- **`npm test`**: Launches the test runner
-- **`npm run eject`**: Ejects from Create React App (one-way operation)
+```bash
+git clone https://github.com/coderbenny/Qeja-frontend.git
+cd Qeja-frontend
+```
+
+### 2️⃣ Install frontend dependencies
+
+```bash
+npm install
+```
+
+### 3️⃣ Add environment variables
+
+Create a `.env` file in the project root:
+
+```env
+REACT_APP_APIKEY=your_firebase_api_key
+REACT_APP_AUTHDOMAIN=your_firebase_auth_domain
+REACT_APP_PROJECTID=your_firebase_project_id
+REACT_APP_STORAGEBUCKET=your_firebase_storage_bucket
+REACT_APP_MESSAGINGSENDERID=your_firebase_messaging_sender_id
+REACT_APP_APPID=your_firebase_app_id
+REACT_APP_MEASUREMENTID=your_firebase_measurement_id
+```
+
+### 4️⃣ Start the development server
+
+```bash
+npm start
+```
+
+The app will be available at:
+👉 [http://localhost:3000](http://localhost:3000)
+
+---
+
+## 🔑 Environment Variables
+
+The frontend requires the following Firebase settings:
+
+| Variable                      | Description              |
+| ----------------------------- | ------------------------ |
+| `REACT_APP_APIKEY`            | Firebase API Key         |
+| `REACT_APP_AUTHDOMAIN`        | Authentication Domain    |
+| `REACT_APP_PROJECTID`         | Project ID               |
+| `REACT_APP_STORAGEBUCKET`     | File Storage Bucket      |
+| `REACT_APP_MESSAGINGSENDERID` | Messaging Sender ID      |
+| `REACT_APP_APPID`             | Application ID           |
+| `REACT_APP_MEASUREMENTID`     | Analytics Measurement ID |
+
+---
+
+## 🧪 Available Scripts
+
+| Script          | Description                  |
+| --------------- | ---------------------------- |
+| `npm start`     | Runs app in development mode |
+| `npm run build` | Builds production bundle     |
+| `npm test`      | Starts Jest test runner      |
+| `npm run eject` | Ejects CRA configuration     |
+| `docker build`  | Builds Docker image          |
+| `docker run`    | Runs Docker container        |
 
 ### Running with Docker
 
@@ -182,138 +196,117 @@ docker run -p 3000:3000 qeja-frontend
 
 ```
 qeja-frontend/
-├── public/              # Static files
+├── public/                # Static assets
 ├── src/
-│   ├── components/      # React components
-│   ├── App.js           # Main application component
-│   ├── App.css          # Application styles
-│   ├── index.js         # Entry point
-│   └── index.css        # Global styles
-├── Dockerfile           # Docker configuration
-├── package.json         # Dependencies and scripts
-├── tailwind.config.js   # Tailwind CSS configuration
-└── README.md            # Project documentation
+│   ├── components/        # Shared UI components
+│   ├── pages/             # Page-level components
+│   ├── hooks/             # Custom hooks
+│   ├── context/           # Auth / Global context
+│   ├── utils/             # Helper functions
+│   ├── App.js             # Main React component
+│   ├── index.js           # React DOM entry point
+│   ├── App.css            # Global styles
+│   └── index.css          # TailwindCSS entry
+├── Dockerfile             # Docker config
+├── package.json
+├── tailwind.config.js
+└── README.md
 ```
 
 ---
 
 ## 🌐 Deployment
 
-### Frontend (Vercel)
+### **Frontend — Vercel**
 
-The frontend is automatically deployed to Vercel on every push to the main branch.
+Deployed using automatic CI/CD:
 
-1. Connect your GitHub repository to Vercel
-2. Configure environment variables in Vercel dashboard
-3. Deploy automatically via GitHub integration
+1. Connect GitHub repo to Vercel
+2. Add environment variables
+3. Push to `main` → Vercel deploys automatically
 
-### Backend (Render)
+### Backend — Render
 
-The Flask backend is deployed on Render with automatic deployments from GitHub.
+* Auto deploys on each push
+* Provides public API endpoint for frontend
 
 ### CI/CD
 
-GitHub Actions is configured for continuous integration and deployment:
-- Automatic deployment to Vercel (frontend) and Render (backend)
-- Build validation and error checking
+* GitHub Actions for build testing
+* Automatic deployments to Vercel and Render
 
 ---
 
 ## 🗺 Roadmap
 
-### Current Focus
-- [x] User authentication system
-- [x] Property listing functionality
-- [x] Real-time chat feature
-- [x] Community forum
+### Completed
 
-### Future Enhancements
-- [ ] **Codebase Refactoring**: Improve code structure and maintainability
-- [ ] **Payment Integration**: Implement secure payment processing for deposits and rent
-- [ ] **Advanced Filters**: Add more sophisticated search and filtering options
-- [ ] **Mobile App**: Native iOS and Android applications
-- [ ] **Property Tours**: Virtual tour integration
-- [ ] **AI Recommendations**: Smart property suggestions based on user preferences
-- [ ] **Multi-language Support**: Internationalization for broader accessibility
+* [x] Authentication
+* [x] Listings page & advanced filters
+* [x] Chat system
+* [x] Community posts
+* [x] Dashboard visuals
 
-See the [open issues](../../issues) for a full list of proposed features and known issues.
+### Upcoming
+
+* [ ] Secure payment integration
+* [ ] Push notifications
+* [ ] AI-powered property recommendations
+* [ ] Virtual property tours
+* [ ] Mobile apps (React Native)
+* [ ] Multi-language support
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are welcome and appreciated ❤️
 
-### How to Contribute
+### Steps
 
-1. **Fork the Project**
+1. Fork the repo
+2. Create a feature branch:
+
    ```bash
-   git clone https://github.com/coderbenny/Qeja-frontend.git
+   git checkout -b feature/my-feature
    ```
+3. Commit changes
+4. Push to GitHub
+5. Open a pull request
 
-2. **Create your Feature Branch**
-   ```bash
-   git checkout -b feature/AmazingFeature
-   ```
-   
-   Or use your name:
-   ```bash
-   git checkout -b yourname/feature-description
-   ```
+### Guidelines
 
-3. **Commit your Changes**
-   ```bash
-   git commit -m 'Add some AmazingFeature'
-   ```
-
-4. **Push to the Branch**
-   ```bash
-   git push origin feature/AmazingFeature
-   ```
-
-5. **Open a Pull Request**
-
-### Contribution Guidelines
-
-- Follow the existing code style and conventions
-- Write clear, descriptive commit messages
-- Update documentation as needed
-- Add tests for new features
-- Ensure all tests pass before submitting PR
+* Follow existing code conventions
+* Write clean commit messages
+* Update documentation where necessary
+* Add tests if applicable
 
 ---
 
 ## 📄 License
 
-Distributed under the MIT License. See `LICENSE` file for more information.
-
----
-
-## 📧 Contact
-
-Project Link: [https://github.com/coderbenny/Qeja-frontend](https://github.com/coderbenny/Qeja-frontend)
-
-Live Demo: [https://qeja-frontend.vercel.app](https://qeja-frontend.vercel.app)
+Distributed under the **MIT License**.
+See [`LICENSE`](LICENSE) for details.
 
 ---
 
 ## 🙏 Acknowledgments
 
-- [React](https://reactjs.org/)
-- [Material-UI](https://mui.com/)
-- [Firebase](https://firebase.google.com/)
-- [Vercel](https://vercel.com/)
-- [Render](https://render.com/)
-- [Chart.js](https://www.chartjs.org/)
-- [Swiper](https://swiperjs.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
+* **React**
+* **Material-UI**
+* **Firebase**
+* **Tailwind CSS**
+* **Vercel**
+* **Render**
+* **Chart.js**
+* **Swiper.js**
 
 ---
 
 <div align="center">
-  
-**Made with ❤️ by the Qeja Team**
 
-⭐ Star this repo if you find it helpful!
+### **Made with ❤️ from Kenya*
+
+⭐ *Star this repo if you find it helpful!*
 
 </div>
